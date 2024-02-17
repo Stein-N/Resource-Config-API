@@ -8,13 +8,15 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'maven-publish'
 
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-    java.withSourcesJar()
-    java.withJavadocJar()
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(17)
+        withSourcesJar()
+        withJavadocJar()
+    }
         
     jar {
         from(rootProject.file("LICENSE")) {
-            rename { "${it}_${mod_name}" }
+            rename { "${it}_${mod_id}" }
         }
         manifest {
             attributes([
@@ -34,7 +36,7 @@ subprojects {
 
     sourcesJar {
         from(rootProject.file("LICENSE")) {
-            rename { "${it}_${mod_name}" }
+            rename { "${it}_${mod_id}" }
         }
     }
 
@@ -83,7 +85,7 @@ subprojects {
                 "neoforge_loader_version_range": neoforge_loader_version_range
         ]
 
-        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'quilt.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
             expand expandProps
         }
         inputs.properties(expandProps)

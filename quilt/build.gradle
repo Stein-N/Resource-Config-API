@@ -1,9 +1,9 @@
 plugins {
-    id 'fabric-loom' version '1.5-SNAPSHOT'
+    id 'org.quiltmc.loom' version '1.4.1'
 }
 
 base {
-    archivesName = "${mod_id}-fabric-${minecraft_base_version}"
+    archivesName = "${mod_id}-quilt-${minecraft_base_version}"
 }
 
 configurations {
@@ -14,20 +14,12 @@ dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
 
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    modImplementation "org.quiltmc:quilt-loader:${quilt_loader_version}"
 
     implementation "com.electronwill.night-config:toml:${night_config}"
     includedLibs "com.electronwill.night-config:toml:${night_config}"
 
     compileOnly project(":common")
-}
-
-sourceSets {
-    testmod {
-        runtimeClasspath += main.runtimeClasspath;
-        compileClasspath += main.compileClasspath;
-    }
 }
 
 loom {
@@ -37,19 +29,19 @@ loom {
     mixin {
         defaultRefmapName.set("${mod_id}.refmap.json")
     }
+
+    mods {
+        "resourceconfigapi" {
+            sourceSet("main")
+        }
+    }
+
     runs {
         client {
             client()
-            setConfigName("Fabric Client")
+            setConfigName("Quilt Client")
             ideConfigGenerated(true)
             runDir("run")
-        }
-        testmodClient {
-            client()
-            setConfigName("Fabric Testmod Client")
-            ideConfigGenerated(true)
-            runDir("run")
-            source sourceSets.testmod
         }
     }
 }

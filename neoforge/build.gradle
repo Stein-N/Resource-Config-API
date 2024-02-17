@@ -46,4 +46,5 @@ tasks.named("sourcesJar", Jar) {
 tasks.withType(ProcessResources).matching(notNeoTask).configureEach {
     from project(":common").sourceSets.main.resources
     from file('src/generated/resources')
+    exclude 'logo.png'
 }
