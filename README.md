@@ -3,7 +3,7 @@
 ![Title Header](https://cdn.modrinth.com/data/69TY9iyJ/images/9766e95e84d5abf6c2ff5ca19a5f317bc6280d3a.png)
 
 A Config API for Fabric, (Quilt) and Neo-/Forge which is based on [NightConfig Library](https://github.com/TheElectronWill/night-config).
-It is downloadable on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/resource-config-api) and[Modrinth](https://modrinth.com/mod/resource-config-api).
+It is downloadable on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/resource-config-api) and [Modrinth](https://modrinth.com/mod/resource-config-api).
 
 This API is basically [Simple Config API](https://www.curseforge.com/minecraft/mc-mods/simple-config-api) but renamed to fit my other Mods, since the Major Update 1.21.
 
