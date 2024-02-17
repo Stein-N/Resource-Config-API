@@ -22,7 +22,7 @@ public class ModConfig {
     final String modId, filePath;
     final File file;
     final IConfigBuilder builder;
-    CommentedConfig config = CommentedConfig.of(LinkedHashMap::new, InMemoryCommentedFormat.withUniversalSupport());
+    CommentedConfig config = CommentedConfig.inMemory();
 
     public ModConfig(String modId, String fileName, IConfigBuilder builder, String filePath) {
         this.file = new File(filePath + "/" + fileName + ".toml");
@@ -36,7 +36,7 @@ public class ModConfig {
 
         entries.forEach(this::readConfigValue);
 
-        this.config.clear();
+        this.config = CommentedConfig.of(LinkedHashMap::new, InMemoryCommentedFormat.withUniversalSupport());
 
         entries.forEach(this::writeConfigValue);
         writeCategoryComments();
