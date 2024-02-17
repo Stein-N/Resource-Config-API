@@ -6,12 +6,19 @@ base {
     archivesName = "${mod_id}-fabric-${minecraft_base_version}"
 }
 
+configurations {
+    includedLibs
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+
+    implementation "com.electronwill.night-config:toml:${night_config}"
+    includedLibs "com.electronwill.night-config:toml:${night_config}"
 
     compileOnly project(":common")
 }
@@ -60,4 +67,8 @@ tasks.named("sourcesJar", Jar) {
 processResources {
     from project(":common").sourceSets.main.resources
     from file("src/main/generated")
+}
+
+jar {
+    from configurations.includedLibs.collect { it.isDirectory() ? it : zipTree(it) }
 }

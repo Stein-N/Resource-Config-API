@@ -13,4 +13,6 @@ minecraft {
 
 dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+
+    implementation "com.electronwill.night-config:toml:${night_config}"
 }

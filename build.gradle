@@ -95,4 +95,26 @@ subprojects {
     tasks.withType(GenerateModuleMetadata).configureEach {
         enabled = false
     }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = "resource-config-api" + "-" + base.archivesName.get()
+                version = minecraft_base_version + "+" + version
+                groupId = "xstopho.resource-config-api"
+                from components.java
+
+                pom.withXml {
+                    asNode().dependencies.each { node ->
+                        node.replaceNode {}
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                url = "C:\\Users\\stein\\Desktop\\maven"
+            }
+        }
+    }
 }
