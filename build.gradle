@@ -56,7 +56,7 @@ subprojects {
     processResources {
         def expandProps = [
                 // Project related Keys
-                "version": version,
+                "version": minecraft_base_version + "+" + version,
                 "group": project.group,
 
                 // Mod related Keys
@@ -99,11 +99,15 @@ subprojects {
     }
 
     publishing {
+        def mavenDirectory = System.getenv("MAVEN_REPOSITORY_TEST")
+        def artifact = mod_id + "-" + base.archivesName.get()
+        def ver = minecraft_base_version + "+" + version
+        def commitMessage = artifact + " " + ver
+
         publications {
             mavenJava(MavenPublication) {
-                artifactId = "resource-config-api" + "-" + base.archivesName.get()
-                version = minecraft_base_version + "+" + version
-                groupId = "xstopho.resource-config-api"
+                artifactId = artifact
+                version = ver
                 from components.java
 
                 pom.withXml {
@@ -113,9 +117,23 @@ subprojects {
                 }
             }
         }
+
         repositories {
-            maven {
-                url = "C:\\Users\\stein\\Desktop\\maven"
+            maven { url = mavenDirectory }
+        }
+
+        publish.doLast {
+            exec {
+                workingDir mavenDirectory
+                commandLine 'git', 'add', '.'
+            }
+            exec {
+                workingDir mavenDirectory
+                commandLine 'git', 'commit', '-m', commitMessage
+            }
+            exec {
+                workingDir mavenDirectory
+                commandLine 'git', 'push'
             }
         }
     }
