@@ -56,7 +56,7 @@ subprojects {
     processResources {
         def expandProps = [
                 // Project related Keys
-                "version": minecraft_base_version + "+" + version,
+                "version": version,
                 "group": project.group,
 
                 // Mod related Keys
@@ -101,13 +101,11 @@ subprojects {
     publishing {
         def mavenDirectory = System.getenv("MAVEN_REPOSITORY_TEST")
         def artifact = mod_id + "-" + base.archivesName.get()
-        def ver = minecraft_base_version + "+" + version
-        def commitMessage = artifact + " " + ver
+        def commitMessage = artifact + " " + version
 
         publications {
             mavenJava(MavenPublication) {
                 artifactId = artifact
-                version = ver
                 from components.java
 
                 pom.withXml {

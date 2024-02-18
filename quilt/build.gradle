@@ -3,7 +3,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_id}-quilt-${minecraft_base_version}"
+    archivesName = "${mod_id}-quilt"
 }
 
 configurations {
