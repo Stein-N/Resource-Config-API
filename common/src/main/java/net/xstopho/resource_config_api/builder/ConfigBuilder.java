@@ -1,7 +1,11 @@
 package net.xstopho.resource_config_api.builder;
 
 import net.xstopho.resource_config_api.config.*;
-import net.xstopho.resource_config_api.values.*;
+import net.xstopho.resource_config_api.values.primitive.BooleanConfigValue;
+import net.xstopho.resource_config_api.values.primitive.DoubleConfigValue;
+import net.xstopho.resource_config_api.values.primitive.IntegerConfigValue;
+import net.xstopho.resource_config_api.values.primitive.StringConfigValue;
+import net.xstopho.resource_config_api.values.reference.ListConfigValue;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package net.xstopho.resource_config_api.values;
+package net.xstopho.resource_config_api.values.reference;
 
 import net.xstopho.resource_config_api.values.base.ConfigValue;
 
