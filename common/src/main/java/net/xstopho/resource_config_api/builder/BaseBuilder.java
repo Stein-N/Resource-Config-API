@@ -62,7 +62,7 @@ public abstract class BaseBuilder implements IConfigBuilder {
      * @return returns a Supplier that returns the value from the config file, when it is initialised.
      * @param <T> gets defined by the {@link #define(String, int)} methods.
      */
-    public <T> Supplier<T> addEntry(String path, ConfigValue<T> configValue) {
+    <T> Supplier<T> addEntry(String path, ConfigValue<T> configValue) {
         if (this.entries.containsKey(path)) throw new IllegalStateException("Key '" + path + "' is already defined!");
 
         ConfigEntry<T> entry = new ConfigEntry<>(path, configValue);
@@ -75,7 +75,7 @@ public abstract class BaseBuilder implements IConfigBuilder {
      * @param key defined key where the Value gets saved in the .toml file
      * @return returns a key separated with a dot, when a Category is set, when not it returns the given key
      */
-    public String createKey(String key) {
+    String createKey(String key) {
         if (key == null || key.isBlank() || key.isEmpty()) throw new IllegalArgumentException("Key can't be null or empty!");
         if (category != null) return category + "." + key;
         return key;

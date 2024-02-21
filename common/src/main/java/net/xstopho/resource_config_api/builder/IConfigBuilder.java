@@ -2,6 +2,7 @@ package net.xstopho.resource_config_api.builder;
 
 import net.xstopho.resource_config_api.config.ConfigEntry;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -24,4 +25,6 @@ public interface IConfigBuilder {
 
     Supplier<String> define(String key, String defaultValue);
     Supplier<String> defineInRange(String key, String defaultValue, int minLength, int maxLength);
+
+    <T> Supplier<List<T>> define(String key, List<T> defaultList);
 }

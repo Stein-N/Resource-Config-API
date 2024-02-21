@@ -3,6 +3,7 @@ package net.xstopho.resource_config_api.builder;
 import net.xstopho.resource_config_api.config.*;
 import net.xstopho.resource_config_api.values.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -111,6 +112,17 @@ public class ConfigBuilder extends BaseBuilder {
     @Override
     public Supplier<String> defineInRange(String key, String defaultValue, int minLength, int maxLength) {
         return addEntry(createKey(key), new StringConfigValue(defaultValue, minLength, maxLength, this.comment));
+    }
+
+    /**
+     * @param key Key where the defined List is saved in the .toml File
+     * @param defaultList The defaultValue gets used when the config file get initialised the first Time or
+     *                     when the Value in the .toml file is corrupt.
+     * @return returns a {@link Supplier} of Type {@link List<T>}
+     */
+    @Override
+    public <T> Supplier<List<T>> define(String key, List<T> defaultList) {
+        return addEntry(createKey(key), new ListConfigValue<>(defaultList, this.comment));
     }
 
 }

@@ -2,6 +2,8 @@ package net.xstopho.testmod;
 
 import net.xstopho.resource_config_api.builder.ConfigBuilder;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class TestConfig {
@@ -12,6 +14,10 @@ public class TestConfig {
     static Supplier<Double> double_normal, double_ranged, double_comment, double_multiple_comments;
     static Supplier<String> string_normal, string_ranged, string_comment, string_multiple_comments;
     static Supplier<Boolean> boolean_normal, boolean_multipleComments, comment_category;
+
+    static Supplier<List<String>> list_normal, list_comment, list_multiple_comments;
+
+    static List<String> test_list = Arrays.asList("minecraft:diamond", "minecraft:charcoal", "minecraft:emerald");
 
 
     static {
@@ -41,6 +47,12 @@ public class TestConfig {
         boolean_normal = BUILDER.define("normal", true);
         boolean_multipleComments = BUILDER.comment("First line comment")
                 .comment("Second line comment").define("multiple_comment", false);
+
+        BUILDER.pop().comment("List Category Comment").push("List");
+        list_normal = BUILDER.define("normal", test_list);
+        list_comment = BUILDER.comment("This is a commented List").define("comment", test_list);
+        list_multiple_comments = BUILDER.comment("First Line comment").comment("Second Line comment")
+                        .define("multiple_comments", test_list);
 
         BUILDER.pop().comment("Categories can also have").comment("multiple comment lines").push("Comment Category");
         comment_category = BUILDER.define("needed", true);
