@@ -1,4 +1,6 @@
-![](https://cf.way2muchnoise.eu/title/975801.svg)![](https://cf.way2muchnoise.eu/975801.svg)![](https://cf.way2muchnoise.eu/versions/975801.svg)
+![](https://cf.way2muchnoise.eu/975801.svg)![](https://cf.way2muchnoise.eu/versions/975801.svg)
+
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/69TY9iyJ?logo=modrinth&label=Downloads&color=%2300AF5C)![Modrinth Version](https://img.shields.io/modrinth/v/69TY9iyJ?logo=modrinth&label=Available%20For&color=%2300AF5C)
 
 ![Title Header](https://cdn.modrinth.com/data/69TY9iyJ/images/9766e95e84d5abf6c2ff5ca19a5f317bc6280d3a.png)
 
