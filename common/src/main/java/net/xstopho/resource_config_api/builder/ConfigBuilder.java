@@ -128,5 +128,4 @@ public class ConfigBuilder extends BaseBuilder {
     public <T> Supplier<List<T>> define(String key, List<T> defaultList) {
         return addEntry(createKey(key), new ListConfigValue<>(defaultList, this.comment));
     }
-
 }

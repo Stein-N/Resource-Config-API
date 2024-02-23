@@ -19,10 +19,12 @@ import java.util.Map;
 
 public class ModConfig {
 
-    final String modId, filePath;
-    final File file;
-    final IConfigBuilder builder;
-    CommentedConfig config = CommentedConfig.inMemory();
+    private final String modId, filePath;
+    private final File file;
+    private final IConfigBuilder builder;
+    private final TomlWriter writer = new TomlWriter();
+
+    private CommentedConfig config = CommentedConfig.inMemory();
 
     public ModConfig(String modId, String fileName, IConfigBuilder builder, String filePath) {
         this.file = new File(filePath + "/" + fileName + ".toml");
@@ -56,8 +58,9 @@ public class ModConfig {
     }
 
     void writeConfigFile() {
-        createFilePathIfNeeded(this.filePath);
-        new TomlWriter().write(this.config, this.file, WritingMode.REPLACE);
+        createFilePathIfNeeded(this.filePath); // Create custom config path if needed
+        writer.setIndentArrayElementsPredicate(values -> true); // write Lists as an actual List and not a Line
+        writer.write(this.config, this.file, WritingMode.REPLACE);
     }
 
     <T> void readConfigValue(ConfigEntry<T> entry) {

@@ -52,7 +52,7 @@ public class TestConfig {
         list_normal = BUILDER.define("normal", test_list);
         list_comment = BUILDER.comment("This is a commented List").define("comment", test_list);
         list_multiple_comments = BUILDER.comment("First Line comment").comment("Second Line comment")
-                        .define("multiple_comments", test_list);
+                .define("multiple_comments", test_list);
 
         BUILDER.pop().comment("Categories can also have").comment("multiple comment lines").push("Comment Category");
         comment_category = BUILDER.define("needed", true);
