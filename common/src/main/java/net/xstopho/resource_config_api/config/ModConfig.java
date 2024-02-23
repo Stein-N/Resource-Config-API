@@ -77,10 +77,14 @@ public class ModConfig {
     }
 
     void writeConfigValue(ConfigEntry<?> entry) {
-        if (entry.configValue.getRangedComment() == null) this.config.setComment(entry.path, entry.configValue.getComment());
-        else this.config.setComment(entry.path, entry.configValue.getRangedComment());
-
+        writeValueComment(entry);
         this.config.set(entry.path, entry.value);
+    }
+
+    void writeValueComment(ConfigEntry<?> entry) {
+        if (entry.configValue.getRangedComment() == null) {
+            this.config.setComment(entry.path, entry.configValue.getComment());
+        } else this.config.setComment(entry.path, entry.configValue.getRangedComment());
     }
 
     void writeCategoryComments() {

@@ -6,6 +6,4 @@ public interface IPlatformHelper {
 
     Path getConfigDir();
 
-    boolean isDevEnvironment();
-
 }
