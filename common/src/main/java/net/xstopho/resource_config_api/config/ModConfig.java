@@ -12,6 +12,7 @@ import net.xstopho.resource_config_api.builder.IConfigBuilder;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,16 +20,17 @@ import java.util.Map;
 
 public class ModConfig {
 
-    private final String modId, filePath;
+    private final String modId;
+    private final Path path;
     private final File file;
     private final IConfigBuilder builder;
     private final TomlWriter writer = new TomlWriter();
 
     private CommentedConfig config = CommentedConfig.inMemory();
 
-    public ModConfig(String modId, String fileName, IConfigBuilder builder, String filePath) {
-        this.file = new File(filePath + "/" + fileName + ".toml");
-        this.filePath = filePath;
+    public ModConfig(String modId, String fileName, IConfigBuilder builder, Path path) {
+        this.file = new File(path + "/" + fileName + ".toml");
+        this.path = path;
         this.builder = builder;
         this.modId = modId;
 
@@ -58,7 +60,7 @@ public class ModConfig {
     }
 
     void writeConfigFile() {
-        createFilePathIfNeeded(this.filePath); // Create custom config path if needed
+        createFilePathIfNeeded(); // Create custom config path if needed
         writer.setIndentArrayElementsPredicate(values -> true); // write Lists as an actual List and not a Line
         writer.write(this.config, this.file, WritingMode.REPLACE);
     }
@@ -93,8 +95,8 @@ public class ModConfig {
         }
     }
 
-    void createFilePathIfNeeded(String filePath) {
-        File file = new File(filePath);
+    void createFilePathIfNeeded() {
+        File file = new File(path.toString());
         if (!file.exists()) file.mkdirs();
     }
 }
