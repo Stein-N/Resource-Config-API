@@ -12,9 +12,11 @@ This API is basically [Simple Config API](https://www.curseforge.com/minecraft/m
 ### Features:
 
 - Save different Datatypes
-  - Integer, Doubles, Strings and Booleans
+  - Primitive: Integer, Double, String, Boolean
+  - Reference: List
   - Values and Categories can be commented
   - Values can be defined in Range
+- Custom Config Path
 - Designed for Multi-Loader Projects
 - Autocorrection of invalid or corrupt Config Values
 
@@ -30,6 +32,9 @@ This API is basically [Simple Config API](https://www.curseforge.com/minecraft/m
 - Forge 1.21 -> latest
 - NeoForge 1.21 -> latest
 
+### Note:
+- Float, Long, Short, Byte and Char can't be supported due to parsing incompatibilities.
+- Quilt will not get a dedicated version, use the Fabric Version instead.
 
 <details>
 <summary>Adding Resource Config API to your Project</summary>
@@ -43,7 +48,7 @@ This API is basically [Simple Config API](https://www.curseforge.com/minecraft/m
     }
 ````
 
-When you want to use this API in a Quilt Project u have to use the Fabric version for now, i am working on a dedicated version.
+When you want to use this API in a Quilt Project u have to use the Fabric version.
 
 ````groovy
     dependencies {
