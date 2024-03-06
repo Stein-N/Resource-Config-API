@@ -7,23 +7,13 @@ import java.util.function.Predicate;
 public class BooleanConfigValue extends ConfigValue<Boolean> {
     public BooleanConfigValue(boolean defaultValue, String comment) {
         super(defaultValue, comment);
-    }
 
-    @Override
-    public String getRangedComment() {
-        String comment = " Allowed: true ~ false - Default: " + this.defaultValue;
-        if (hasComment()) return getComment() + "\n" + comment;
-        else return comment;
+        this.rangedComment = " Allowed: true ~ false - Default: " + this.defaultValue;
     }
 
     @Override
     public boolean validate(Object value) {
         Predicate<Object> isValid = o -> o instanceof Boolean;
         return isValid.test(value);
-    }
-
-    @Override
-    public boolean isRanged() {
-        return false;
     }
 }

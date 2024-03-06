@@ -11,19 +11,8 @@ public class ListConfigValue<T> extends ConfigValue<List<T>> {
     }
 
     @Override
-    public String getRangedComment() {
-        if (hasComment()) return getComment();
-        return null;
-    }
-
-    @Override
     public boolean validate(Object value) {
         Predicate<Object> isValid = o -> o instanceof List<?>;
         return isValid.test(value);
-    }
-
-    @Override
-    public boolean isRanged() {
-        return false;
     }
 }
