@@ -8,6 +8,7 @@ import com.electronwill.nightconfig.toml.TomlParser;
 import com.electronwill.nightconfig.toml.TomlWriter;
 import net.xstopho.resource_config_api.ResourceConstants;
 import net.xstopho.resource_config_api.builder.IConfigBuilder;
+import net.xstopho.resource_config_api.values.base.ConfigValue;
 
 import java.io.File;
 import java.io.FileReader;
@@ -40,7 +41,7 @@ public class ModConfig {
 
         entries.forEach(this::readConfigValue);
 
-        this.config = CommentedConfig.of(LinkedHashMap::new, InMemoryCommentedFormat.withUniversalSupport());
+        config = CommentedConfig.of(LinkedHashMap::new, InMemoryCommentedFormat.withUniversalSupport());
 
         entries.forEach(this::writeConfigValue);
         writeCategoryComments();
@@ -50,26 +51,26 @@ public class ModConfig {
     }
 
     void readConfigFile() {
-        if (!this.file.exists()) return;
+        if (!file.exists()) return;
 
-        try (FileReader reader = new FileReader(this.file)) {
-            this.config = new TomlParser().parse(reader);
+        try (FileReader reader = new FileReader(file)) {
+            config = new TomlParser().parse(reader);
         } catch (IOException | ParsingException e) {
-            ResourceConstants.LOG.error("Reading '{}' from mod '{}' failed!\nError: {}", this.file.getName(), this.modId, e.getMessage());
+            ResourceConstants.LOG.error("Reading '{}' from mod '{}' failed!\nError: {}", file.getName(), modId, e.getMessage());
         }
     }
 
     void writeConfigFile() {
         createFilePathIfNeeded(); // Create custom config path if needed
         writer.setIndentArrayElementsPredicate(values -> true); // write Lists as an actual List and not a Line
-        writer.write(this.config, this.file, WritingMode.REPLACE);
+        writer.write(config, file, WritingMode.REPLACE);
     }
 
     <T> void readConfigValue(ConfigEntry<T> entry) {
         String path = entry.path;
-        if (!this.config.contains(path)) entry.value = entry.configValue.get();
+        if (!config.contains(path)) entry.value = entry.configValue.get();
         else {
-            T value = this.config.get(path);
+            T value = config.get(path);
             if (value != null && entry.configValue.validate(value)) entry.value = value;
             else {
                 entry.value = entry.configValue.get();
@@ -80,25 +81,25 @@ public class ModConfig {
 
     void writeConfigValue(ConfigEntry<?> entry) {
         writeValueComment(entry);
-        this.config.set(entry.path, entry.value);
+        config.set(entry.path, entry.value);
     }
 
     void writeValueComment(ConfigEntry<?> entry) {
-        if (entry.configValue.hasRangedComment()) {
-            this.config.setComment(entry.path, entry.configValue.getRangedComment());
-        } else if (entry.configValue.hasComment()) {
-            this.config.setComment(entry.path, entry.configValue.getComment());
-        }
+        ConfigValue<?> value = entry.configValue;
+
+        if (value.hasRangedComment()) config.setComment(entry.path, value.getRangedComment());
+        else if (value.hasComment()) config.setComment(entry.path, value.getComment());
     }
 
     void writeCategoryComments() {
-        for (Map.Entry<String, String> comment : this.builder.getCategoryComments().entrySet()) {
-            this.config.setComment(comment.getKey(), comment.getValue());
+        for (Map.Entry<String, String> comment : builder.getCategoryComments().entrySet()) {
+            config.setComment(comment.getKey(), comment.getValue());
         }
     }
 
     void createFilePathIfNeeded() {
-        File file = new File(path.toString());
-        if (!file.exists()) file.mkdirs();
+        if (new File(path.toString()).mkdirs()) {
+            ResourceConstants.LOG.info("Created custom Config Path: '{}' for Mod: '{}'", path, modId);
+        }
     }
 }

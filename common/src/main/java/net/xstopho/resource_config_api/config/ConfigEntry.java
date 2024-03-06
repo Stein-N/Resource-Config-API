@@ -5,7 +5,7 @@ import net.xstopho.resource_config_api.values.base.ConfigValue;
 public class ConfigEntry<T> {
     public final String path;
     public final ConfigValue<T> configValue;
-    public boolean isLoaded = false;
+    public boolean isLoaded;
     public T value;
 
     public ConfigEntry(String path, ConfigValue<T> configValue) {
