@@ -2,7 +2,9 @@ package net.xstopho.testmod;
 
 import net.xstopho.resource_config_api.builder.ConfigBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -16,8 +18,10 @@ public class TestConfig {
     static Supplier<Boolean> boolean_normal, boolean_multipleComments, comment_category;
 
     static Supplier<List<String>> list_normal, list_comment, list_multiple_comments;
+    static Supplier<ArrayList<String>> array_list_normal, array_list_comment, array_list_multiple_comments;
 
     static List<String> test_list = Arrays.asList("minecraft:diamond", "minecraft:charcoal", "minecraft:emerald");
+    static ArrayList<String> test_array_list = new ArrayList<>(test_list);
 
 
     static {
@@ -53,6 +57,12 @@ public class TestConfig {
         list_comment = BUILDER.comment("This is a commented List").define("comment", test_list);
         list_multiple_comments = BUILDER.comment("First Line comment").comment("Second Line comment")
                 .define("multiple_comments", test_list);
+
+        BUILDER.pop().comment("ArrayList Category Comment").push("ArrayList");
+        array_list_normal = BUILDER.define("normal", test_array_list);
+        array_list_comment = BUILDER.comment("This is a commented List").define("comment", test_array_list);
+        array_list_multiple_comments = BUILDER.comment("First Line comment").comment("Second Line comment")
+                .define("multiple_comments", test_array_list);
 
         BUILDER.pop().comment("Categories can also have").comment("multiple comment lines").push("Comment Category");
         comment_category = BUILDER.define("needed", true);

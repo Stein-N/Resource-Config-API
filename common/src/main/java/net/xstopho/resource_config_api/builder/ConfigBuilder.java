@@ -6,8 +6,10 @@ import net.xstopho.resource_config_api.values.primitive.BooleanConfigValue;
 import net.xstopho.resource_config_api.values.primitive.DoubleConfigValue;
 import net.xstopho.resource_config_api.values.primitive.IntegerConfigValue;
 import net.xstopho.resource_config_api.values.primitive.StringConfigValue;
+import net.xstopho.resource_config_api.values.reference.ArrayListConfigValue;
 import net.xstopho.resource_config_api.values.reference.ListConfigValue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -128,5 +130,16 @@ public class ConfigBuilder extends BaseBuilder {
     @Override
     public <T> Supplier<List<T>> define(String key, List<T> defaultList) {
         return addEntry(createKey(key), new ListConfigValue<>(defaultList, this.comment));
+    }
+
+    /**
+     * @param key Key where the defined List is saved in the .toml File
+     * @param defaultList The defaultValue gets used when the config file get initialised the first Time or
+     *                     when the Value in the .toml file is corrupt.
+     * @return returns a {@link Supplier} of Type {@link ArrayList<T>}
+     */
+    @Override
+    public <T> Supplier<ArrayList<T>> define(String key, ArrayList<T> defaultList) {
+        return addEntry(createKey(key), new ArrayListConfigValue<>(defaultList, this.comment));
     }
 }
