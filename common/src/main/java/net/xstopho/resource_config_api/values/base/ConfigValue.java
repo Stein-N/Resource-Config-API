@@ -5,7 +5,6 @@ public abstract class ConfigValue<T> implements IConfigValue<T> {
     public final T defaultValue;
     public final String comment;
     public String rangedComment;
-    public boolean isRanged;
 
     public ConfigValue(T defaultValue, String comment) {
         this.defaultValue = defaultValue;
@@ -24,7 +23,8 @@ public abstract class ConfigValue<T> implements IConfigValue<T> {
 
     @Override
     public String getRangedComment() {
-        return rangedComment;
+        if (hasComment()) return comment + '\n' + rangedComment;
+        else return rangedComment;
     }
 
     @Override
