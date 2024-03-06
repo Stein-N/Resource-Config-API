@@ -84,9 +84,11 @@ public class ModConfig {
     }
 
     void writeValueComment(ConfigEntry<?> entry) {
-        if (entry.configValue.getRangedComment() == null) {
+        if (entry.configValue.hasRangedComment()) {
+            this.config.setComment(entry.path, entry.configValue.getRangedComment());
+        } else if (entry.configValue.hasComment()) {
             this.config.setComment(entry.path, entry.configValue.getComment());
-        } else this.config.setComment(entry.path, entry.configValue.getRangedComment());
+        }
     }
 
     void writeCategoryComments() {
