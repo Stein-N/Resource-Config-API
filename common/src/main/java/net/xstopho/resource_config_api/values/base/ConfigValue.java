@@ -2,9 +2,9 @@ package net.xstopho.resource_config_api.values.base;
 
 public abstract class ConfigValue<T> implements IConfigValue<T> {
 
-    final T defaultValue;
-    final String comment;
-    String rangedComment;
+    protected final T defaultValue;
+    protected final String comment;
+    protected String rangedComment;
 
     public ConfigValue(T defaultValue, String comment) {
         this.defaultValue = defaultValue;
