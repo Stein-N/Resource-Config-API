@@ -3,11 +3,12 @@ package net.xstopho.resource_config_api.platform;
 import net.xstopho.resource_config_api.ResourceConstants;
 import net.xstopho.resource_config_api.platform.services.IPlatformHelper;
 
+import java.nio.file.Path;
 import java.util.ServiceLoader;
 
 public class Services {
 
-    public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
+    public static Path CONFIG_DIR = load(IPlatformHelper.class).getConfigDir();
 
     public static <T> T load(Class<T> clazz) {
 

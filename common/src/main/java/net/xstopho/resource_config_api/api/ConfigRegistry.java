@@ -13,7 +13,7 @@ public class ConfigRegistry {
     }
 
     public static void register(String modId, String fileName, IConfigBuilder builder) {
-        new ModConfig(modId, fileName, builder, Services.PLATFORM.getConfigDir());
+        new ModConfig(modId, fileName, builder, Services.CONFIG_DIR);
     }
 
     public static void register(String modId, IConfigBuilder builder, Path path) {
@@ -21,7 +21,7 @@ public class ConfigRegistry {
     }
 
     public static void register(String modId, IConfigBuilder builder) {
-        new ModConfig(modId, modId, builder, Services.PLATFORM.getConfigDir());
+        new ModConfig(modId, modId, builder, Services.CONFIG_DIR);
     }
 
 }
