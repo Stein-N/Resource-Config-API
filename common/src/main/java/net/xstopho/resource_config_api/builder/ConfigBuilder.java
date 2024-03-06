@@ -1,6 +1,7 @@
 package net.xstopho.resource_config_api.builder;
 
-import net.xstopho.resource_config_api.config.*;
+import net.xstopho.resource_config_api.config.ConfigEntry;
+import net.xstopho.resource_config_api.config.ModConfig;
 import net.xstopho.resource_config_api.values.primitive.BooleanConfigValue;
 import net.xstopho.resource_config_api.values.primitive.DoubleConfigValue;
 import net.xstopho.resource_config_api.values.primitive.IntegerConfigValue;

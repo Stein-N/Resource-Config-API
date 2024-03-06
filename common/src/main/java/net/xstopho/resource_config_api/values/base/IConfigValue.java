@@ -1,7 +1,5 @@
 package net.xstopho.resource_config_api.values.base;
 
-import net.minecraft.network.chat.MutableComponent;
-
 import java.util.function.Supplier;
 
 public interface IConfigValue<T> extends Supplier<T> {
