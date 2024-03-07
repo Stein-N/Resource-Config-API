@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public abstract class BaseBuilder implements IConfigBuilder {
 
-    String category = null, comment;
+    String category, comment;
     Map<String, ConfigEntry<?>> entries = new LinkedHashMap<>();
     Map<String, String> categoryComments = new LinkedHashMap<>();
 
@@ -21,7 +21,7 @@ public abstract class BaseBuilder implements IConfigBuilder {
      */
     @Override
     public IConfigBuilder push(String category) {
-        if (this.category == null) {
+        if (empty(this.category)) {
             this.categoryComments.put(category, this.comment);
             this.category = category;
             this.comment = null;
@@ -35,13 +35,13 @@ public abstract class BaseBuilder implements IConfigBuilder {
      */
     @Override
     public IConfigBuilder pop() {
-        if (this.category != null) this.category = null;
+        if (!empty(this.category)) category = null;
         else throw new IllegalArgumentException("There is no Category to remove!");
         return this;
     }
 
     /**
-     * @param msg can be as long as you want
+     * @param comment can be as long as you want
      * @return returns the ConfigBuilder itself, to add more actions afterward.<br>
      *         Use this Method before declaring a Category with {@link #push(String)}
      *         or defining a Value with f.e. {@link #define(String, int)}.<br>
@@ -49,9 +49,9 @@ public abstract class BaseBuilder implements IConfigBuilder {
      *         comment gets ignored, because it gets automatically a ranged comment!
      */
     @Override
-    public IConfigBuilder comment(String msg) {
-        if (comment == null) this.comment = " " + msg;
-        else this.comment = this.comment + "\n " + msg;
+    public IConfigBuilder comment(String comment) {
+        if (empty(this.comment)) this.comment = " " + comment;
+        else this.comment = this.comment + "\n " + comment;
         return this;
     }
 
@@ -81,4 +81,7 @@ public abstract class BaseBuilder implements IConfigBuilder {
         return key;
     }
 
+    boolean empty(String comment) {
+        return comment == null || comment.isEmpty() || comment.isBlank();
+    }
 }
