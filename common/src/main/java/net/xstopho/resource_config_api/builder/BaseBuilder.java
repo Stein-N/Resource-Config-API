@@ -76,12 +76,12 @@ public abstract class BaseBuilder implements IConfigBuilder {
      * @return returns a key separated with a dot, when a Category is set, when not it returns the given key
      */
     String createKey(String key) {
-        if (key == null || key.isBlank() || key.isEmpty()) throw new IllegalArgumentException("Key can't be null or empty!");
+        if (empty(key)) throw new IllegalArgumentException("Key can't be null or empty!");
         if (category != null) return category + "." + key;
         return key;
     }
 
-    boolean empty(String comment) {
-        return comment == null || comment.isEmpty() || comment.isBlank();
+    boolean empty(String string) {
+        return string == null || string.isEmpty() || string.isBlank();
     }
 }
