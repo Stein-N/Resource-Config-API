@@ -47,7 +47,7 @@ public class ModConfig {
         writeCategoryComments();
         writeConfigFile();
 
-        entries.forEach(configEntry -> configEntry.isLoaded = true);
+        entries.forEach(ConfigEntry::setLoaded);
     }
 
     void readConfigFile() {
@@ -67,28 +67,28 @@ public class ModConfig {
     }
 
     <T> void readConfigValue(ConfigEntry<T> entry) {
-        String path = entry.path;
-        if (!config.contains(path)) entry.value = entry.configValue.get();
+        String path = entry.getPath();
+        if (!config.contains(path)) entry.setValue(entry.getConfigValue().get());
         else {
             T value = config.get(path);
-            if (value != null && entry.configValue.validate(value)) entry.value = value;
+            if (value != null && entry.getConfigValue().validate(value)) entry.setValue(value);
             else {
-                entry.value = entry.configValue.get();
-                ResourceConstants.LOG.error("Config Entry key '{}' isn't correct and is set to its default value '{}'!", path, entry.configValue.get());
+                entry.setValue(entry.getConfigValue().get());
+                ResourceConstants.LOG.error("Config Entry key '{}' isn't correct and is set to its default value '{}'!", path, entry.getConfigValue().get());
             }
         }
     }
 
     void writeConfigValue(ConfigEntry<?> entry) {
         writeValueComment(entry);
-        config.set(entry.path, entry.value);
+        config.set(entry.getPath(), entry.value());
     }
 
     void writeValueComment(ConfigEntry<?> entry) {
-        ConfigValue<?> value = entry.configValue;
+        ConfigValue<?> value = entry.getConfigValue();
 
-        if (value.hasRangedComment()) config.setComment(entry.path, value.getRangedComment());
-        else if (value.hasComment()) config.setComment(entry.path, value.getComment());
+        if (value.hasRangedComment()) config.setComment(entry.getPath(), value.getRangedComment());
+        else if (value.hasComment()) config.setComment(entry.getPath(), value.getComment());
     }
 
     void writeCategoryComments() {

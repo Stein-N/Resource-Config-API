@@ -3,10 +3,10 @@ package net.xstopho.resource_config_api.config;
 import net.xstopho.resource_config_api.values.base.ConfigValue;
 
 public class ConfigEntry<T> {
-    public final String path;
-    public final ConfigValue<T> configValue;
-    public boolean isLoaded;
-    public T value;
+    private final String path;
+    private final ConfigValue<T> configValue;
+    private boolean isLoaded;
+    private T value;
 
     public ConfigEntry(String path, ConfigValue<T> configValue) {
         this.path = path;
@@ -14,7 +14,31 @@ public class ConfigEntry<T> {
     }
 
     public T getValue() {
-        if (!this.isLoaded) throw new IllegalStateException("Config isn't loaded yet!");
-        return this.value;
+        if (!isLoaded()) throw new IllegalStateException("Config isn't loaded yet!");
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+
+    public T value() {
+        return value;
+    }
+
+    public ConfigValue<T> getConfigValue() {
+        return configValue;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    public void setLoaded() {
+        isLoaded = true;
     }
 }
