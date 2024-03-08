@@ -9,13 +9,13 @@ It doesn't have fancy Features, simply create Config Files and save your values 
 
 It is downloadable on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/resource-config-api) and [Modrinth](https://modrinth.com/mod/resource-config-api).
 
-This API is basically [Simple Config API](https://www.curseforge.com/minecraft/mc-mods/simple-config-api) but renamed to fit my other Mods, since the Major Update 1.21.
+This API is basically [Simple Config API](https://www.curseforge.com/minecraft/mc-mods/simple-config-api) but renamed to fit my other Mods and with more Features and Datatypes, since the Major Update 1.21.
 
 ### Features:
 
 - Save different Datatypes
   - Primitive: Integer, Double, String, Boolean
-  - Reference: List, ArrayLists
+  - Reference: List, ArrayList, LinkedList
   - Values and Categories can be commented
   - Values can be defined in Range
 - Custom Config Path
@@ -25,10 +25,12 @@ This API is basically [Simple Config API](https://www.curseforge.com/minecraft/m
 ### Planned:
 
 - Support more Datatypes
+- Translatable Comments
+  - will be defined through the lang file
 
 ### For Developer:
 
-#### Latest Version: 0.1.0
+#### Latest Version: 0.5.0
 #### Available for:
 - Fabric 1.21 -> latest
 - Forge 1.21 -> latest
@@ -51,7 +53,6 @@ This API is basically [Simple Config API](https://www.curseforge.com/minecraft/m
 ````
 
 When you want to use this API in a Quilt Project u have to use the Fabric version.
-
 ````groovy
     dependencies {
         implementation "xstopho.resource-config-api:resource-config-api-common:{major_minecraft_version}+{api_version}"
@@ -60,5 +61,4 @@ When you want to use this API in a Quilt Project u have to use the Fabric versio
         implementation "xstopho.resource-config-api:resource-config-api-neoforge:{major_minecraft_version}+{api_version}"
     }
 ````
-
 </details>

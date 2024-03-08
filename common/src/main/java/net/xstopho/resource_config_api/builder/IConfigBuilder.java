@@ -3,6 +3,7 @@ package net.xstopho.resource_config_api.builder;
 import net.xstopho.resource_config_api.config.ConfigEntry;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -29,4 +30,5 @@ public interface IConfigBuilder {
 
     <T> Supplier<List<T>> define(String key, List<T> defaultList);
     <T> Supplier<ArrayList<T>> define(String key, ArrayList<T> defaultList);
+    <T> Supplier<LinkedList<T>> define(String key, LinkedList<T> defaultList);
 }
