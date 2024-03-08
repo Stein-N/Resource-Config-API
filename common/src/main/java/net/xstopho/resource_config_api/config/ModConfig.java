@@ -68,15 +68,12 @@ public class ModConfig {
 
     <T> void readConfigValue(ConfigEntry<T> entry) {
         String path = entry.getPath();
-        if (!config.contains(path)) entry.setValue(entry.getConfigValue().get());
-        else {
-            T value = config.get(path);
-            if (value != null && entry.getConfigValue().validate(value)) entry.setValue(value);
-            else {
-                entry.setValue(entry.getConfigValue().get());
-                ResourceConstants.LOG.error("Config Entry key '{}' isn't correct and is set to its default value '{}'!", path, entry.getConfigValue().get());
-            }
-        }
+        T defaultValue = entry.getConfigValue().get();
+
+        if (!config.contains(path) || !entry.getConfigValue().validate(config.get(path))) {
+            entry.setValue(defaultValue);
+            ResourceConstants.LOG.error("Config Entry key '{}' isn't correct and is set to its default value '{}'!", path, defaultValue);
+        } else entry.setValue(config.get(path));
     }
 
     void writeConfigValue(ConfigEntry<?> entry) {
