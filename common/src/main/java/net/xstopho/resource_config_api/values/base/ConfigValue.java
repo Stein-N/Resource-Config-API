@@ -29,12 +29,12 @@ public abstract class ConfigValue<T> implements IConfigValue<T> {
 
     @Override
     public boolean hasComment() {
-        return validateComment(comment);
+        return validComment(comment);
     }
 
     @Override
     public boolean hasRangedComment() {
-        return validateComment(rangedComment);
+        return validComment(rangedComment);
     }
 
     @Override
@@ -42,7 +42,7 @@ public abstract class ConfigValue<T> implements IConfigValue<T> {
         return hasRangedComment();
     }
 
-    boolean validateComment(String comment) {
+    boolean validComment(String comment) {
         return comment != null && !comment.isEmpty() && !comment.isBlank();
     }
 }
