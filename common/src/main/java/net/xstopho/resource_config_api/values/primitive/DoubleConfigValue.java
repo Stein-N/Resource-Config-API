@@ -20,10 +20,10 @@ public class DoubleConfigValue extends ConfigValue<Double> {
     }
 
     @Override
-    public boolean validate(Object value) {
-        Predicate<Object> isValid = o -> o instanceof Double;
+    public boolean isValid(Object value) {
+        Predicate<Object> predicate = o -> o instanceof Double;
 
-        if (isRanged() && isValid.test(value)) return (double) value >= min && (double) value <= max;
-        else return !isRanged() && isValid.test(value);
+        if (isRanged() && predicate.test(value)) return (double) value >= min && (double) value <= max;
+        else return !isRanged() && predicate.test(value);
     }
 }

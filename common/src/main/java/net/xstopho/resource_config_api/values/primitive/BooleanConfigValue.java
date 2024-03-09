@@ -2,6 +2,7 @@ package net.xstopho.resource_config_api.values.primitive;
 
 import net.xstopho.resource_config_api.values.base.ConfigValue;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class BooleanConfigValue extends ConfigValue<Boolean> {
@@ -12,8 +13,8 @@ public class BooleanConfigValue extends ConfigValue<Boolean> {
     }
 
     @Override
-    public boolean validate(Object value) {
-        Predicate<Object> isValid = o -> o instanceof Boolean;
-        return isValid.test(value);
+    public boolean isValid(Object value) {
+        Predicate<Object> predicate = o -> o instanceof Boolean;
+        return predicate.test(value);
     }
 }

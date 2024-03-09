@@ -11,8 +11,8 @@ public class ListConfigValue<T> extends ConfigValue<List<T>> {
     }
 
     @Override
-    public boolean validate(Object value) {
-        Predicate<Object> isValid = o -> o instanceof List<?>;
-        return isValid.test(value);
+    public boolean isValid(Object value) {
+        Predicate<Object> predicate = o -> o instanceof List<?>;
+        return predicate.test(value);
     }
 }

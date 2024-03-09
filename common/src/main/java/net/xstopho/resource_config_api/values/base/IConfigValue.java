@@ -10,6 +10,6 @@ public interface IConfigValue<T> extends Supplier<T> {
     boolean hasComment();
     boolean hasRangedComment();
 
-    boolean validate(Object value);
+    boolean isValid(Object value);
     boolean isRanged();
 }

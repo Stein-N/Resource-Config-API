@@ -11,8 +11,8 @@ public class ArrayListConfigValue<T> extends ConfigValue<ArrayList<T>> {
     }
 
     @Override
-    public boolean validate(Object value) {
-        Predicate<Object> isValid = o -> o instanceof ArrayList<?>;
-        return isValid.test(value);
+    public boolean isValid(Object value) {
+        Predicate<Object> predicate = o -> o instanceof ArrayList<?>;
+        return predicate.test(value);
     }
 }

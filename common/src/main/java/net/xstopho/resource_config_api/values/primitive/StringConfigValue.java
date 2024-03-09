@@ -20,10 +20,10 @@ public class StringConfigValue extends ConfigValue<String> {
     }
 
     @Override
-    public boolean validate(Object value) {
-        Predicate<Object> isValid = o -> o instanceof String;
+    public boolean isValid(Object value) {
+        Predicate<Object> predicate = o -> o instanceof String;
 
-        if (isRanged() && isValid.test(value)) return value.toString().length() >= this.min && value.toString().length() <= this.max;
-        else return !isRanged() && isValid.test(value);
+        if (isRanged() && predicate.test(value)) return value.toString().length() >= this.min && value.toString().length() <= this.max;
+        else return !isRanged() && predicate.test(value);
     }
 }

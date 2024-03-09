@@ -11,8 +11,8 @@ public class LinkedListConfigValue<T> extends ConfigValue<LinkedList<T>> {
     }
 
     @Override
-    public boolean validate(Object value) {
-        Predicate<Object> isValid = o -> o instanceof LinkedList<?>;
-        return isValid.test(value);
+    public boolean isValid(Object value) {
+        Predicate<Object> predicate = o -> o instanceof LinkedList<?>;
+        return predicate.test(value);
     }
 }

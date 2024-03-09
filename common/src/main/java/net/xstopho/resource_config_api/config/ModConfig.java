@@ -70,7 +70,7 @@ public class ModConfig {
         String path = entry.getPath();
         T defaultValue = entry.getConfigValue().get();
 
-        if (!config.contains(path) || !entry.getConfigValue().validate(config.get(path))) {
+        if (!config.contains(path) || !entry.getConfigValue().isValid(config.get(path))) {
             entry.setValue(defaultValue);
             ResourceConstants.LOG.error("Config Entry key '{}' isn't correct and is set to its default value '{}'!", path, defaultValue);
         } else entry.setValue(config.get(path));

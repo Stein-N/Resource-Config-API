@@ -20,10 +20,10 @@ public class IntegerConfigValue extends ConfigValue<Integer> {
     }
 
     @Override
-    public boolean validate(Object value) {
-        Predicate<Object> isValid = o -> o instanceof Integer;
+    public boolean isValid(Object value) {
+        Predicate<Object> predicate = o -> o instanceof Integer;
 
-        if (isRanged() && isValid.test(value)) return (int) value >= min && (int) value <= max;
-        else return !isRanged() && isValid.test(value);
+        if (isRanged() && predicate.test(value)) return (int) value >= min && (int) value <= max;
+        else return !isRanged() && predicate.test(value);
     }
 }

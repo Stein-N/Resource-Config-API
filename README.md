@@ -9,15 +9,16 @@ It doesn't have fancy Features, simply create Config Files and save your values 
 
 It is downloadable on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/resource-config-api) and [Modrinth](https://modrinth.com/mod/resource-config-api).
 
-This API is basically [Simple Config API](https://www.curseforge.com/minecraft/mc-mods/simple-config-api) but renamed to fit my other Mods and with more Features and Datatypes, since the Major Update 1.21.
+This API is basically [Simple Config API](https://www.curseforge.com/minecraft/mc-mods/simple-config-api) but renamed to fit my other Mods and with more Features and Datatypes, 
+since the Major Update 1.21.
 
 ### Features:
 
 - Save different Datatypes
   - Primitive: Integer, Double, String, Boolean
   - Reference: List, ArrayList, LinkedList
-  - Values and Categories can be commented
-  - Values can be defined in Range
+- Values and Categories can be commented
+- Values can be defined in Range
 - Custom Config Path
 - Designed for Multi-Loader Projects
 - Autocorrection of invalid or corrupt Config Values
