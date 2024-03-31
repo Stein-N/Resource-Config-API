@@ -73,3 +73,15 @@ processResources {
 jar {
     from configurations.includedLibs.collect { it.isDirectory() ? it : zipTree(it) }
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom.withXml {
+                asNode().dependencies.each { node ->
+                    node.replaceNode {}
+                }
+            }
+        }
+    }
+}

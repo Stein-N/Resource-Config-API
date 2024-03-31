@@ -75,3 +75,15 @@ sourceSets.each {
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom.withXml {
+                asNode().dependencies.each { node ->
+                    node.replaceNode {}
+                }
+            }
+        }
+    }
+}

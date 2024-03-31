@@ -106,12 +106,6 @@ subprojects {
             mavenJava(MavenPublication) {
                 artifactId = artifact
                 from components.java
-
-                pom.withXml {
-                    asNode().dependencies.each { node ->
-                        node.replaceNode {}
-                    }
-                }
             }
         }
 

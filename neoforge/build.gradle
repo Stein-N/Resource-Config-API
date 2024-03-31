@@ -48,3 +48,15 @@ tasks.withType(ProcessResources).matching(notNeoTask).configureEach {
     from file('src/generated/resources')
     exclude 'logo.png'
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom.withXml {
+                asNode().dependencies.each { node ->
+                    node.replaceNode {}
+                }
+            }
+        }
+    }
+}
