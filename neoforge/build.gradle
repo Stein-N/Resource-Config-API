@@ -25,13 +25,6 @@ runs {
     client {
         systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
-    server {
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
-    }
-    data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-    }
 }
 
 publishMods {
