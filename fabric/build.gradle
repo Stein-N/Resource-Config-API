@@ -23,6 +23,13 @@ dependencies {
     compileOnly project(":common")
 }
 
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath;
+        compileClasspath += main.compileClasspath;
+    }
+}
+
 loom {
     var aw = project(":common").file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) accessWidenerPath.set(aw)
@@ -38,20 +45,13 @@ loom {
             programArgs('--username', 'Dev')
             runDir("runs/client")
         }
-        server {
-            server()
-            setConfigName("Fabric Server")
+        testmodClient {
+            client()
+            setConfigName("Fabric Testmod Client")
             ideConfigGenerated(true)
+            programArgs('--username', 'Dev')
             runDir("runs/client")
-        }
-        datagen {
-            inherit server
-            name "Fabric Datagen"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=${mod_id}"
-
-            runDir "build/datagen"
+            source sourceSets.testmod
         }
     }
 }
