@@ -1,9 +1,9 @@
 plugins {
-    id 'fabric-loom' version '1.5-SNAPSHOT'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
 }
 
 base {
-    archivesName = "${mod_id}-fabric"
+    archivesName = "${mod_id}-fabric-${minecraft_version}"
 }
 
 configurations {
@@ -17,23 +17,16 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
-    implementation "com.electronwill.night-config:toml:${night_config}"
-    includedLibs "com.electronwill.night-config:toml:${night_config}"
+    implementation group: 'com.electronwill.night-config', name: 'toml', version: '3.6.7'
+    includedLibs group: 'com.electronwill.night-config', name: 'toml', version: '3.6.7'
 
     compileOnly project(":common")
 }
 
-sourceSets {
-    testmod {
-        runtimeClasspath += main.runtimeClasspath;
-        compileClasspath += main.compileClasspath;
-    }
-}
-
 loom {
-    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
-        accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
-    }
+    var aw = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) accessWidenerPath.set(aw)
+
     mixin {
         defaultRefmapName.set("${mod_id}.refmap.json")
     }
@@ -42,36 +35,35 @@ loom {
             client()
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
-            runDir("run")
+            programArgs('--username', 'Dev')
+            runDir("runs/client")
         }
-        testmodClient {
-            client()
-            setConfigName("Fabric Testmod Client")
+        server {
+            server()
+            setConfigName("Fabric Server")
             ideConfigGenerated(true)
-            runDir("run")
-            source sourceSets.testmod
+            runDir("runs/client")
+        }
+        datagen {
+            inherit server
+            name "Fabric Datagen"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=${mod_id}"
+
+            runDir "build/datagen"
         }
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    source(project(":common").sourceSets.main.allSource)
-}
-tasks.withType(Javadoc).configureEach {
-    source(project(":common").sourceSets.main.allJava)
-}
-tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
-}
-
-processResources {
-    from project(":common").sourceSets.main.resources
-    from file("src/main/generated")
-    exclude 'icon_forge.png'
-}
-
 jar {
     from configurations.includedLibs.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+// Loader Specific Settings
+publishMods {
+    file = remapJar.archiveFile
+    modLoaders.addAll("fabric", "quilt")
 }
 
 publishing {

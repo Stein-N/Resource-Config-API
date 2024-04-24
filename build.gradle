@@ -1,59 +1,86 @@
 plugins {
+    // Required for NeoGradle
     id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
+    id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'maven-publish'
+    apply plugin: 'me.modmuss50.mod-publish-plugin'
 
     java {
-        toolchain.languageVersion = JavaLanguageVersion.of(17)
+        toolchain.languageVersion = JavaLanguageVersion.of(21)
         withSourcesJar()
         withJavadocJar()
-    }
-        
-    jar {
-        from(rootProject.file("LICENSE")) {
-            rename { "${it}_${mod_id}" }
-        }
-        manifest {
-            attributes([
-                'Specification-Title'     : mod_name,
-                'Specification-Vendor'    : mod_author,
-                'Specification-Version'   : project.jar.archiveVersion,
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_author,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'Timestamp'               : System.currentTimeMillis(),
-                'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
-                'Built-On-Minecraft'      : minecraft_version
-            ])
-        }
-    }
-
-    sourcesJar {
-        from(rootProject.file("LICENSE")) {
-            rename { "${it}_${mod_id}" }
-        }
     }
 
     repositories {
         mavenCentral()
         maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven { url 'https://raw.githubusercontent.com/Stein-N/resources/main/maven' }
     }
 
-    tasks.withType(JavaCompile).configureEach {
-        it.options.encoding = 'UTF-8'
-        it.options.getRelease().set(17)
+    // Basic Settings for the Mod Publish Plugin by modmuss50
+    // It also uses the CHANGELOG.md for an ongoing Changelog File
+    publishMods {
+        if (project.name != 'common') {
+            displayName = file.map { it.asFile.name }
+            type = ALPHA
+
+            var changelogFile = rootProject.file('CHANGELOG.md')
+            if (changelogFile.exists()) changelog = changelogFile.text
+            else changelog = 'NO VALID CHANGELOG FILE FOUND!'
+
+            modrinth {
+                accessToken = MODRINTH_KEY
+                projectId = modrinth_id
+                minecraftVersions.add("1.20.4")
+            }
+            curseforge {
+                accessToken = CURSEFORGE_KEY
+                projectId = curseforge_id
+                minecraftVersions.add("1.20.4")
+
+                clientRequired = true
+                serverRequired = true
+
+                javaVersions.add(JavaVersion.VERSION_21)
+            }
+        }
     }
-    tasks.withType(Javadoc).configureEach {
+
+    // Unify the Task configuration for every Mod Loader
+    // so the loader specific build.gradle files are a little bit cleaner
+    Spec<Task> notNeoTask = { Task itTask -> !itTask.name.startsWith("neo") } as Spec<Task>
+    tasks.withType(JavaCompile).matching(notNeoTask).configureEach {
+        it.options.encoding = 'UTF-8'
+        it.options.getRelease().set(21)
+        if (project.name != 'common') {
+            source(project(":common").sourceSets.main.allSource)
+        }
+    }
+    tasks.withType(Javadoc).matching(notNeoTask).configureEach {
         options.addStringOption('Xdoclint:none', '-quiet')
+        if (project.name != 'common') {
+            source(project(":common").sourceSets.main.allJava)
+        }
+    }
+    tasks.named("sourcesJar", Jar) {
+        if (project.name != 'common') {
+            from(project(":common").sourceSets.main.allSource)
+        }
+    }
+    tasks.withType(ProcessResources).matching(notNeoTask).configureEach() {
+        if (project.name != 'common') {
+            from project(":common").sourceSets.main.resources
+            from file("src/generated")
+        }
     }
 
     processResources {
-        def expandProps = [
+        var expandProps = [
                 // Project related Keys
                 "version": version,
                 "group": project.group,
@@ -90,13 +117,6 @@ subprojects {
         inputs.properties(expandProps)
     }
 
-    // Disables Gradle's custom module metadata from being published to maven. The
-    // metadata includes mapped dependencies which are not reasonably consumable by
-    // other mod developers.
-    tasks.withType(GenerateModuleMetadata).configureEach {
-        enabled = false
-    }
-
     publishing {
         def mavenDirectory = MAVEN_REPOSITORY_TEST
         def artifact = mod_id + "-" + base.archivesName.get()
@@ -128,4 +148,5 @@ subprojects {
             }
         }
     }
+
 }
