@@ -36,12 +36,12 @@ subprojects {
             modrinth {
                 accessToken = MODRINTH_KEY
                 projectId = modrinth_id
-                minecraftVersions.add("1.20.4")
+                minecraftVersions.add("1.20.5")
             }
             curseforge {
                 accessToken = CURSEFORGE_KEY
                 projectId = curseforge_id
-                minecraftVersions.add("1.20.4")
+                minecraftVersions.add("1.20.5")
 
                 clientRequired = true
                 serverRequired = true
