@@ -1,13 +1,8 @@
 plugins {
+    id 'ml-loader'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
-
-base {
-    archivesName = "${mod_id}-forge"
-}
-
-jarJar.enable()
 
 mixin {
     add(sourceSets.main, "${mod_id}.refmap.json")
@@ -19,8 +14,6 @@ mixin {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-
-    compileOnly project(":common")
 }
 
 minecraft {

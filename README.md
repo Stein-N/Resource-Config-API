@@ -9,8 +9,7 @@ It doesn't have fancy Features, simply create Config Files and save your values 
 
 It is downloadable on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/resource-config-api) and [Modrinth](https://modrinth.com/mod/resource-config-api).
 
-This API is basically [Simple Config API](https://www.curseforge.com/minecraft/mc-mods/simple-config-api) but renamed to fit my other Mods and with more Features and Datatypes, 
-since Update 1.20.5.
+This API is basically [Simple Config API](https://www.curseforge.com/minecraft/mc-mods/simple-config-api) but renamed to fit my other Mods and with more Features and Datatypes.
 
 ### Features:
 
@@ -31,11 +30,11 @@ since Update 1.20.5.
 
 ### For Developer:
 
-#### Latest Version: 1.0.0
+#### Latest Version: 1.20-1.1.0
 #### Available for:
-- Fabric 1.20.5. -> latest
-- Forge 1.20.5. -> latest
-- NeoForge 1.20.5. -> latest
+- Fabric 1.20 -> latest
+- Forge 1.20 -> latest (will be dropped with 1.21)
+- NeoForge 1.20.4 -> latest
 
 ### Note:
 - Float, Long, Short, Byte and Char can't be supported due to parsing incompatibilities.

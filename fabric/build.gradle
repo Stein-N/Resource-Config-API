@@ -1,9 +1,6 @@
 plugins {
+    id 'ml-loader'
     id 'fabric-loom' version '1.6-SNAPSHOT'
-}
-
-base {
-    archivesName = "${mod_id}-fabric"
 }
 
 configurations {
@@ -15,12 +12,10 @@ dependencies {
     mappings loom.officialMojangMappings()
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
 
-    implementation group: 'com.electronwill.night-config', name: 'toml', version: '3.6.7'
-    includedLibs group: 'com.electronwill.night-config', name: 'toml', version: '3.6.7'
-
-    compileOnly project(":common")
+    implementation group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
+    includedLibs group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
 }
 
 sourceSets {

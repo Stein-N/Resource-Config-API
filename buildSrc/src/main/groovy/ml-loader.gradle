@@ -1,0 +1,27 @@
+plugins {
+    id 'ml-common'
+}
+
+dependencies {
+    compileOnly(project(':common'))
+}
+
+tasks.named('compileJava', JavaCompile) {
+    it.options.encoding = 'UTF-8'
+    it.options.getRelease().set(17)
+    source(project(':common').sourceSets.main.allSource)
+}
+
+tasks.named('javadoc', Javadoc) {
+    source(project(":common").sourceSets.main.allJava)
+}
+
+tasks.named('sourcesJar', Jar) {
+    from project(':common').sourceSets.main.resources
+    from file('src/generated')
+}
+
+processResources {
+    from project(":common").sourceSets.main.resources
+    from file("src/generated")
+}

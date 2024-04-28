@@ -4,23 +4,12 @@ plugins {
     id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 }
 
+//TODO: Change gradle setup to the new one(Multiloader Template)
+//      Add ConfigBuilder Settings to suppress Ranged Comments
+//      -> general and Value Specific
+
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'idea'
-    apply plugin: 'maven-publish'
     apply plugin: 'me.modmuss50.mod-publish-plugin'
-
-    java {
-        toolchain.languageVersion = JavaLanguageVersion.of(21)
-        withSourcesJar()
-        withJavadocJar()
-    }
-
-    repositories {
-        mavenCentral()
-        maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
-        maven { url 'https://raw.githubusercontent.com/Stein-N/resources/main/maven' }
-    }
 
     // Basic Settings for the Mod Publish Plugin by modmuss50
     // It also uses the CHANGELOG.md for an ongoing Changelog File
@@ -36,117 +25,26 @@ subprojects {
             modrinth {
                 accessToken = MODRINTH_KEY
                 projectId = modrinth_id
-                minecraftVersions.add("1.20.5")
+
+                minecraftVersionRange {
+                    start = '1.20'
+                    end = '1.20.5'
+                }
             }
             curseforge {
                 accessToken = CURSEFORGE_KEY
                 projectId = curseforge_id
-                minecraftVersions.add("1.20.5")
 
                 clientRequired = true
                 serverRequired = true
 
-                javaVersions.add(JavaVersion.VERSION_21)
+                minecraftVersionRange {
+                    start = '1.20'
+                    end = '1.20.5'
+                }
+
+                javaVersions.add(JavaVersion.VERSION_17)
             }
         }
     }
-
-    // Unify the Task configuration for every Mod Loader
-    // so the loader specific build.gradle files are a little bit cleaner
-    Spec<Task> notNeoTask = { Task itTask -> !itTask.name.startsWith("neo") } as Spec<Task>
-    tasks.withType(JavaCompile).matching(notNeoTask).configureEach {
-        it.options.encoding = 'UTF-8'
-        it.options.getRelease().set(21)
-        if (project.name != 'common') {
-            source(project(":common").sourceSets.main.allSource)
-        }
-    }
-    tasks.withType(Javadoc).matching(notNeoTask).configureEach {
-        options.addStringOption('Xdoclint:none', '-quiet')
-        if (project.name != 'common') {
-            source(project(":common").sourceSets.main.allJava)
-        }
-    }
-    tasks.named("sourcesJar", Jar) {
-        if (project.name != 'common') {
-            from(project(":common").sourceSets.main.allSource)
-        }
-    }
-    tasks.withType(ProcessResources).matching(notNeoTask).configureEach() {
-        if (project.name != 'common') {
-            from project(":common").sourceSets.main.resources
-            from file("src/generated")
-        }
-    }
-
-    processResources {
-        var expandProps = [
-                // Project related Keys
-                "version": version,
-                "group": project.group,
-
-                // Mod related Keys
-                "minecraft_version": minecraft_version,
-                "mod_name": mod_name,
-                "mod_author": mod_author,
-                "mod_id": mod_id,
-                "mod_license": mod_license,
-                "mod_credits": mod_credits,
-                "mod_description": mod_description,
-
-                // General Key
-                "minecraft_version_range": minecraft_version_range,
-
-                // Fabric Keys
-                "fabric_loader_version": fabric_loader_version,
-                "fabric_api_version": fabric_api_version,
-
-                // Forge Keys
-                "forge_version": forge_version,
-                "forge_loader_version_range": forge_loader_version_range,
-                "forge_version_range": forge_version_range,
-
-                // NeoForge Keys
-                "neoforge_version": neoforge_version,
-                "neoforge_loader_version_range": neoforge_loader_version_range
-        ]
-
-        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
-            expand expandProps
-        }
-        inputs.properties(expandProps)
-    }
-
-    publishing {
-        def mavenDirectory = MAVEN_REPOSITORY
-        def artifact = mod_id + "-" + base.archivesName.get()
-        def commitMessage = artifact + " " + version
-
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = artifact
-                from components.java
-            }
-        }
-
-        repositories {
-            maven { url = mavenDirectory }
-        }
-
-        publish.doLast {
-            exec {
-                workingDir mavenDirectory
-                commandLine 'git', 'add', '.'
-            }
-            exec {
-                workingDir mavenDirectory
-                commandLine 'git', 'commit', '-m', commitMessage
-            }
-            exec {
-                workingDir mavenDirectory
-                commandLine 'git', 'push'
-            }
-        }
-    }
-
 }

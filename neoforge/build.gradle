@@ -1,21 +1,13 @@
 plugins {
+    id 'ml-loader'
     id 'net.neoforged.gradle.userdev' version '7.0.105'
-    id 'java-library'
 }
-
-base {
-    archivesName = "${mod_id}-neoforge"
-}
-
-jarJar.enable()
 
 var at = file('src/main/resources/META-INF/accesstransformer.cfg')
 if (at.exists()) minecraft.accessTransformers.file at
 
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
-
-    compileOnly project(":common")
 }
 
 runs {
@@ -30,6 +22,9 @@ runs {
 publishMods {
     file = jar.archiveFile
     modLoaders.add("neoforge")
+
+    modrinth { minecraftVersions.addAll('1.20.4', '1.20.5') }
+    curseforge { minecraftVersions.addAll('1.20.4', '1.20.5') }
 }
 
 publishing {
