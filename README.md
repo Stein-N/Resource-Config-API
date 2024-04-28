@@ -2,7 +2,7 @@
 
 ![Modrinth Downloads](https://img.shields.io/modrinth/dt/69TY9iyJ?logo=modrinth&label=Downloads&color=%2300AF5C)![Modrinth Version](https://img.shields.io/modrinth/v/69TY9iyJ?logo=modrinth&label=Available%20For&color=%2300AF5C)
 
-![Title Header](https://cdn.modrinth.com/data/69TY9iyJ/images/9766e95e84d5abf6c2ff5ca19a5f317bc6280d3a.png)
+![Title Header](https://raw.githubusercontent.com/Stein-N/resources/main/images/resource_config_api/title_header.png)
 
 This Config API is based on the [NightConfig Library](https://github.com/TheElectronWill/night-config) and is very basic.
 It doesn't have fancy Features, simply create Config Files and save your values in it.

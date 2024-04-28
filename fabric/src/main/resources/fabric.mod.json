@@ -13,7 +13,7 @@
         "issues": "https://github.com/Stein-N/Resource-Config-API/issues"
     },
     "license": "${mod_license}",
-    "icon": "logo.png",
+    "icon": "icon_fabric.png",
     "environment": "*",
     "entrypoints": {
         "main": [ "net.xstopho.resource_config_api.ResourceConfig" ]
