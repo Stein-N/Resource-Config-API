@@ -25,11 +25,6 @@ subprojects {
             modrinth {
                 accessToken = MODRINTH_KEY
                 projectId = modrinth_id
-
-                minecraftVersionRange {
-                    start = '1.20'
-                    end = '1.20.5'
-                }
             }
             curseforge {
                 accessToken = CURSEFORGE_KEY
@@ -37,11 +32,6 @@ subprojects {
 
                 clientRequired = true
                 serverRequired = true
-
-                minecraftVersionRange {
-                    start = '1.20'
-                    end = '1.20.5'
-                }
 
                 javaVersions.add(JavaVersion.VERSION_17)
             }

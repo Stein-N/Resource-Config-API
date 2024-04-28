@@ -59,6 +59,19 @@ jar {
 publishMods {
     file = remapJar.archiveFile
     modLoaders.addAll("fabric", "quilt")
+
+    modrinth {
+        minecraftVersionRange {
+            start = '1.20'
+            end = '1.20.5'
+        }
+    }
+    curseforge {
+        minecraftVersionRange {
+            start = '1.20'
+            end = '1.20.5'
+        }
+    }
 }
 
 publishing {

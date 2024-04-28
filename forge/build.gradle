@@ -52,7 +52,21 @@ sourceSets.each {
 publishMods {
     file = jar.archiveFile
     modLoaders.add("forge")
+
+    modrinth {
+        minecraftVersionRange {
+            start = '1.20'
+            end = '1.20.5'
+        }
+    }
+    curseforge {
+        minecraftVersionRange {
+            start = '1.20'
+            end = '1.20.5'
+        }
+    }
 }
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
