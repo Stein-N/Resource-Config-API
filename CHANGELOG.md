@@ -1,3 +1,7 @@
+#### v1.2.0
+- updating NightConfig to 3.7.2
+  - this only applies to Fabric, Neo-/Forge ship Night Config on its own
+
 #### v1.1.0
 - backport update
 - Fabric 1.20 up to 1.20.4
