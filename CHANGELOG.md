@@ -1,3 +1,6 @@
+#### v2.0.0
+- update release for Minecraft 1.21
+
 #### v1.2.0
 - updating NightConfig to 3.7.2
   - this only applies to Fabric, Neo-/Forge ship Night Config on its own

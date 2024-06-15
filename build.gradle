@@ -29,7 +29,7 @@ subprojects {
                 clientRequired = true
                 serverRequired = true
 
-                javaVersions.add(JavaVersion.VERSION_17)
+                javaVersions.add(JavaVersion.VERSION_21)
             }
         }
     }
