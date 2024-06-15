@@ -4,10 +4,6 @@ plugins {
     id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 }
 
-//TODO: Change gradle setup to the new one(Multiloader Template)
-//      Add ConfigBuilder Settings to suppress Ranged Comments
-//      -> general and Value Specific
-
 subprojects {
     apply plugin: 'me.modmuss50.mod-publish-plugin'
 

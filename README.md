@@ -1,6 +1,4 @@
-![](https://cf.way2muchnoise.eu/975801.svg)![](https://cf.way2muchnoise.eu/versions/975801.svg)
-
-![Modrinth Downloads](https://img.shields.io/modrinth/dt/69TY9iyJ?logo=modrinth&label=Downloads&color=%2300AF5C)![Modrinth Version](https://img.shields.io/modrinth/v/69TY9iyJ?logo=modrinth&label=Available%20For&color=%2300AF5C)
+![](https://cf.way2muchnoise.eu/versions/975801.svg)![](https://cf.way2muchnoise.eu/975801.svg)![Modrinth Downloads](https://img.shields.io/modrinth/dt/69TY9iyJ?logo=modrinth&label=Downloads&color=%2300AF5C)
 
 ![Title Header](https://raw.githubusercontent.com/Stein-N/resources/main/images/resource_config_api/title_header.png)
 
