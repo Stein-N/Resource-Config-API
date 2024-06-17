@@ -21,6 +21,8 @@ subprojects {
             modrinth {
                 accessToken = MODRINTH_API_KEY
                 projectId = modrinth_id
+
+                minecraftVersions.add(minecraft_version)
             }
             curseforge {
                 accessToken = CURSEFORGE_API_KEY
@@ -28,6 +30,8 @@ subprojects {
 
                 clientRequired = true
                 serverRequired = true
+
+                minecraftVersions.add(minecraft_version)
 
                 javaVersions.add(JavaVersion.VERSION_21)
             }

@@ -4,13 +4,6 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
-mixin {
-    add(sourceSets.main, "${mod_id}.refmap.json")
-
-    config("${mod_id}.mixins.json")
-    config("${mod_id}.forge.mixins.json")
-}
-
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
@@ -29,8 +22,6 @@ minecraft {
             workingDirectory project.file('runs/client')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Client'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 modClientRun {
                     source sourceSets.main
@@ -41,8 +32,6 @@ minecraft {
     }
 }
 
-jar.finalizedBy('reobfJar')
-
 sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
@@ -52,19 +41,6 @@ sourceSets.each {
 publishMods {
     file = jar.archiveFile
     modLoaders.add("forge")
-
-    modrinth {
-        minecraftVersionRange {
-            start = '1.20'
-            end = '1.20.5'
-        }
-    }
-    curseforge {
-        minecraftVersionRange {
-            start = '1.20'
-            end = '1.20.5'
-        }
-    }
 }
 
 publishing {

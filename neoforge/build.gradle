@@ -22,19 +22,6 @@ runs {
 publishMods {
     file = jar.archiveFile
     modLoaders.add("neoforge")
-
-    modrinth {
-        minecraftVersionRange {
-            start = '1.20.4'
-            end = '1.20.5'
-        }
-    }
-    curseforge {
-        minecraftVersionRange {
-            start = '1.20.4'
-            end = '1.20.5'
-        }
-    }
 }
 
 publishing {
