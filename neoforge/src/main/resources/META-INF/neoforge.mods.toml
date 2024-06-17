@@ -10,11 +10,6 @@ license = "${mod_license}"
     description = '''${mod_description}'''
     logoFile = "icon_forge.png"
 
-[[mixins]]
-    config = "${mod_id}.mixins.json"
-[[mixins]]
-    config = "${mod_id}.neoforge.mixins.json"
-
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     required = true

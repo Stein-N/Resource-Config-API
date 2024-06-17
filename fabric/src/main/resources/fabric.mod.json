@@ -16,13 +16,9 @@
     "entrypoints": {
         "main": [ "net.xstopho.resource_config_api.ResourceConfig" ]
     },
-    "mixins": [
-        "${mod_id}.mixins.json",
-        "${mod_id}.fabric.mixins.json"
-    ],
     "depends": {
         "fabricloader": "*",
-        "minecraft": ">=1.21 <1.22",
+        "minecraft": "${minecraft_version}",
         "java": ">=21"
     },
     "custom": {
