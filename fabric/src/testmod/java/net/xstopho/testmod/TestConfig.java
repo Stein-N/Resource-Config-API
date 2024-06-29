@@ -16,11 +16,9 @@ public class TestConfig {
 
     static Supplier<List<String>> list_normal, list_comment, list_multiple_comments;
     static Supplier<ArrayList<String>> array_list_normal, array_list_comment, array_list_multiple_comments;
-    static Supplier<LinkedList<String>> linked_list_normal, linked_list_comment, linked_list_multiple_comments;
 
     static List<String> test_list = Arrays.asList("minecraft:diamond", "minecraft:charcoal", "minecraft:emerald");
     static ArrayList<String> test_array_list = new ArrayList<>(test_list);
-    static LinkedList<String> test_linked_list = new LinkedList<>(test_list);
 
 
     static {
@@ -62,12 +60,6 @@ public class TestConfig {
         array_list_comment = BUILDER.comment("This is a commented ArrayList").define("comment", test_array_list);
         array_list_multiple_comments = BUILDER.comment("First Line comment").comment("Second Line comment")
                 .define("multiple_comments", test_array_list);
-
-        BUILDER.pop().comment("LinkedList Category Comment").push("LinkedList");
-        linked_list_normal = BUILDER.define("normal", test_linked_list);
-        linked_list_comment = BUILDER.comment("This is a commented LinkedList").define("comment", test_linked_list);
-        linked_list_multiple_comments = BUILDER.comment("First Line comment").comment("Second Line comment")
-                .define("multiple_comments", test_linked_list);
 
         BUILDER.pop().comment("Categories can also have").comment("multiple comment lines").push("Comment Category");
         comment_category = BUILDER.define("needed", true);

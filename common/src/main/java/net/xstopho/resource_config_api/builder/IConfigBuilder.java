@@ -30,5 +30,4 @@ public interface IConfigBuilder {
 
     <T> Supplier<List<T>> define(String key, List<T> defaultList);
     <T> Supplier<ArrayList<T>> define(String key, ArrayList<T> defaultList);
-    <T> Supplier<LinkedList<T>> define(String key, LinkedList<T> defaultList);
 }
