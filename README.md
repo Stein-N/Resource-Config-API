@@ -13,7 +13,7 @@ This API is basically [Simple Config API](https://www.curseforge.com/minecraft/m
 
 - Save different Datatypes
   - Primitive: Integer, Double, String, Boolean
-  - Reference: List, ArrayList, LinkedList
+  - Reference: List, ArrayList
 - Values and Categories can be commented
 - Values can be defined in Range
 - Custom Config Path
