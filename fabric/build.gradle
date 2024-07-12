@@ -4,6 +4,10 @@ plugins {
     id 'me.modmuss50.mod-publish-plugin'
 }
 
+configurations {
+    includedLibs
+}
+
 sourceSets {
     testmod {
         runtimeClasspath += main.runtimeClasspath;
@@ -20,7 +24,7 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
 
     implementation group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
-    include group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
+    includedLibs group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
 
     // Runtime Mods
     modRuntimeOnly "maven.modrinth:modmenu:${mod_menu}"
@@ -50,6 +54,10 @@ loom {
             runDir("runs/server")
         }
     }
+}
+
+jar {
+    from configurations.includedLibs.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 // Loader Specific Settings

@@ -1,7 +1,7 @@
 package net.xstopho.resourceconfigapi.platform;
 
-import net.xstopho.resourceconfigapi.ResourceConstants;
-import net.xstopho.resourceconfigapi.platform.services.IPlatformHelper;
+import net.xstopho.resource_config_api.ResourceConstants;
+import net.xstopho.resource_config_api.platform.services.IPlatformHelper;
 
 import java.nio.file.Path;
 import java.util.ServiceLoader;
