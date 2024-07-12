@@ -44,7 +44,7 @@ ao:true
 prioritizeChunkUpdates:0
 biomeBlendRadius:2
 renderClouds:"true"
-resourcePacks:["fabric"]
+resourcePacks:[]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
@@ -70,7 +70,7 @@ useNativeTransport:true
 mainHand:"right"
 attackIndicator:1
 narrator:0
-tutorialStep:
+tutorialStep:none
 mouseWheelSensitivity:1.0
 rawMouseInput:true
 glDebugVerbosity:1

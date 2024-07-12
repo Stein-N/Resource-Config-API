@@ -1,30 +1,7 @@
 plugins {
     id 'ml-loader'
-    id 'fabric-loom' version '1.6-SNAPSHOT'
-}
-
-configurations {
-    includedLibs
-}
-
-repositories {
-    maven {
-        name = "Terraformers"
-        url = "https://maven.terraformersmc.com/"
-    }
-}
-
-dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.officialMojangMappings()
-
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
-
-    modImplementation("com.terraformersmc:modmenu:${mod_menu}")
-
-    implementation group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
-    includedLibs group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
+    id 'fabric-loom'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 sourceSets {
@@ -32,6 +9,21 @@ sourceSets {
         runtimeClasspath += main.runtimeClasspath;
         compileClasspath += main.compileClasspath;
     }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    testmodImplementation sourceSets.main.output;
+
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
+
+    implementation group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
+    include group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
+
+    // Runtime Mods
+    modRuntimeOnly "maven.modrinth:modmenu:${mod_menu}"
 }
 
 loom {
@@ -44,40 +36,31 @@ loom {
     runs {
         client {
             client()
-            setConfigName("Fabric Client")
+            source sourceSets.testmod
+            setConfigName("Fabric Test Client")
             ideConfigGenerated(true)
             programArgs('--username', 'Dev')
             runDir("runs/client")
         }
-        testmodClient {
-            client()
-            setConfigName("Fabric Testmod Client")
-            ideConfigGenerated(true)
-            programArgs('--username', 'Dev')
-            runDir("runs/client")
+        server {
+            server()
             source sourceSets.testmod
+            setConfigName("Fabric Test Server")
+            ideConfigGenerated(true)
+            runDir("runs/server")
         }
     }
-}
-
-jar {
-    from configurations.includedLibs.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 // Loader Specific Settings
 publishMods {
     file = remapJar.archiveFile
     modLoaders.addAll("fabric", "quilt")
-}
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            pom.withXml {
-                asNode().dependencies.each { node ->
-                    node.replaceNode {}
-                }
-            }
-        }
+    modrinth {
+        requires('fabric-api')
+    }
+    curseforge {
+        requires('fabric-api')
     }
 }

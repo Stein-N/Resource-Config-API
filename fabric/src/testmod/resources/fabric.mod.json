@@ -1,26 +1,12 @@
 {
     "schemaVersion": 1,
-    "id": "config_testmod",
-    "version": "1.0",
-    "name": "Config Testmod",
-    "description": "Config Testmod",
-    "authors": [
-        "xStopho"
-    ],
-    "contact": {
-        "homepage": "https://github.com/Stein-N/Resource-Config-API",
-        "sources": "https://github.com/Stein-N/Resource-Config-API",
-        "issues": "https://github.com/Stein-N/Resource-Config-API/issues"
-    },
+    "id": "resourceconfigapi_test",
+    "version": "1.0-TEST",
+    "name": "Resource Config Test Mod",
+    "authors": [ "xStopho" ],
     "license": "MIT",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.xstopho.testmod.TestmodConfig" ]
-    },
-    "depends": {
-        "fabric-api": "*",
-        "fabricloader": "*",
-        "minecraft": "*",
-        "java": ">=17"
+        "main": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTest" ]
     }
 }

@@ -1,37 +1,54 @@
 plugins {
     id 'ml-loader'
-    id 'net.neoforged.gradle.userdev' version '7.0.143'
+    id 'net.neoforged.moddev'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
-var at = file('src/main/resources/META-INF/accesstransformer.cfg')
-if (at.exists()) minecraft.accessTransformers.file at
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath;
+        compileClasspath += main.compileClasspath;
+    }
+}
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neoforge_version}"
+    testmodImplementation sourceSets.main.output
 }
 
-runs {
-    configureEach {
-        modSource project.sourceSets.main
+neoForge {
+    version = neoforge_version
+
+    var at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) accessTransformers = [at.absolutePath]
+
+
+    parchment {
+        minecraftVersion = minecraft_version
+        mappingsVersion = parchment_version
     }
-    client {
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+
+    runs {
+        testClient {
+            client()
+            sourceSet = sourceSets.testmod
+            ideName = "NeoForge Test Client (${project.path})"
+            gameDirectory = project.file("runs/client")
+        }
+        testServer {
+            server()
+            sourceSet = sourceSets.testmod
+            programArguments.add('nogui')
+            ideName = "NeoForge Test Server (${project.path})"
+            gameDirectory = project.file("runs/server")
+        }
+    }
+    mods {
+        "${mod_id}" { sourceSet sourceSets.main }
+        "${mod_id}_test" { sourceSet sourceSets.testmod }
     }
 }
 
 publishMods {
     file = jar.archiveFile
     modLoaders.add("neoforge")
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            pom.withXml {
-                asNode().dependencies.each { node ->
-                    node.replaceNode {}
-                }
-            }
-        }
-    }
 }

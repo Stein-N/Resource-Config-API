@@ -1,31 +1,53 @@
 plugins {
     id 'ml-loader'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'net.minecraftforge.gradle' version '[6.0.25, 6.2)'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+}
+
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath;
+        compileClasspath += main.compileClasspath;
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
+    testmodImplementation sourceSets.main.output
 }
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
+    reobf = false
+    copyIdeResources = true //Calls processResources when in dev
 
-    copyIdeResources = true // Calls processResources when in dev
-
-    var at = file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) accessTransformer = at
+    // Automatically enable forge AccessTransformers if the file exists
+    // This location is hardcoded in Forge and can not be changed.
+    // https://github.com/MinecraftForge/MinecraftForge/blob/be1698bb1554f9c8fa2f58e32b9ab70bc4385e60/fmlloader/src/main/java/net/minecraftforge/fml/loading/moddiscovery/ModFile.java#L123
+    if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
+        accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    }
 
     runs {
         client {
             workingDirectory project.file('runs/client')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Client'
+            ideaModule "${rootProject.name}.${project.name}.testmod"
+            taskName "TestClient"
             mods {
                 modClientRun {
-                    source sourceSets.main
-                    source project(":common").sourceSets.main
+                    source sourceSets.testmod
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('runs/server')
+            ideaModule "${rootProject.name}.${project.name}.testmod"
+            taskName "TestServer"
+            args '--nogui'
+            mods {
+                modServerRun {
+                    source sourceSets.testmod
                 }
             }
         }
@@ -38,9 +60,15 @@ sourceSets.each {
     it.java.destinationDirectory = dir
 }
 
+processResources {
+    exclude "${mod_id}.mixin.json"
+    exclude "${mod_id}.forge.mixin.json"
+}
+
+// Loader Specific Settings
 publishMods {
     file = jar.archiveFile
-    modLoaders.add("forge")
+    modLoaders.addAll("forge")
 }
 
 publishing {
