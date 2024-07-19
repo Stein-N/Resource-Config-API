@@ -1,31 +1,36 @@
 package net.xstopho.resourceconfigapi.api;
 
 
-import net.xstopho.resourceconfigapi.builder.IConfigBuilder;
-import net.xstopho.resourceconfigapi.config.ModConfig;
+import net.xstopho.resourceconfigapi.builder.IResourceConfigBuilder;
+import net.xstopho.resourceconfigapi.config.ModConfigFile;
 import net.xstopho.resourceconfigapi.platform.Services;
 
 import java.nio.file.Path;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ConfigRegistry {
 
-    public static final List<ModConfig> MOD_CONFIGS = new LinkedList<>();
+    private static final HashMap<String, ModConfigFile> MOD_CONFIG_FILES = new LinkedHashMap<>();
 
-    public static void register(String modId, String fileName, IConfigBuilder builder, Path path) {
-        MOD_CONFIGS.add(new ModConfig(modId, fileName, builder, path));
+    public static void register(String modId, String fileName, IResourceConfigBuilder builder, String folderName, boolean disableRangedComments) {
+        MOD_CONFIG_FILES.put(fileName, new ModConfigFile(modId, fileName, builder, Path.of(Services.getConfigPath() + "/" + folderName), disableRangedComments));
     }
 
-    public static void register(String modId, String fileName, IConfigBuilder builder) {
-        MOD_CONFIGS.add(new ModConfig(modId, fileName, builder, Services.CONFIG_DIR));
+    public static void register(String modId, IResourceConfigBuilder builder, String folderName, boolean disableRangedComments) {
+        MOD_CONFIG_FILES.put(modId, new ModConfigFile(modId, modId, builder, Path.of(Services.getConfigPath() + "/" + folderName), disableRangedComments));
     }
 
-    public static void register(String modId, IConfigBuilder builder, Path path) {
-        MOD_CONFIGS.add(new ModConfig(modId, modId, builder, path));
+    public static void register(String modId, String fileName, IResourceConfigBuilder builder, boolean disableRangedComments) {
+        MOD_CONFIG_FILES.put(fileName, new ModConfigFile(modId, fileName, builder, Services.getConfigPath(), disableRangedComments));
     }
 
-    public static void register(String modId, IConfigBuilder builder) {
-        MOD_CONFIGS.add(new ModConfig(modId, modId, builder, Services.CONFIG_DIR));
+    public static void register(String modId, IResourceConfigBuilder builder, boolean disableRangedComments) {
+        MOD_CONFIG_FILES.put(modId, new ModConfigFile(modId, modId, builder, Services.getConfigPath(), disableRangedComments));
     }
+
+    public static HashMap<String, ModConfigFile> getConfigFiles() {
+        return MOD_CONFIG_FILES;
+    }
+
 }

@@ -1,6 +1,7 @@
 package net.xstopho.resourceconfigapi_test;
 
 import net.minecraftforge.fml.common.Mod;
+import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,10 @@ public class ResourceConfigTest {
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
     public ResourceConfigTest() {
+        ConfigRegistry.register(MOD_ID, TestConfig.BUILDER, MOD_ID, false);
+        ConfigRegistry.register(MOD_ID, MOD_ID + "_without", TestConfig.BUILDER, MOD_ID, true);
 
+        ConfigRegistry.register(MOD_ID,TestConfig.BUILDER, false);
+        ConfigRegistry.register(MOD_ID, MOD_ID + "_without",TestConfig.BUILDER, true);
     }
 }

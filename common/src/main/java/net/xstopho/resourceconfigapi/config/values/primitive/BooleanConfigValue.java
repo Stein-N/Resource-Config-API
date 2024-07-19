@@ -1,7 +1,6 @@
-package net.xstopho.resourceconfigapi.values.primitive;
+package net.xstopho.resourceconfigapi.config.values.primitive;
 
-
-import net.xstopho.resourceconfigapi.values.base.ConfigValue;
+import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 import java.util.function.Predicate;
 
@@ -9,7 +8,7 @@ public class BooleanConfigValue extends ConfigValue<Boolean> {
     public BooleanConfigValue(boolean defaultValue, String comment) {
         super(defaultValue, comment);
 
-        this.rangedComment = " Allowed: true ~ false - Default: " + this.defaultValue;
+        this.rangedComment = "Allowed: true ~ false";
     }
 
     @Override

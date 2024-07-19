@@ -1,11 +1,11 @@
-package net.xstopho.resourceconfigapi.values.reference;
+package net.xstopho.resourceconfigapi.config.values.reference;
 
-import net.xstopho.resourceconfigapi.values.base.ConfigValue;
+import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-public class ArrayListConfigValue<T> extends ConfigValue<ArrayList<T>> {
+public class ArrayListConfigValue <T> extends ConfigValue<ArrayList<T>> {
     public ArrayListConfigValue(ArrayList<T> defaultValue, String comment) {
         super(defaultValue, comment);
     }

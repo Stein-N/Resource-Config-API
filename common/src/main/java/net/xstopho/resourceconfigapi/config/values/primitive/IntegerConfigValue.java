@@ -1,23 +1,22 @@
-package net.xstopho.resourceconfigapi.values.primitive;
+package net.xstopho.resourceconfigapi.config.values.primitive;
 
-
-import net.xstopho.resourceconfigapi.values.base.ConfigValue;
+import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 import java.util.function.Predicate;
 
 public class IntegerConfigValue extends ConfigValue<Integer> {
 
-    public int min, max;
+    private Integer min, max;
 
     public IntegerConfigValue(Integer defaultValue, String comment) {
         super(defaultValue, comment);
     }
 
-    public IntegerConfigValue(Integer defaultValue, int min, int max, String comment) {
-        super(defaultValue, comment);
-        this.min = min; this.max = max;
-
-        this.rangedComment = " Range: " + this.min + " ~ " + this.max + " - Default: " + this.defaultValue;
+    public IntegerConfigValue(Integer defaultValue, String comment, int min, int max) {
+        this(defaultValue, comment);
+        this.min = min;
+        this.max = max;
+        this.rangedComment = "Ranged " + this.min + " ~ " + this.max;
     }
 
     @Override

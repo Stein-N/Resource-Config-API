@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.values.base;
+package net.xstopho.resourceconfigapi.config.values;
 
 import java.util.function.Supplier;
 
@@ -8,8 +8,11 @@ public interface IConfigValue<T> extends Supplier<T> {
     String getRangedComment();
 
     boolean hasComment();
-    boolean hasRangedComment();
 
     boolean isValid(Object value);
     boolean isRanged();
+
+    default boolean nonEmpty(String comment) {
+        return comment != null && !comment.isEmpty() && !comment.isBlank();
+    }
 }

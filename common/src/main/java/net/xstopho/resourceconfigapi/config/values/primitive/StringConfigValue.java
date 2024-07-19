@@ -1,6 +1,6 @@
-package net.xstopho.resourceconfigapi.values.primitive;
+package net.xstopho.resourceconfigapi.config.values.primitive;
 
-import net.xstopho.resourceconfigapi.values.base.ConfigValue;
+import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 import java.util.function.Predicate;
 
@@ -12,11 +12,11 @@ public class StringConfigValue extends ConfigValue<String> {
         super(defaultValue, comment);
     }
 
-    public StringConfigValue(String defaultValue, int minLength, int maxLength, String comment) {
+    public StringConfigValue(String defaultValue, String comment, int minLength, int maxLength) {
         super(defaultValue, comment);
         this.min = minLength; this.max = maxLength;
 
-        this.rangedComment = " Allowed Length: " + this.min + " ~ " + this.max + " chars.";
+        this.rangedComment = "Allowed Length: " + this.min + " ~ " + this.max + " chars.";
     }
 
     @Override

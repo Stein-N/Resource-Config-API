@@ -7,6 +7,7 @@
     "license": "MIT",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTest" ]
+        "main": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTest" ],
+        "client": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTestClient" ]
     }
 }

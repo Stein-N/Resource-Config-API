@@ -6,9 +6,10 @@ import com.electronwill.nightconfig.core.io.ParsingException;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.electronwill.nightconfig.toml.TomlParser;
 import com.electronwill.nightconfig.toml.TomlWriter;
-import net.xstopho.resourceconfigapi.ResourceConstants;
-import net.xstopho.resourceconfigapi.builder.IConfigBuilder;
-import net.xstopho.resourceconfigapi.values.base.ConfigValue;
+import net.xstopho.resourceconfigapi.ResourceConfigConstants;
+import net.xstopho.resourceconfigapi.builder.IResourceConfigBuilder;
+import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
+import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,32 +20,31 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ModConfig {
+public class ModConfigFile {
 
     private final String modId;
-    private final Path path;
     private final File file;
-    private final IConfigBuilder builder;
+    private final IResourceConfigBuilder builder;
     private final TomlWriter writer = new TomlWriter();
+    private final boolean disableRangedComments;
 
     private CommentedConfig config = CommentedConfig.inMemory();
 
-    public ModConfig(String modId, String fileName, IConfigBuilder builder, Path path) {
-        this.file = new File(path + "/" + fileName + ".toml");
-        this.path = path;
+    public ModConfigFile(String modId, String fileName, IResourceConfigBuilder builder, Path configPath, boolean disableRangedComments) {
+        this.file = new File(configPath + "/" + fileName + ".toml");
+        this.disableRangedComments = disableRangedComments;
+        createFilePathIfNeeded(configPath);
         this.builder = builder;
         this.modId = modId;
 
-        List<ConfigEntry<?>> entries = new ArrayList<>(builder.getEntries().values());
-
         readConfigFile();
-
-        entries.forEach(this::readConfigValue);
+        List<ConfigEntry<?>> entries = new ArrayList<>(builder.getEntries().values());
+        entries.forEach(this::readConfigValues);
 
         config = CommentedConfig.of(LinkedHashMap::new, InMemoryCommentedFormat.withUniversalSupport());
 
-        entries.forEach(this::writeConfigValue);
-        writeCategoryComments();
+        entries.forEach(this::writeConfigValues);
+
         writeConfigFile();
 
         entries.forEach(ConfigEntry::setLoaded);
@@ -52,31 +52,31 @@ public class ModConfig {
 
     void readConfigFile() {
         if (!file.exists()) return;
-
         try (FileReader reader = new FileReader(file)) {
             config = new TomlParser().parse(reader);
-        } catch (IOException | ParsingException e) {
-            ResourceConstants.LOG.error("Reading '{}' from mod '{}' failed!\nError: {}", file.getName(), modId, e.getMessage());
+        } catch(IOException | ParsingException e) {
+            ResourceConfigConstants.LOG.error("Reading '{}' from mod '{}' failed!\nError: {}", file.getName(), modId, e.getMessage());
         }
     }
 
     void writeConfigFile() {
-        createFilePathIfNeeded(); // Create custom config path if needed
-        writer.setIndentArrayElementsPredicate(values -> true); // write Lists as an actual List and not a Line
+        writeCategoryComments();
+
+        writer.setIndentArrayElementsPredicate(objects -> true);
         writer.write(config, file, WritingMode.REPLACE);
     }
 
-    <T> void readConfigValue(ConfigEntry<T> entry) {
+    <T> void readConfigValues(ConfigEntry<T> entry) {
         String path = entry.getPath();
         T defaultValue = entry.getConfigValue().get();
 
         if (!config.contains(path) || !entry.getConfigValue().isValid(config.get(path))) {
             entry.setValue(defaultValue);
-            ResourceConstants.LOG.error("Config Entry key '{}' isn't correct and is set to its default value '{}'!", path, defaultValue);
+            ResourceConfigConstants.LOG.error("Config Entry key '{}' isn't correct and is set to its default value '{}'!", path, defaultValue);
         } else entry.setValue(config.get(path));
     }
 
-    void writeConfigValue(ConfigEntry<?> entry) {
+    void writeConfigValues(ConfigEntry<?> entry) {
         writeValueComment(entry);
         config.set(entry.getPath(), entry.value());
     }
@@ -84,19 +84,23 @@ public class ModConfig {
     void writeValueComment(ConfigEntry<?> entry) {
         ConfigValue<?> value = entry.getConfigValue();
 
-        if (value.hasRangedComment()) config.setComment(entry.getPath(), value.getRangedComment());
+        if (value.isRanged() && !disableRangedComments) config.setComment(entry.getPath(), value.getRangedComment());
         else if (value.hasComment()) config.setComment(entry.getPath(), value.getComment());
     }
 
     void writeCategoryComments() {
-        for (Map.Entry<String, String> comment : builder.getCategoryComments().entrySet()) {
+        for (Map.Entry<String, String> comment : builder.getCategoryComment().entrySet()) {
             config.setComment(comment.getKey(), comment.getValue());
         }
     }
 
-    void createFilePathIfNeeded() {
+    void createFilePathIfNeeded(Path path) {
         if (new File(path.toString()).mkdirs()) {
-            ResourceConstants.LOG.info("Created custom Config Path: '{}' for Mod: '{}'", path, modId);
+            ResourceConfigConstants.LOG.info("Created custom Config Path: '{}' for Mod: '{}'", path, modId);
         }
+    }
+
+    public IResourceConfigBuilder getBuilder() {
+        return builder;
     }
 }

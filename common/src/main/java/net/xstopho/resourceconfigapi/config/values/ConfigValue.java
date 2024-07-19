@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.values.base;
+package net.xstopho.resourceconfigapi.config.values;
 
 public abstract class ConfigValue<T> implements IConfigValue<T> {
 
@@ -23,26 +23,17 @@ public abstract class ConfigValue<T> implements IConfigValue<T> {
 
     @Override
     public String getRangedComment() {
-        if (hasComment()) return comment + '\n' + rangedComment;
-        else return rangedComment;
+        if (hasComment()) return comment + "\n " + rangedComment;
+        return " " + rangedComment;
     }
 
     @Override
     public boolean hasComment() {
-        return validComment(comment);
-    }
-
-    @Override
-    public boolean hasRangedComment() {
-        return validComment(rangedComment);
+        return nonEmpty(comment);
     }
 
     @Override
     public boolean isRanged() {
-        return hasRangedComment();
-    }
-
-    boolean validComment(String comment) {
-        return comment != null && !comment.isEmpty() && !comment.isBlank();
+        return nonEmpty(rangedComment);
     }
 }

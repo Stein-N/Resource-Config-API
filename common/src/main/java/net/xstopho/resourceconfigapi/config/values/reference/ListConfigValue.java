@@ -1,7 +1,6 @@
-package net.xstopho.resourceconfigapi.values.reference;
+package net.xstopho.resourceconfigapi.config.values.reference;
 
-
-import net.xstopho.resourceconfigapi.values.base.ConfigValue;
+import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 import java.util.List;
 import java.util.function.Predicate;
