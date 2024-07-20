@@ -40,16 +40,16 @@ public class ResourceConfig implements ModInitializer {
 
     public void sendPacket(PacketSender sender, ConfigEntry<?> entry, String fileName) {
         if (entry.getValue() instanceof Integer) {
-            sender.sendPacket(new SyncIntegerConfigEntryPacket(fileName, entry.getPath(), (Integer) entry.getValue()));
+            sender.sendPacket(new SyncIntegerConfigEntryPacket(fileName, entry.getPath(), (Integer) entry.value()));
         }
         if (entry.getValue() instanceof Double) {
-            sender.sendPacket(new SyncDoubleConfigEntryPacket(fileName, entry.getPath(), (Double) entry.getValue()));
+            sender.sendPacket(new SyncDoubleConfigEntryPacket(fileName, entry.getPath(), (Double) entry.value()));
         }
         if (entry.getValue() instanceof String) {
-            sender.sendPacket(new SyncStringConfigEntryPacket(fileName, entry.getPath(), (String) entry.getValue()));
+            sender.sendPacket(new SyncStringConfigEntryPacket(fileName, entry.getPath(), (String) entry.value()));
         }
         if (entry.getValue() instanceof Boolean) {
-            sender.sendPacket(new SyncBooleanConfigEntryPacket(fileName, entry.getPath(), (Boolean) entry.getValue()));
+            sender.sendPacket(new SyncBooleanConfigEntryPacket(fileName, entry.getPath(), (Boolean) entry.value()));
         }
     }
 }

@@ -53,9 +53,4 @@ public class ConfigEntry<T> {
     public T value() {
         return value;
     }
-
-    //TODO: remove when syncing is finished
-    public T serverValue() {
-        return serverValue;
-    }
 }
