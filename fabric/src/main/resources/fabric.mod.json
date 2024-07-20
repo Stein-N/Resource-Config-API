@@ -14,7 +14,8 @@
     "icon": "icon_fabric.png",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.xstopho.resourceconfigapi.ResourceConfig" ]
+        "main": [ "net.xstopho.resourceconfigapi.ResourceConfig" ],
+        "client": [ "net.xstopho.resourceconfigapi.ResourceConfigClient" ]
     },
     "depends": {
         "fabricloader": "*",

@@ -19,8 +19,7 @@ public class ConfigEntry<T> {
 
     public T getValue() {
         if (!isLoaded) throw new IllegalStateException("Config isn't loaded yet!");
-        if (isSynced) return serverValue;
-        return value;
+        return isSynced ? serverValue : value;
     }
 
     public void setValue(T value) {
@@ -53,5 +52,10 @@ public class ConfigEntry<T> {
 
     public T value() {
         return value;
+    }
+
+    //TODO: remove when syncing is finished
+    public T serverValue() {
+        return serverValue;
     }
 }

@@ -13,10 +13,6 @@ public class ResourceConfigTest implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ConfigRegistry.register(MOD_ID, TestConfig.BUILDER, MOD_ID, false);
-        ConfigRegistry.register(MOD_ID, MOD_ID + "_without", TestConfig.BUILDER, MOD_ID, true);
-
-        ConfigRegistry.register(MOD_ID,TestConfig.BUILDER, false);
-        ConfigRegistry.register(MOD_ID, MOD_ID + "_without",TestConfig.BUILDER, true);
+        ConfigRegistry.register(MOD_ID, TestConfig.BUILDER, false);
     }
 }
