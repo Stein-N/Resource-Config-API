@@ -15,12 +15,12 @@ public class TestConfig {
 
     public static final ResourceConfigBuilder BUILDER = new ResourceConfigBuilder();
 
-    public static final ConfigEntry<Integer> NORMAL_INTEGER, RANGED_INTEGER;
-    public static final ConfigEntry<Double> NORMAL_DOUBLE, RANGED_DOUBLE;
-    public static final ConfigEntry<Boolean> BOOLEAN;
-    public static final ConfigEntry<String> NORMAL_STRING, RANGED_STRING;
-    public static final ConfigEntry<List<String>> LIST;
-    public static final ConfigEntry<ArrayList<String>> ARRAY_LIST;
+    public static final Supplier<Integer> NORMAL_INTEGER, RANGED_INTEGER;
+    public static final Supplier<Double> NORMAL_DOUBLE, RANGED_DOUBLE;
+    public static final Supplier<Boolean> BOOLEAN;
+    public static final Supplier<String> NORMAL_STRING, RANGED_STRING;
+    public static final Supplier<List<String>> LIST;
+    public static final Supplier<ArrayList<String>> ARRAY_LIST;
 
     private static final List<String> ITEM_LIST = Arrays.asList(Items.DIAMOND.toString(), Items.DIAMOND_BLOCK.toString());
     private static final ArrayList<String> BLOCK_LIST = new ArrayList<>(List.of(Blocks.ANDESITE.toString(), Blocks.DIAMOND_ORE.toString()));
