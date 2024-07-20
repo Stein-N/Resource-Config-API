@@ -26,7 +26,7 @@ public class ResourceConfig implements ModInitializer {
             HashMap<String, ModConfigFile> configs = ConfigRegistry.getConfigFiles();
 
             for (Map.Entry<String, ModConfigFile> config : configs.entrySet()) {
-                ResourceConfigConstants.LOG.info("Syncing Values for ModConfigFile: " + config.getKey());
+                ResourceConfigConstants.LOG.info("Syncing Values for ModConfigFile: {}", config.getKey());
                 ModConfigFile modConfig = config.getValue();
 
                 for (ConfigEntry<?> entry : modConfig.getBuilder().getEntries().values()) {
