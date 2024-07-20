@@ -1,16 +1,25 @@
 package net.xstopho.resourceconfigapi_test;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 
 public class ResourceConfigTestClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            Player player = client.player;
-            player.displayClientMessage(Component.literal("Client: " + TestConfig.SYNCED_INTEGER.get()), false);
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            dispatcher.register(ClientCommandManager.literal("checkConfig").executes(context -> {
+                context.getSource().sendFeedback(Component.literal("Synced Integer: " + TestConfig.SYNCED_INTEGER.get()));
+
+                context.getSource().sendFeedback(Component.literal("Client: " + TestConfig.SYNCED_DOUBLE.get()));
+
+                context.getSource().sendFeedback(Component.literal("Client: " + TestConfig.SYNCED_STRING.get()));
+
+                context.getSource().sendFeedback(Component.literal("Client: " + TestConfig.SYNCED_BOOLEAN.get()));
+
+                return 0;
+            }));
         });
     }
 }
