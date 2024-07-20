@@ -11,12 +11,9 @@ public class ResourceConfigTestClient implements ClientModInitializer {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(ClientCommandManager.literal("checkConfig").executes(context -> {
                 context.getSource().sendFeedback(Component.literal("Synced Integer: " + TestConfig.SYNCED_INTEGER.get()));
-
-                context.getSource().sendFeedback(Component.literal("Client: " + TestConfig.SYNCED_DOUBLE.get()));
-
-                context.getSource().sendFeedback(Component.literal("Client: " + TestConfig.SYNCED_STRING.get()));
-
-                context.getSource().sendFeedback(Component.literal("Client: " + TestConfig.SYNCED_BOOLEAN.get()));
+                context.getSource().sendFeedback(Component.literal("Synced Double: " + TestConfig.SYNCED_DOUBLE.get()));
+                context.getSource().sendFeedback(Component.literal("Synced String: " + TestConfig.SYNCED_STRING.get()));
+                context.getSource().sendFeedback(Component.literal("Synced Boolean: " + TestConfig.SYNCED_BOOLEAN.get()));
 
                 return 0;
             }));

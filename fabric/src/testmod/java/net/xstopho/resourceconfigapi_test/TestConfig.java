@@ -50,8 +50,4 @@ public class TestConfig {
         BUILDER.pop().push("ArrayList Category");
         ARRAY_LIST = BUILDER.define("array_list", BLOCK_LIST);
     }
-
-    public static IResourceConfigBuilder getBuilder() {
-        return BUILDER;
-    }
 }
