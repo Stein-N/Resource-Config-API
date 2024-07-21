@@ -4,6 +4,7 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.xstopho.resourceconfigapi.ResourceConfig;
 import net.xstopho.resourceconfigapi.config.ResourceModConfig;
+import net.xstopho.resourceconfigapi.platform.Services;
 
 public class ResourceConfigScreenEntrypoint implements ModMenuApi {
 
@@ -20,7 +21,7 @@ public class ResourceConfigScreenEntrypoint implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> new ConfigScreenBuilder(modId, config);
+        return parent -> new ConfigScreenBuilder(parent, Services.getModName(modId), config);
     }
 
     private void isAlreadyRegistered(String modId) {

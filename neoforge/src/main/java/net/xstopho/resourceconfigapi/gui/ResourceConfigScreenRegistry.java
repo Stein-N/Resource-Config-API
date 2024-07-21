@@ -14,7 +14,7 @@ public class ResourceConfigScreenRegistry {
     public static void register(String modId, ResourceModConfig config) {
         isAlreadyRegistered(modId);
         ModLoadingContext.get().registerExtensionPoint(
-                IConfigScreenFactory.class, () -> (modContainer, screen) -> new ConfigScreenBuilder(modId, config));
+                IConfigScreenFactory.class, () -> (modContainer, screen) -> new ConfigScreenBuilder(screen, modId, config));
         CONFIGS.add(modId);
     }
 

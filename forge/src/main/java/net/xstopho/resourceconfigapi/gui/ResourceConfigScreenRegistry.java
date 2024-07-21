@@ -16,7 +16,7 @@ public class ResourceConfigScreenRegistry{
         isAlreadyRegistered(modId);
         ModLoadingContext.get().registerExtensionPoint(
                 ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new ConfigScreenBuilder(Services.getModName(modId), config))
+                () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new ConfigScreenBuilder(screen, Services.getModName(modId), config))
         );
         CONFIGS.add(modId);
     }

@@ -17,6 +17,17 @@ public class ResourceConfigTestClient implements ClientModInitializer {
 
                 return 0;
             }));
+
+            dispatcher.register(ClientCommandManager.literal("checkTranslation").executes(context -> {
+                String path = "General.enableModMenu";
+                String pathTranslation = "config.path.general.enableModMenu";
+
+                Component noTranslation = Component.translatable(pathTranslation);
+
+                context.getSource().sendFeedback(noTranslation.getString().equals(pathTranslation) ? Component.literal(path) : Component.translatable(pathTranslation));
+                context.getSource().sendFeedback(Component.translatable("config.test.tooltip2"));
+                return 0;
+            }));
         });
     }
 }
