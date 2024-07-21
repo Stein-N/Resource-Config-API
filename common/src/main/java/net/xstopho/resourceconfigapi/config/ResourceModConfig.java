@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ModConfigFile {
+public class ResourceModConfig {
 
     private final String modId;
     private final File file;
@@ -30,7 +30,7 @@ public class ModConfigFile {
 
     private CommentedConfig config = CommentedConfig.inMemory();
 
-    public ModConfigFile(String modId, String fileName, IResourceConfigBuilder builder, Path configPath, boolean disableRangedComments) {
+    public ResourceModConfig(String modId, String fileName, IResourceConfigBuilder builder, Path configPath, boolean disableRangedComments) {
         this.file = new File(configPath + "/" + fileName + ".toml");
         this.disableRangedComments = disableRangedComments;
         createFilePathIfNeeded(configPath);

@@ -7,7 +7,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.builder.IResourceConfigBuilder;
-import net.xstopho.resourceconfigapi.config.ModConfigFile;
+import net.xstopho.resourceconfigapi.config.ResourceModConfig;
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 import net.xstopho.resourceconfigapi.network.ConfigNetwork;
 
@@ -19,10 +19,10 @@ public record SyncBooleanConfigEntryPacket(String configName, String path, Boole
 
     public static void apply(SyncBooleanConfigEntryPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
-            HashMap<String, ModConfigFile> configs = ConfigRegistry.getConfigFiles();
+            HashMap<String, ResourceModConfig> configs = ConfigRegistry.getConfigFiles();
 
             if (configs.containsKey(packet.configName())) {
-                ModConfigFile config = configs.get(packet.configName());
+                ResourceModConfig config = configs.get(packet.configName());
 
                 IResourceConfigBuilder builder = config.getBuilder();
 

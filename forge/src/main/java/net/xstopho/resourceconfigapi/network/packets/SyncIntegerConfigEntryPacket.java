@@ -4,7 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.builder.IResourceConfigBuilder;
-import net.xstopho.resourceconfigapi.config.ModConfigFile;
+import net.xstopho.resourceconfigapi.config.ResourceModConfig;
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 
 import java.util.HashMap;
@@ -33,10 +33,10 @@ public class SyncIntegerConfigEntryPacket {
 
     public static void handle(SyncIntegerConfigEntryPacket packet, CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> {
-            HashMap<String, ModConfigFile> configs = ConfigRegistry.getConfigFiles();
+            HashMap<String, ResourceModConfig> configs = ConfigRegistry.getConfigFiles();
 
             if (configs.containsKey(packet.fileName)) {
-                ModConfigFile config = configs.get(packet.fileName);
+                ResourceModConfig config = configs.get(packet.fileName);
 
                 IResourceConfigBuilder builder = config.getBuilder();
 
