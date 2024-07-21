@@ -103,4 +103,8 @@ public class ResourceModConfig {
     public IResourceConfigBuilder getBuilder() {
         return builder;
     }
+
+    public CommentedConfig getConfig() {
+        return config;
+    }
 }

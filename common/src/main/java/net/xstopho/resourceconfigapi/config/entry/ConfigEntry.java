@@ -1,9 +1,10 @@
 package net.xstopho.resourceconfigapi.config.entry;
 
+import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 public class ConfigEntry<T> {
-    protected final String path;
+    protected final String path, translation;
     protected final ConfigValue<T> configValue;
     protected final boolean sync;
 
@@ -11,9 +12,10 @@ public class ConfigEntry<T> {
     private T value, serverValue;
 
 
-    public ConfigEntry(String path, ConfigValue<T> configValue, boolean sync) {
+    public ConfigEntry(String path, ConfigValue<T> configValue, String translation, boolean sync) {
         this.path = path;
         this.configValue = configValue;
+        this.translation = translation;
         this.sync = sync;
     }
 
@@ -52,5 +54,9 @@ public class ConfigEntry<T> {
 
     public T value() {
         return value;
+    }
+
+    public String getTranslation() {
+        return translation;
     }
 }

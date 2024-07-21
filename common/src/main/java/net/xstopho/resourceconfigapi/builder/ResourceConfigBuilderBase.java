@@ -11,6 +11,7 @@ public abstract class ResourceConfigBuilderBase implements IResourceConfigBuilde
 
     private String category, comment;
     private boolean sync;
+    private String translation;
     private Map<String, ConfigEntry<?>> entries = new LinkedHashMap<>();
     private Map<String, String> categoryComments = new LinkedHashMap<>();
 
@@ -53,6 +54,14 @@ public abstract class ResourceConfigBuilderBase implements IResourceConfigBuilde
     }
 
     @Override
+    public IResourceConfigBuilder translation(String key) {
+        if (translation != null) translation = key;
+        else throw new IllegalArgumentException("You already defined an translation key!");
+
+        return this;
+    }
+
+    @Override
     public IResourceConfigBuilder sync() {
         this.sync = true;
         return this;
@@ -61,7 +70,7 @@ public abstract class ResourceConfigBuilderBase implements IResourceConfigBuilde
     <T> Supplier<T> createEntry(String path, ConfigValue<T> configValue) {
         if (this.entries.containsKey(path)) throw new IllegalStateException("Key '" + path + "' is already defined!");
 
-        ConfigEntry<T> entry = new ConfigEntry<>(path, configValue, sync);
+        ConfigEntry<T> entry = new ConfigEntry<>(path, configValue, translation, sync);
         addEntry(path, entry);
 
         return entry::getValue;

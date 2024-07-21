@@ -15,6 +15,7 @@ public interface IResourceConfigBuilder {
     IResourceConfigBuilder push(String category);
     IResourceConfigBuilder pop();
     IResourceConfigBuilder comment(String comment);
+    IResourceConfigBuilder translation(String key);
     IResourceConfigBuilder sync();
 
     Supplier<Boolean> define(String key, Boolean defaultValue);
