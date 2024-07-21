@@ -13,6 +13,10 @@ public class Services {
         return load(IPlatformHelper.class).getConfigDir();
     }
 
+    public static String getModName(String modId) {
+        return load(IPlatformHelper.class).getModName(modId);
+    }
+
     public static <T> T load(Class<T> clazz) {
 
         final T loadedService = ServiceLoader.load(clazz)
