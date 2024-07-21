@@ -23,11 +23,10 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
 
+    modImplementation "com.terraformersmc:modmenu:${mod_menu}"
+
     implementation group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
     includedLibs group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
-
-    // Runtime Mods
-    modRuntimeOnly "maven.modrinth:modmenu:${mod_menu}"
 }
 
 loom {

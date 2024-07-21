@@ -1,14 +1,13 @@
 package net.xstopho.resourceconfigapi.handler;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.xstopho.resourceconfigapi.ResourceConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
-import net.xstopho.resourceconfigapi.config.ModConfigFile;
+import net.xstopho.resourceconfigapi.config.ResourceModConfig;
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 import net.xstopho.resourceconfigapi.network.packets.SyncBooleanConfigEntryPacket;
 import net.xstopho.resourceconfigapi.network.packets.SyncDoubleConfigEntryPacket;
@@ -24,11 +23,11 @@ public class NeoForgeEventHandler {
     @SubscribeEvent
     public static void registerLoginEvents(PlayerEvent.PlayerLoggedInEvent event) {
         ResourceConfigConstants.LOG.info("Syncing Config Values with Client");
-        HashMap<String, ModConfigFile> configs = ConfigRegistry.getConfigFiles();
+        HashMap<String, ResourceModConfig> configs = ConfigRegistry.getConfigFiles();
 
-        for (Map.Entry<String, ModConfigFile> config : configs.entrySet()) {
+        for (Map.Entry<String, ResourceModConfig> config : configs.entrySet()) {
             ResourceConfigConstants.LOG.info("Syncing Values for ModConfigFile: {}", config.getKey());
-            ModConfigFile modConfig = config.getValue();
+            ResourceModConfig modConfig = config.getValue();
 
             for (ConfigEntry<?> entry : modConfig.getBuilder().getEntries().values()) {
                 if (entry.syncWithServer()) {
