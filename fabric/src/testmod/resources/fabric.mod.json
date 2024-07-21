@@ -8,6 +8,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTest" ],
-        "client": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTestClient" ]
+        "client": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTestClient" ],
+        "modmenu": [ "net.xstopho.resourceconfigapi_test.compat.ModMenuCompat" ]
     }
 }
