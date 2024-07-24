@@ -3,7 +3,7 @@ plugins {
 }
 
 publishing {
-    def mavenDirectory = MAVEN_REPOSITORY_TEST
+    def mavenDirectory = MAVEN_REPOSITORY
     def artifact = mod_id + "-" + project.name
     def commitMessage = artifact + " " + version
 
