@@ -60,11 +60,6 @@ sourceSets.each {
     it.java.destinationDirectory = dir
 }
 
-processResources {
-    exclude "${mod_id}.mixin.json"
-    exclude "${mod_id}.forge.mixin.json"
-}
-
 // Loader Specific Settings
 publishMods {
     file = jar.archiveFile
