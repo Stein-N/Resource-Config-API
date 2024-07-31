@@ -1,6 +1,5 @@
 package net.xstopho.resourceconfigapi.config.entry;
 
-import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
 public class ConfigEntry<T> {

@@ -41,5 +41,4 @@ tasks.named('sourcesJar', Jar) {
 processResources {
     dependsOn(configurations.commonResources)
     from(configurations.commonResources)
-    from file("src/generated/resources")
 }

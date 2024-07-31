@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ResourceConfigBuilder extends ResourceConfigBuilderBase{
+public class ResourceConfigBuilder extends ResourceConfigBuilderBase {
     @Override
     public Supplier<Boolean> define(String key, Boolean defaultValue) {
         return createEntry(createKey(key), new BooleanConfigValue(defaultValue, getComment()));

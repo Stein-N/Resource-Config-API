@@ -11,9 +11,7 @@ import net.xstopho.resourceconfigapi.builder.IResourceConfigBuilder;
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 import net.xstopho.resourceconfigapi.config.values.ConfigValue;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -102,9 +100,5 @@ public class ResourceModConfig {
 
     public IResourceConfigBuilder getBuilder() {
         return builder;
-    }
-
-    public CommentedConfig getConfig() {
-        return config;
     }
 }
