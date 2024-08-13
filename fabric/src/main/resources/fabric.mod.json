@@ -19,7 +19,7 @@
     },
     "depends": {
         "fabricloader": "*",
-        "minecraft": "${minecraft_version}",
+        "minecraft": "~1.21",
         "java": ">=21"
     },
     "custom": {

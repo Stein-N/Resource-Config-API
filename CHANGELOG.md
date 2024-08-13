@@ -1,3 +1,2 @@
-#### v2.1.1
-- Config Values can be tagged to be Synced between Server and Client
-  - Lists aren't currently supported
+#### v2.1.2
+- fixing the accepted Minecraft versions for Fabric version
