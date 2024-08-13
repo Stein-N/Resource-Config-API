@@ -13,12 +13,12 @@ publishMods {
     modrinth {
         accessToken = MODRINTH_API_KEY
         projectId = modrinth_id
-        minecraftVersions.add("${minecraft_version}")
+        minecraftVersions.addAll('1.21', '1.21.1')
     }
     curseforge {
         accessToken = CURSEFORGE_API_KEY
         projectId = curseforge_id
-        minecraftVersions.add("${minecraft_version}")
+        minecraftVersions.addAll('1.21', '1.21.1')
 
         clientRequired = true
         serverRequired = true
