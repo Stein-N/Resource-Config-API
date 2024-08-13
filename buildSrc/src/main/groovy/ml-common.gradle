@@ -87,6 +87,7 @@ processResources {
 
             // NeoForge Keys
             "neoforge_version": neoforge_version,
+            "neoforge_version_range": neoforge_version_range,
 
             // Forge Keys
             "forge_version": forge_version,

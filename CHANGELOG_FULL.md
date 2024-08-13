@@ -1,3 +1,6 @@
+#### v2.1.3
+- fixing an issue with the dependencies for neoforge
+
 #### v2.1.2
 - fixing the accepted Minecraft versions for Fabric version
 
