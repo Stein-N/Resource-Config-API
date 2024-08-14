@@ -29,6 +29,10 @@ tasks.named('javadoc', Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+
 jar {
     from(rootProject.file("LICENSE")) {
         rename { "${it}_${mod_name}" }
