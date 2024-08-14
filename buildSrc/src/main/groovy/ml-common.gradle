@@ -29,7 +29,7 @@ tasks.named('javadoc', Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 
-tasks.withType(GenerateModuleMetadata) {
+tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
 }
 
