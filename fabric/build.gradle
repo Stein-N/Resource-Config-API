@@ -1,7 +1,6 @@
 plugins {
     id 'ml-loader'
     id 'fabric-loom'
-    id 'me.modmuss50.mod-publish-plugin'
 }
 
 configurations {
@@ -18,6 +17,7 @@ sourceSets {
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
+
     testmodImplementation sourceSets.main.output;
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
