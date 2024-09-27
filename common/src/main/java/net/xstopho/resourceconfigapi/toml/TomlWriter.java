@@ -1,7 +1,5 @@
 package net.xstopho.resourceconfigapi.toml;
 
-import de.stein_n.toml_lib4j.util.TomlHelper;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,18 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Writes a {@link TomlConfig} object to a TOML file or string.
- */
 @SuppressWarnings("unchecked")
 public class TomlWriter {
 
-    /**
-     * Writes the given configuration to the specified file.
-     *
-     * @param config the configuration to write
-     * @param file the file to write the configuration to
-     */
     public void write(TomlConfig config, File file) {
         try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(writeToString(config));
@@ -32,12 +21,6 @@ public class TomlWriter {
         }
     }
 
-    /**
-     * Converts the given configuration to a TOML formatted string.
-     *
-     * @param config the configuration to convert
-     * @return the TOML formatted string
-     */
     public String writeToString(TomlConfig config) {
         Map<String, Object> configEntries = config.getEntries();
         StringBuilder builder = new StringBuilder();
@@ -58,24 +41,10 @@ public class TomlWriter {
         return builder.toString();
     }
 
-    /**
-     * Writes a key-value pair to the StringBuilder in TOML format.
-     *
-     * @param key the key
-     * @param object the value
-     * @param builder the StringBuilder to append the formatted string to
-     */
     private void writeObject(String key, Object object, StringBuilder builder) {
         builder.append(key).append(" = ").append(TomlHelper.convertToString(object));
     }
 
-    /**
-     * Writes a collection to the StringBuilder in TOML format.
-     *
-     * @param key the key
-     * @param list the collection
-     * @param builder the StringBuilder to append the formatted string to
-     */
     private void writeList(String key, Object list, StringBuilder builder) {
         if (validList(list)) {
             builder.append(key).append(" = [");
@@ -84,12 +53,6 @@ public class TomlWriter {
         } else throw new IllegalStateException("You can only nest Lists one Time!");
     }
 
-    /**
-     * Iterates through the Collection Entries and writes them as a List in the Toml Format.
-     *
-     * @param list
-     * @param builder
-     */
     private void writeList(Object list, StringBuilder builder) {
         if (list.getClass().isArray()) list = TomlHelper.arrayToList(list);
         for (Iterator<?> iterator = ((Collection<?>) list).iterator(); iterator.hasNext();) {
@@ -109,13 +72,6 @@ public class TomlWriter {
         }
     }
 
-    /**
-     * Writes a map to the StringBuilder in TOML format.
-     *
-     * @param category the category name
-     * @param map the map to write
-     * @param builder the StringBuilder to append the formatted string to
-     */
     private void writeMap(String category, Map<String, Object> map, StringBuilder builder) {
         builder.append("[").append(category).append("]\n");
 
@@ -138,11 +94,6 @@ public class TomlWriter {
         }
     }
 
-    /**
-     *
-     * @param object
-     * @return
-     */
     private boolean validList(Object object) {
         if (object instanceof List<?> list0) {
             if (list0.getFirst() instanceof List<?> list1) {
