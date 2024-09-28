@@ -11,7 +11,7 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class TomlWriter {
 
-    public void write(TomlConfig config, File file) {
+    public static void write(TomlConfig config, File file) {
         try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(writeToString(config));
 
@@ -21,7 +21,7 @@ public class TomlWriter {
         }
     }
 
-    public String writeToString(TomlConfig config) {
+    public static String writeToString(TomlConfig config) {
         Map<String, Object> configEntries = config.getEntries();
         StringBuilder builder = new StringBuilder();
 
@@ -41,11 +41,11 @@ public class TomlWriter {
         return builder.toString();
     }
 
-    private void writeObject(String key, Object object, StringBuilder builder) {
+    private static void writeObject(String key, Object object, StringBuilder builder) {
         builder.append(key).append(" = ").append(TomlHelper.convertToString(object));
     }
 
-    private void writeList(String key, Object list, StringBuilder builder) {
+    private static void writeList(String key, Object list, StringBuilder builder) {
         if (validList(list)) {
             builder.append(key).append(" = [");
             writeList(list, builder);
@@ -53,7 +53,7 @@ public class TomlWriter {
         } else throw new IllegalStateException("You can only nest Lists one Time!");
     }
 
-    private void writeList(Object list, StringBuilder builder) {
+    private static void writeList(Object list, StringBuilder builder) {
         if (list.getClass().isArray()) list = TomlHelper.arrayToList(list);
         for (Iterator<?> iterator = ((Collection<?>) list).iterator(); iterator.hasNext();) {
             Object value = iterator.next();
@@ -72,7 +72,7 @@ public class TomlWriter {
         }
     }
 
-    private void writeMap(String category, Map<String, Object> map, StringBuilder builder) {
+    private static void writeMap(String category, Map<String, Object> map, StringBuilder builder) {
         builder.append("[").append(category).append("]\n");
 
         for (Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator(); iterator.hasNext();) {
@@ -94,7 +94,7 @@ public class TomlWriter {
         }
     }
 
-    private boolean validList(Object object) {
+    private static boolean validList(Object object) {
         if (object instanceof List<?> list0) {
             if (list0.getFirst() instanceof List<?> list1) {
                 return !(list1.getFirst() instanceof List<?> || list1.getFirst().getClass().isArray());

@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class TomlParser {
 
-    public TomlConfig parse(Path filePath) {
+    public static TomlConfig parse(Path filePath) {
         try (Stream<String> lines = Files.lines(filePath)) {
             return parse(lines.toList());
 
@@ -24,7 +24,7 @@ public class TomlParser {
         return parse(Arrays.asList(lines));
     }
 
-    private TomlConfig parse(List<String> lines) {
+    private static TomlConfig parse(List<String> lines) {
         TomlConfig config = new TomlConfig();
         Map<String, Object> currentMap = null;
         String mapKey = "";
@@ -65,7 +65,7 @@ public class TomlParser {
         return config;
     }
 
-    private void parseMap(Map<String, Object> currentMap, String line) {
+    private static void parseMap(Map<String, Object> currentMap, String line) {
         String[] parts = line.split("=");
         String key = getRawKey(parts[0]);
         if (parts[1].contains("[")) {
@@ -75,7 +75,7 @@ public class TomlParser {
         }
     }
 
-    private void parseValue(TomlConfig config, String line) {
+    private static void parseValue(TomlConfig config, String line) {
         String[] parts = line.split("=");
 
         String key = getRawKey(parts[0]);
@@ -87,7 +87,7 @@ public class TomlParser {
         }
     }
 
-    private List<Object> parseList(String value) {
+    private static List<Object> parseList(String value) {
         List<Object> list = new ArrayList<>();
 
         if (value.contains("[[")) {
@@ -103,7 +103,7 @@ public class TomlParser {
         }
     }
 
-    private List<Object> parseArrayList(String value) {
+    private static List<Object> parseArrayList(String value) {
         List<Object> list = new ArrayList<>();
         String[] parts = value.split("],");
 
@@ -119,7 +119,7 @@ public class TomlParser {
         return list;
     }
 
-    private String getRawKey(String value) {
+    private static String getRawKey(String value) {
         if (value.contains("[")) value = value.replace("[", "");
         if (value.contains("]")) value = value.replace("]", "");
         if (value.contains("\"")) value = value.replace("\"", "");
