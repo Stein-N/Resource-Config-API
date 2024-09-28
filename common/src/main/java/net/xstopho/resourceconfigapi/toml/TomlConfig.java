@@ -3,10 +3,11 @@ package net.xstopho.resourceconfigapi.toml;
 
 import net.xstopho.resourceconfigapi.api.Config;
 
+import java.io.Serializable;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
-public class TomlConfig implements Config {
+public class TomlConfig implements Config, Serializable {
 
     private final String INVALID_KEY = "Your key contains illegal characters. Allowed are: a-z, A-Z, whitespace and underscore!";
     private final String KEY_NOT_PRESENT = "The given key isn't present in your Config!";
