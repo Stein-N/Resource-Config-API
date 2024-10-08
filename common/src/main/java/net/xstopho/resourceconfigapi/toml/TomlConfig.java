@@ -1,6 +1,7 @@
 package net.xstopho.resourceconfigapi.toml;
 
 
+import net.xstopho.resourceconfigapi.ResourceConfigConstants;
 import net.xstopho.resourceconfigapi.api.Config;
 
 import java.io.Serializable;
@@ -30,11 +31,12 @@ public class TomlConfig implements Config, Serializable {
         String path = createKey(key.split("\\."));
         String valueName = getValueName(key);
 
-        if (entries.containsKey(path)) {
-            Map<String, Object> valueMap = (Map<String, Object>) entries.get(path);
-            return valueMap.containsKey(valueName);
+        Object value = entries.get(path);
+
+        if (value instanceof Map<?,?> map) {
+            return map.containsKey(valueName);
         }
-        return false;
+        return entries.containsKey(valueName);
     }
 
 

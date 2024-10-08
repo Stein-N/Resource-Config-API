@@ -38,7 +38,7 @@ public interface IResourceConfigBuilder extends Serializable {
 
     ConfigEntry<Character> define(String key, Character defaultValue);
 
-    <T extends Enum<T>> ConfigEntry<Enum<T>> define(String key, Enum<T> defaultValue);
+    <T extends Enum<T>> ConfigEntry<T> define(String key, T defaultValue);
     <T> ConfigEntry<List<T>> define(String key, List<T> defaultValue);
 
     ConfigEntry<Integer[]> define(String key, Integer[] defaultValue);

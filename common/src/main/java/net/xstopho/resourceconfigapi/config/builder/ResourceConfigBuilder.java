@@ -86,7 +86,7 @@ public class ResourceConfigBuilder extends ResourceConfigBuilderBase {
     }
 
     @Override
-    public <T extends Enum<T>> ConfigEntry<Enum<T>> define(String key, Enum<T> defaultValue) {
+    public <T extends Enum<T>> ConfigEntry<T> define(String key, T defaultValue) {
         return createEntry(createKey(key), new EnumConfigValue<>(defaultValue));
     }
 

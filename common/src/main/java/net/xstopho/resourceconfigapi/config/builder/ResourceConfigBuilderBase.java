@@ -9,7 +9,7 @@ import java.util.Map;
 public abstract class ResourceConfigBuilderBase implements IResourceConfigBuilder {
 
     private boolean sync;
-    private String category;
+    private String category = "";
     private Map<String, ConfigEntry<?>> entries = new LinkedHashMap<>();
 
     @Override
@@ -19,7 +19,7 @@ public abstract class ResourceConfigBuilderBase implements IResourceConfigBuilde
 
     @Override
     public IResourceConfigBuilder push(String category) {
-        if (isEmpty(category)) {
+        if (isEmpty(this.category)) {
             this.category = category;
         } else throw new IllegalArgumentException("Category is already set! Use pop() before pushing a new Category!");
         return this;

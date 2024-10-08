@@ -20,18 +20,16 @@ public class ResourceModConfig {
     private final String modId;
     private final File file;
     private final IResourceConfigBuilder builder;
-    private final ConfigType type;
 
     private TomlConfig config = new TomlConfig();
 
     public ResourceModConfig(String modId, IResourceConfigBuilder builder, ConfigType type) {
-        this.file = new File(Services.getConfigPath() + "/" + modId + "/" + modId + "_" + type + ".toml");
+        this.file = new File(Services.getConfigPath() + "/" + modId + "/" + type + ".toml");
         this.builder = builder;
         this.modId = modId;
-        this.type = type;
         createFile(file);
 
-        readConfigFile();
+        config = readConfigFile();
         List<ConfigEntry<?>> entries = new ArrayList<>(builder.getEntries().values());
         entries.forEach(this::readConfigValues);
 
@@ -44,9 +42,9 @@ public class ResourceModConfig {
         entries.forEach(ConfigEntry::setLoaded);
     }
 
-    void readConfigFile() {
-        if (!file.exists()) return;
-        config = new TomlParser().parse(Path.of(file.getPath()));
+    TomlConfig readConfigFile() {
+        if (!file.exists()) ResourceConfigConstants.LOG.error("File '{}' not existing!", file.getName());
+        return new TomlParser().parse(Path.of(file.getPath()));
     }
 
     void writeConfigFile() {
@@ -59,12 +57,12 @@ public class ResourceModConfig {
 
     <T> void readConfigValues(ConfigEntry<T> entry) {
         String path = entry.getPath();
-        T defaultVale = entry.getConfigValue().get();
-        Class<?> clazz = defaultVale.getClass();
+        T defaultValue = entry.getConfigValue().get();
+        Class<?> clazz = defaultValue.getClass();
 
         if (!config.contains(path) || !entry.getConfigValue().isValid(config.get(path, clazz))) {
-            entry.setValue(defaultVale);
-            ResourceConfigConstants.LOG.error("Config Entry '{}' isn't correct ans is set to its default value '{}'", path, defaultVale);
+            entry.setValue(defaultValue);
+            ResourceConfigConstants.LOG.error("Config Entry '{}' isn't correct ans is set to its default value '{}'", path, defaultValue);
         } else {
             entry.setValue((T) config.get(path, clazz));
         }
@@ -78,5 +76,9 @@ public class ResourceModConfig {
         } catch(IOException e) {
             ResourceConfigConstants.LOG.error("Error while creating Config File: {} for Mod: {}\nError Message: {}", file.getName(), modId, e.getMessage());
         }
+    }
+
+    public IResourceConfigBuilder getBuilder() {
+        return this.builder;
     }
 }
