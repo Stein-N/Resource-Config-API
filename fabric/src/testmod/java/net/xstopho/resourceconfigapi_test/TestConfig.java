@@ -1,53 +1,77 @@
 package net.xstopho.resourceconfigapi_test;
 
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
-import net.xstopho.resourceconfigapi.builder.IResourceConfigBuilder;
-import net.xstopho.resourceconfigapi.builder.ResourceConfigBuilder;
+import net.xstopho.resourceconfigapi.api.ConfigType;
+import net.xstopho.resourceconfigapi.config.builder.ResourceConfigBuilder;
+import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class TestConfig {
 
     public static final ResourceConfigBuilder BUILDER = new ResourceConfigBuilder();
 
-    public static Supplier<Integer> NORMAL_INTEGER, RANGED_INTEGER, SYNCED_INTEGER;
-    public static Supplier<Double> NORMAL_DOUBLE, RANGED_DOUBLE, SYNCED_DOUBLE;
-    public static Supplier<Boolean> BOOLEAN, SYNCED_BOOLEAN;
-    public static Supplier<String> NORMAL_STRING, RANGED_STRING, SYNCED_STRING;
-    public static Supplier<List<String>> LIST;
-    public static Supplier<ArrayList<String>> ARRAY_LIST;
+    private static final List<Integer> integerList = List.of(1, 2, 3, 4, 5);
 
-    private static final List<String> ITEM_LIST = Arrays.asList(Items.DIAMOND.toString(), Items.DIAMOND_BLOCK.toString());
-    private static final ArrayList<String> BLOCK_LIST = new ArrayList<>(List.of(Blocks.ANDESITE.toString(), Blocks.DIAMOND_ORE.toString()));
+    public static final ConfigEntry<Boolean> BOOLEAN, CATEGORY_BOOLEAN;
+    public static final ConfigEntry<Byte> BYTE, CATEGORY_BYTE;
+    public static final ConfigEntry<Character> CHARACTER, CATEGORY_CHARACTER;
+    public static final ConfigEntry<Double> DOUBLE, CATEGORY_DOUBLE;
+    public static final ConfigEntry<Float> FLOAT, CATEGORY_FLOAT;
+    public static final ConfigEntry<Integer> INTEGER, CATEGORY_INTEGER;
+    public static final ConfigEntry<Long> LONG, CATEGORY_LONG;
+    public static final ConfigEntry<Short> SHORT, CATEGORY_SHORT;
+    public static final ConfigEntry<String> STRING, CATEGORY_STRING;
+    public static final ConfigEntry<ConfigType> ENUM, CATEGORY_ENUM;
+
+    public static final ConfigEntry<Byte[]> BYTE_ARRAY;
+    public static final ConfigEntry<Character[]> CHARACTER_ARRAY;
+    public static final ConfigEntry<Double[]> DOUBLE_ARRAY;
+    public static final ConfigEntry<Float[]> FLOAT_ARRAY;
+    public static final ConfigEntry<Integer[]> INTEGER_ARRAY;
+    public static final ConfigEntry<Long[]> LONG_ARRAY;
+    public static final ConfigEntry<Short[]> SHORT_ARRAY;
+    public static final ConfigEntry<String[]> STRING_ARRAY;
+    public static final ConfigEntry<ConfigType[]> ENUM_ARRAY;
+
+    public static final ConfigEntry<List<Integer>> INTEGER_LIST, CATEGORY_INTEGER_LIST;
 
     static {
-        BUILDER.comment("Integer Category").push("Integer");
-        NORMAL_INTEGER = BUILDER.comment("normal").define("normal", 100);
-        RANGED_INTEGER = BUILDER.comment("ranged").defineInRange("ranged", 25, 0, 50);
-        SYNCED_INTEGER = BUILDER.comment("syncable").sync().define("synced", 100);
+        BOOLEAN = BUILDER.define("boolean", true);
+        BYTE = BUILDER.define("byte", (byte) 12);
+        CHARACTER = BUILDER.define("character", 'j');
+        DOUBLE = BUILDER.define("double", 2.9);
+        FLOAT = BUILDER.define("float", 35.5874f);
+        INTEGER = BUILDER.define("integer", 100);
+        LONG = BUILDER.define("long", 983649816749124L);
+        SHORT = BUILDER.define("short", (short) 345);
+        STRING = BUILDER.define("string", "Hello World!");
+        INTEGER_LIST = BUILDER.define("integerList", integerList);
+        ENUM = BUILDER.define("enum", ConfigType.CLIENT);
 
-        BUILDER.pop().comment("Double Category").comment("With Multiline Comment").push("Double");
-        NORMAL_DOUBLE = BUILDER.comment("Normal Double").comment("with Multiline Comment").define("normal", 2.5);
-        RANGED_DOUBLE = BUILDER.defineInRange("ranged", 0.5, 0.0, 1.0);
-        SYNCED_DOUBLE = BUILDER.sync().define("synced", 2.5);
+        BUILDER.push("Category");
 
-        BUILDER.pop().push("String Category");
-        NORMAL_STRING = BUILDER.define("normal", "this is a String");
-        RANGED_STRING = BUILDER.defineInRange("ranged", "This is a ranged String", 0, 25);
-        SYNCED_STRING = BUILDER.sync().define("synced", "String should get synced.");
+        CATEGORY_BOOLEAN = BUILDER.define("boolean", false);
+        CATEGORY_BYTE = BUILDER.define("byte", (byte) 34);
+        CATEGORY_CHARACTER = BUILDER.define("character", 'l');
+        CATEGORY_DOUBLE = BUILDER.define("double", 3.8);
+        CATEGORY_FLOAT = BUILDER.define("float", 5.39874f);
+        CATEGORY_INTEGER = BUILDER.define("integer", 388);
+        CATEGORY_LONG = BUILDER.define("long", 238745L);
+        CATEGORY_SHORT = BUILDER.define("short", (short) 457);
+        CATEGORY_STRING = BUILDER.define("string", "Category String");
+        CATEGORY_ENUM = BUILDER.define("enum", ConfigType.COMMON);
+        CATEGORY_INTEGER_LIST = BUILDER.define("integerList", integerList);
 
-        BUILDER.pop().push("Boolean Category");
-        BOOLEAN = BUILDER.define("normal", true);
-        SYNCED_BOOLEAN = BUILDER.sync().define("synced", true);
+        BUILDER.pop();
 
-        BUILDER.pop().push("List Category");
-        LIST = BUILDER.define("list", ITEM_LIST);
-
-        BUILDER.pop().push("ArrayList Category");
-        ARRAY_LIST = BUILDER.define("array_list", BLOCK_LIST);
+        BYTE_ARRAY = BUILDER.define("byteArray", new Byte[]{23, 65, 78});
+        CHARACTER_ARRAY = BUILDER.define("characterArray", new Character[]{'l', 'ä', 'f'});
+        DOUBLE_ARRAY = BUILDER.define("doubleArray", new Double[]{354.435, 3.9, 348.0});
+        FLOAT_ARRAY = BUILDER.define("floatArray", new Float[]{35.35f, 213124.356f, 0.14896124f});
+        INTEGER_ARRAY = BUILDER.define("integerArray", new Integer[]{1, 2, 3, 4, 5});
+        LONG_ARRAY = BUILDER.define("longArray", new Long[]{1234532L, 1249612L, 314612L});
+        SHORT_ARRAY = BUILDER.define("shortArray", new Short[]{(short) 213, (short) 124, (short) 2355});
+        STRING_ARRAY = BUILDER.define("stringArray", new String[]{"Audi", "Porsche", "Mercedes"});
+        ENUM_ARRAY = BUILDER.define("enumArray", new ConfigType[]{ConfigType.COMMON, ConfigType.CLIENT, ConfigType.SERVER});
     }
 }

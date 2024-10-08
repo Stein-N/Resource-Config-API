@@ -10,10 +10,17 @@ public class ResourceConfigTestClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(ClientCommandManager.literal("checkConfig").executes(context -> {
-                context.getSource().sendFeedback(Component.literal("Synced Integer: " + TestConfig.SYNCED_INTEGER.get()));
-                context.getSource().sendFeedback(Component.literal("Synced Double: " + TestConfig.SYNCED_DOUBLE.get()));
-                context.getSource().sendFeedback(Component.literal("Synced String: " + TestConfig.SYNCED_STRING.get()));
-                context.getSource().sendFeedback(Component.literal("Synced Boolean: " + TestConfig.SYNCED_BOOLEAN.get()));
+                context.getSource().sendFeedback(Component.literal("Boolean: " + TestConfig.BOOLEAN.get()));
+                context.getSource().sendFeedback(Component.literal("Byte: " + TestConfig.BYTE.get()));
+                context.getSource().sendFeedback(Component.literal("Character: " + TestConfig.CHARACTER.get()));
+                context.getSource().sendFeedback(Component.literal("Double: " + TestConfig.DOUBLE.get()));
+                context.getSource().sendFeedback(Component.literal("Float: " + TestConfig.FLOAT.get()));
+                context.getSource().sendFeedback(Component.literal("Integer: " + TestConfig.INTEGER.get()));
+                context.getSource().sendFeedback(Component.literal("Long: " + TestConfig.LONG.get()));
+                context.getSource().sendFeedback(Component.literal("Short: " + TestConfig.SHORT.get()));
+                context.getSource().sendFeedback(Component.literal("String: " + TestConfig.STRING.get()));
+                context.getSource().sendFeedback(Component.literal("Integer List: " + TestConfig.INTEGER_LIST.get()));
+                context.getSource().sendFeedback(Component.literal("Enum: " + TestConfig.ENUM.get()));
 
                 return 0;
             }));
