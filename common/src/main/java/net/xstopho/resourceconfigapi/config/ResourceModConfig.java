@@ -62,7 +62,7 @@ public class ResourceModConfig {
 
         if (!config.contains(path) || !entry.getConfigValue().isValid(config.get(path, clazz))) {
             entry.setValue(defaultValue);
-            ResourceConfigConstants.LOG.error("Config Entry '{}' isn't correct ans is set to its default value '{}'", path, defaultValue);
+            ResourceConfigConstants.LOG.error("Config Entry '{}' isn't correct and is set to its default value '{}'", path, defaultValue);
         } else {
             entry.setValue((T) config.get(path, clazz));
         }
