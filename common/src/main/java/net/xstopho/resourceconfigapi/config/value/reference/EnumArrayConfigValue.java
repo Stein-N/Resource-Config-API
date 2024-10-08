@@ -4,8 +4,8 @@ import net.xstopho.resourceconfigapi.config.value.ConfigValue;
 
 import java.util.function.Predicate;
 
-public class EnumArrayConfigValue<T extends Enum<T>> extends ConfigValue<Enum<T>[]> {
-    public EnumArrayConfigValue(Enum<T>[] defaultValue) {
+public class EnumArrayConfigValue<T extends Enum<T>> extends ConfigValue<T[]> {
+    public EnumArrayConfigValue(T[] defaultValue) {
         super(defaultValue);
     }
 

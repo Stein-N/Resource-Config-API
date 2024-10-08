@@ -126,11 +126,6 @@ public class ResourceConfigBuilder extends ResourceConfigBuilderBase {
     }
 
     @Override
-    public ConfigEntry<Boolean[]> define(String key, Boolean[] defaultValue) {
-        return createEntry(key, new BooleanArrayConfigValue(defaultValue));
-    }
-
-    @Override
     public ConfigEntry<String[]> define(String key, String[] defaultValue) {
         return createEntry(key, new StringArrayConfigValue(defaultValue));
     }
@@ -141,7 +136,7 @@ public class ResourceConfigBuilder extends ResourceConfigBuilderBase {
     }
 
     @Override
-    public <T extends Enum<T>> ConfigEntry<Enum<T>[]> define(String key, Enum<T>[] defaultValue) {
+    public <T extends Enum<T>> ConfigEntry<T[]> define(String key, T[] defaultValue) {
         return createEntry(key, new EnumArrayConfigValue<>(defaultValue));
     }
 }
