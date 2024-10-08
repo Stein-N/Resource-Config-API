@@ -1,12 +1,13 @@
 package net.xstopho.resourceconfigapi.toml;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class TomlParser {
+public class TomlParser implements Serializable {
 
     public TomlConfig parse(Path filePath) {
         try (Stream<String> lines = Files.lines(filePath)) {
