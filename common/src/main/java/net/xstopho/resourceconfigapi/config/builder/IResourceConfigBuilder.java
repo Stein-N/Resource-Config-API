@@ -15,22 +15,22 @@ public interface IResourceConfigBuilder extends Serializable {
     IResourceConfigBuilder sync();
 
     ConfigEntry<Integer> define(String key, Integer defaultValue);
-    ConfigEntry<Integer> define(String key, Integer defaultValue, Integer min, Integer max);
+    ConfigEntry<Integer> defineInRange(String key, Integer defaultValue, Integer min, Integer max);
 
     ConfigEntry<Long> define(String key, Long defaultValue);
-    ConfigEntry<Long> define(String key, Long defaultValue, Long min, Long max);
+    ConfigEntry<Long> defineInRange(String key, Long defaultValue, Long min, Long max);
 
     ConfigEntry<Short> define(String key, Short defaultValue);
-    ConfigEntry<Short> define(String key, Short defaultValue, Short min, Short max);
+    ConfigEntry<Short> defineInRange(String key, Short defaultValue, Short min, Short max);
 
     ConfigEntry<Double> define(String key, Double defaultValue);
-    ConfigEntry<Double> define(String key, Double defaultValue, Double min, Double max);
+    ConfigEntry<Double> defineInRange(String key, Double defaultValue, Double min, Double max);
 
     ConfigEntry<Float> define(String key, Float defaultValue);
-    ConfigEntry<Float> define(String key, Float defaultValue, Float min, Float max);
+    ConfigEntry<Float> defineInRange(String key, Float defaultValue, Float min, Float max);
 
     ConfigEntry<Byte> define(String key, Byte defaultValue);
-    ConfigEntry<Byte> define(String key, Byte defaultValue, Byte min, Byte max);
+    ConfigEntry<Byte> defineInRange(String key, Byte defaultValue, Byte min, Byte max);
 
     ConfigEntry<Boolean> define(String key, Boolean defaultValue);
 
@@ -40,6 +40,17 @@ public interface IResourceConfigBuilder extends Serializable {
 
     <T extends Enum<T>> ConfigEntry<Enum<T>> define(String key, Enum<T> defaultValue);
     <T> ConfigEntry<List<T>> define(String key, List<T> defaultValue);
+
+    ConfigEntry<Integer[]> define(String key, Integer[] defaultValue);
+    ConfigEntry<Long[]> define(String key, Long[] defaultValue);
+    ConfigEntry<Short[]> define(String key, Short[] defaultValue);
+    ConfigEntry<Double[]> define(String key, Double[] defaultValue);
+    ConfigEntry<Float[]> define(String key, Float[] defaultValue);
+    ConfigEntry<Byte[]> define(String key, Byte[] defaultValue);
+    ConfigEntry<Boolean[]> define(String key, Boolean[] defaultValue);
+    ConfigEntry<String[]> define(String key, String[] defaultValue);
+    ConfigEntry<Character[]> define(String key, Character[] defaultValue);
+    <T extends Enum<T>> ConfigEntry<Enum<T>[]> define(String key, Enum<T>[] defaultValue);
 
     default boolean isEmpty(String string) {
         return string == null || string.isEmpty() || string.isBlank();
