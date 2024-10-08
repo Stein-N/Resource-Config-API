@@ -4,15 +4,14 @@ package net.xstopho.resourceconfigapi.toml;
 import net.xstopho.resourceconfigapi.api.Config;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class TomlConfig implements Config, Serializable {
-
     private final String INVALID_KEY = "Your key contains illegal characters. Allowed are: a-z, A-Z, whitespace and underscore!";
-    private final String KEY_NOT_PRESENT = "The given key isn't present in your Config!";
+    private final String KEY_NOT_PRESENT = "Key isn't present in your Config!";
     private final String NOT_LIST = "The Value you want to get isn't an instance of Collection!";
-    private final String NOT_NESTED_LIST = "The Value you want to get isn't a nested List";
 
     private final Map<String, Object> entries = new LinkedHashMap<>();
 
@@ -25,6 +24,19 @@ public class TomlConfig implements Config, Serializable {
     public TomlConfig empty() {
         return new TomlConfig();
     }
+
+    @Override
+    public boolean contains(String key) {
+        String path = createKey(key.split("\\."));
+        String valueName = getValueName(key);
+
+        if (entries.containsKey(path)) {
+            Map<String, Object> valueMap = (Map<String, Object>) entries.get(path);
+            return valueMap.containsKey(valueName);
+        }
+        return false;
+    }
+
 
     @Override
     public void setValue(String key, Object object) {
@@ -55,15 +67,13 @@ public class TomlConfig implements Config, Serializable {
         if (invalidKey(key)) throw new IllegalArgumentException(INVALID_KEY);
 
         Map<String, Object> valueMap = getValueMap(key);
-        String valueName = getValueName(key);
 
         if (valueMap != null) {
-            return (T) convert(valueMap.get(valueName), clazz);
-        } else {
-            if (entries.containsKey(key)) {
-                return (T) convert(entries.get(key), clazz);
-            } else throw new IllegalStateException(KEY_NOT_PRESENT);
+            return convertValue(valueMap, key, clazz);
         }
+        if (entries.containsKey(key)) {
+            return convertValue(entries, key, clazz);
+        } else throw new IllegalStateException(KEY_NOT_PRESENT);
     }
 
     @Override
@@ -82,9 +92,9 @@ public class TomlConfig implements Config, Serializable {
         }
 
         if (entries.containsKey(key)) {
-            if (entries.get(valueName) instanceof Collection<?>) {
+            if (entries.get(key) instanceof Collection<?>) {
                 list = convertListEntries(entries.get(key), clazz);
-            }
+            } else throw new IllegalStateException(NOT_LIST);
         }
 
         if (list != null) return list;
@@ -92,42 +102,14 @@ public class TomlConfig implements Config, Serializable {
     }
 
     @Override
-    public <T> List<List<?>> getAsListOfLists(String key, Class<T> clazz) {
+    public <T> T[] getAsArray(String key, Class<T> clazz) {
         if (invalidKey(key)) throw new IllegalArgumentException(INVALID_KEY);
 
+        List<T> list = getAsList(key, clazz);
+        T[] array = (T[]) Array.newInstance(clazz, list.size());
 
-        Map<String, Object> valueMap = getValueMap(key);
-        String valueName = getValueName(key);
-
-        List<List<?>> list = null;
-
-        if (valueMap != null) {
-            list = new ArrayList<>();
-            if (valueMap.get(valueName) instanceof List<?> valueList) {
-                if (valueList.getFirst() instanceof List<?>) {
-                    for (Object insideList : valueList) {
-                        list.add(convertListEntries(insideList, clazz));
-                    }
-                } else throw new IllegalStateException(NOT_NESTED_LIST);
-            }
-        }
-
-        if (entries.containsKey(key)) {
-            list = new ArrayList<>();
-            if (entries.get(key) instanceof List<?> valueList) {
-                if (valueList.getFirst() instanceof List<?>) {
-                    for (Object insideList : valueList) {
-                        list.add(convertListEntries(insideList, clazz));
-                    }
-                } else throw new IllegalStateException(NOT_NESTED_LIST);
-            }
-        }
-
-
-        if (list != null) return list;
-        else throw new IllegalStateException(KEY_NOT_PRESENT);
+        return list.toArray(array);
     }
-
 
     private Map<String, Object> getValueMap(String key) {
         if (invalidKey(key)) throw new IllegalArgumentException(INVALID_KEY);
@@ -150,9 +132,26 @@ public class TomlConfig implements Config, Serializable {
         return valueMap;
     }
 
+    private <T> T convertValue(Map<String, Object> valueMap, String key, Class<T> clazz) {
+        String valueName = getValueName(key);
+
+        if (clazz.isArray()) {
+            Class<?> type = clazz.getComponentType();
+            return (T) getAsArray(key, type);
+        }
+
+        if (valueMap.get(valueName) instanceof List<?>){
+            return (T) getAsList(key, clazz);
+
+        } else {
+            return (T) convert(valueMap.get(valueName), clazz);
+        }
+    }
+
     private Object convert(Object object, Class<?> clazz) {
         if (TomlHelper.isPrimitive(clazz)) return TomlHelper.convertToPrimitive(object.toString(), clazz);
         if (clazz.isEnum()) return TomlHelper.convertToEnum(object.toString(), clazz);
+
         return object.toString();
     }
 
@@ -164,7 +163,6 @@ public class TomlConfig implements Config, Serializable {
             return list;
         } else throw new IllegalStateException(NOT_LIST);
     }
-
 
     private String createKey(String[] parts) {
         StringBuilder path = new StringBuilder();

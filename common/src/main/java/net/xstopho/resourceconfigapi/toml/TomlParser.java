@@ -8,12 +8,13 @@ import java.util.stream.Stream;
 
 public class TomlParser {
 
-    public static TomlConfig parse(Path filePath) {
+    public TomlConfig parse(Path filePath) {
         try (Stream<String> lines = Files.lines(filePath)) {
             return parse(lines.toList());
 
         } catch(IOException e) {
             System.err.println("Something went wrong while parsing/reading file: " + filePath);
+            System.err.println("Creating empty Config!");
             System.err.println(e.getMessage());
             return new TomlConfig();
         }
@@ -24,7 +25,7 @@ public class TomlParser {
         return parse(Arrays.asList(lines));
     }
 
-    private static TomlConfig parse(List<String> lines) {
+    private TomlConfig parse(List<String> lines) {
         TomlConfig config = new TomlConfig();
         Map<String, Object> currentMap = null;
         String mapKey = "";
@@ -36,8 +37,8 @@ public class TomlParser {
 
             // Create new Table/Map
             if (firstChar == '[') {
-                if (currentMap != null) {
-                    config.setValue(mapKey, currentMap);
+                if (currentMap != null && !(mapKey.isEmpty() || mapKey.isBlank())) {
+                    config.getEntries().put(mapKey, currentMap);
                 }
                 currentMap = new LinkedHashMap<>();
                 mapKey = getRawKey(line);
@@ -45,14 +46,14 @@ public class TomlParser {
             }
 
             // Parse Table/Map Values
-            if (firstChar == ' ' && currentMap != null) {
+            if ((firstChar == ' ' || firstChar == '\t') && currentMap != null) {
                 parseMap(currentMap, line);
                 continue;
             }
 
             if (Character.isLetter(firstChar) || firstChar == '"') {
-                if (currentMap != null && mapKey.isEmpty()) {
-                    config.setValue(mapKey, currentMap);
+                if (currentMap != null && !(mapKey.isEmpty() || mapKey.isBlank())) {
+                    config.getEntries().put(mapKey, currentMap);
                     currentMap = null;
                     mapKey = "";
                 } else {
@@ -60,14 +61,17 @@ public class TomlParser {
                 }
             }
         }
-        if (currentMap != null) config.setValue(mapKey, currentMap);
+        if (currentMap != null && !(mapKey.isEmpty() || mapKey.isBlank())) {
+            config.getEntries().put(mapKey, currentMap);
+        }
 
         return config;
     }
 
-    private static void parseMap(Map<String, Object> currentMap, String line) {
+    private void parseMap(Map<String, Object> currentMap, String line) {
         String[] parts = line.split("=");
         String key = getRawKey(parts[0]);
+
         if (parts[1].contains("[")) {
             currentMap.put(key, parseList(parts[1]));
         } else {
@@ -75,9 +79,8 @@ public class TomlParser {
         }
     }
 
-    private static void parseValue(TomlConfig config, String line) {
+    private void parseValue(TomlConfig config, String line) {
         String[] parts = line.split("=");
-
         String key = getRawKey(parts[0]);
 
         if (parts[1].contains("[")) {
@@ -87,7 +90,7 @@ public class TomlParser {
         }
     }
 
-    private static List<Object> parseList(String value) {
+    private List<Object> parseList(String value) {
         List<Object> list = new ArrayList<>();
 
         if (value.contains("[[")) {
@@ -103,7 +106,7 @@ public class TomlParser {
         }
     }
 
-    private static List<Object> parseArrayList(String value) {
+    private List<Object> parseArrayList(String value) {
         List<Object> list = new ArrayList<>();
         String[] parts = value.split("],");
 
@@ -119,7 +122,7 @@ public class TomlParser {
         return list;
     }
 
-    private static String getRawKey(String value) {
+    private String getRawKey(String value) {
         if (value.contains("[")) value = value.replace("[", "");
         if (value.contains("]")) value = value.replace("]", "");
         if (value.contains("\"")) value = value.replace("\"", "");
