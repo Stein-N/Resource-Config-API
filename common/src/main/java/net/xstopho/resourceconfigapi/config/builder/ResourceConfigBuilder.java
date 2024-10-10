@@ -126,6 +126,11 @@ public class ResourceConfigBuilder extends ResourceConfigBuilderBase {
     }
 
     @Override
+    public ConfigEntry<Boolean[]> define(String key, Boolean[] defaultValue) {
+        return createEntry(key, new BooleanArrayConfigValue(defaultValue));
+    }
+
+    @Override
     public ConfigEntry<String[]> define(String key, String[] defaultValue) {
         return createEntry(key, new StringArrayConfigValue(defaultValue));
     }
