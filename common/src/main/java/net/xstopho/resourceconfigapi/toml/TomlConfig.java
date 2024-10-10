@@ -1,12 +1,13 @@
 package net.xstopho.resourceconfigapi.toml;
 
-
-import net.xstopho.resourceconfigapi.ResourceConfigConstants;
 import net.xstopho.resourceconfigapi.api.Config;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unchecked")
 public class TomlConfig implements Config, Serializable {

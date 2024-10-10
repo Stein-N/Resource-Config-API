@@ -1,7 +1,5 @@
 package net.xstopho.resourceconfigapi.toml;
 
-import net.xstopho.resourceconfigapi.ResourceConfigConstants;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
