@@ -59,6 +59,7 @@ public class TomlParser implements Serializable {
                     config.getEntries().put(mapKey, currentMap);
                     currentMap = null;
                     mapKey = "";
+                    parseValue(config, line);
                 } else {
                     parseValue(config, line);
                 }
