@@ -24,13 +24,13 @@ public class ConfigRegistry {
 
     private static void checkConfigType(String modId, ConfigType type) {
         Map<ConfigType, ResourceModConfig> modConfigMap = MOD_CONFIG_FILES.get(modId);
-        if (modConfigMap != null &&!modConfigMap.containsKey(type)) {
+        if (modConfigMap != null && modConfigMap.containsKey(type)) {
             throw new IllegalStateException("You already registered an Config File from type '" + type + "'");
         }
     }
 
     private static void addConfig(String modId, ConfigType type, ResourceModConfig config) {
-        Map<ConfigType, ResourceModConfig> configMap = new HashMap<>();
+        Map<ConfigType, ResourceModConfig> configMap = MOD_CONFIG_FILES.containsKey(modId) ? MOD_CONFIG_FILES.get(modId) : new HashMap<>();
         configMap.put(type, config);
 
         MOD_CONFIG_FILES.put(modId, configMap);
