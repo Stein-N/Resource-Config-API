@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+//TODO: rebuild for automated Screen registration when gui is implemented
+
 public class ConfigRegistry {
     private static final Map<String, Map<ConfigType, ResourceModConfig>> MOD_CONFIG_FILES = new LinkedHashMap<>();
 
