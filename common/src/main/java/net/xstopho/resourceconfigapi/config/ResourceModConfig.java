@@ -20,6 +20,7 @@ public class ResourceModConfig {
     private final String modId;
     private final File file;
     private final IResourceConfigBuilder builder;
+    private final ConfigType type;
 
     private TomlConfig config = new TomlConfig();
 
@@ -27,6 +28,7 @@ public class ResourceModConfig {
         this.file = new File(Services.getConfigPath() + "/" + modId + "/" + type + ".toml");
         this.builder = builder;
         this.modId = modId;
+        this.type = type;
         createFile(file);
 
         config = readConfigFile();
@@ -76,6 +78,10 @@ public class ResourceModConfig {
         } catch(IOException e) {
             ResourceConfigConstants.LOG.error("Error while creating Config File: {} for Mod: {}\nError Message: {}", file.getName(), modId, e.getMessage());
         }
+    }
+
+    public ConfigType getType() {
+        return type;
     }
 
     public IResourceConfigBuilder getBuilder() {
