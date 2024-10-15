@@ -37,4 +37,8 @@ public class ConfigRegistry {
 
         MOD_CONFIG_FILES.put(modId, configMap);
     }
+
+    public static Map<ConfigType, ResourceModConfig> getConfigs(String modId) {
+        return MOD_CONFIG_FILES.get(modId);
+    }
 }
