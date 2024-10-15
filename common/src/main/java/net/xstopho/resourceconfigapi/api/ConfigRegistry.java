@@ -39,6 +39,13 @@ public class ConfigRegistry {
     }
 
     public static Map<ConfigType, ResourceModConfig> getConfigs(String modId) {
-        return MOD_CONFIG_FILES.get(modId);
+        Map<ConfigType, ResourceModConfig> modConfigMap = MOD_CONFIG_FILES.get(modId);
+        Map<ConfigType, ResourceModConfig> sortedMap = new LinkedHashMap<>();
+
+        for (ConfigType type : ConfigType.values()) {
+            modConfigMap.computeIfPresent(type, sortedMap::put);
+        }
+
+        return sortedMap;
     }
 }
