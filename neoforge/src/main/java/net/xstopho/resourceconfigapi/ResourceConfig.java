@@ -24,9 +24,9 @@ public class ResourceConfig {
 
     private void registerConfigScreens(FMLClientSetupEvent event) {
         for (Map.Entry<String, Map<ConfigType, ResourceModConfig>> entry : ConfigRegistry.getModConfigFiles().entrySet()) {
-            Optional<? extends ModContainer> context = ModList.get().getModContainerById(entry.getKey());
+            Optional<? extends ModContainer> container = ModList.get().getModContainerById(entry.getKey());
 
-            context.ifPresent(modContainer -> {
+            container.ifPresent(modContainer -> {
                 ModLoadingContext.get().setActiveContainer(modContainer);
                 ModLoadingContext.get().registerExtensionPoint(
                         IConfigScreenFactory.class,
