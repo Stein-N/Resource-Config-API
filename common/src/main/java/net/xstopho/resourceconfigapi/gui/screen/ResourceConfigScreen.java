@@ -16,37 +16,31 @@ import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.config.ResourceModConfig;
 import net.xstopho.resourceconfigapi.gui.widgets.ResourceCategoryTab;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ResourceConfigScreen extends Screen {
 
-    private final String modId;
     private final Screen previous;
     private final HeaderAndFooterLayout layout;
 
     private final TabManager tabManager;
     private TabNavigationBar tabNavigationBar;
 
-    private Map<ConfigType, ResourceModConfig> configMap = new HashMap<>();
+    private final Map<ConfigType, ResourceModConfig> configMap;
 
     public ResourceConfigScreen(Screen previous, String modId) {
         super(Component.literal(""));
-
-        this.modId = modId;
 
         this.previous = previous;
         this.layout = new HeaderAndFooterLayout(this, 32, 32);
 
         tabManager = new TabManager(this::addRenderableWidget, this::removeWidget);
 
-
+        configMap = ConfigRegistry.getConfigs(modId);
     }
 
     @Override
     protected void init() {
-        configMap = ConfigRegistry.getConfigs(modId);
-
         TabNavigationBar.Builder builder = TabNavigationBar.builder(this.tabManager, this.width);
 
         for (ResourceModConfig config : configMap.values()) {
