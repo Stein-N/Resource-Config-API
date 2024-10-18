@@ -18,10 +18,6 @@ public abstract class ConfigBaseEntry extends ContainerObjectSelectionList.Entry
     protected final List<AbstractWidget> children = new ArrayList<>();
     protected final Font font = Minecraft.getInstance().font;
 
-
-
-    public final int WIDGET_WIDTH = 150;
-
     protected void drawStringWithTooltip(GuiGraphics guiGraphics, Component component, Component tooltip,
                                          int xPos, int yPos, int mouseX, int mouseY, boolean hovered) {
         yPos += 6;

@@ -16,7 +16,9 @@ public abstract class ValueConfigEntry<T> extends ConfigBaseEntry {
     protected final SpriteIconButton undo;
     protected final Button reset;
 
-    public final int VALUE_WIDGET_WIDTH;
+    public int BASE_WIDGET_WIDTH = 150;
+    public int FINAL_WIDGET_WIDTH;
+
 
     public ValueConfigEntry(ConfigEntry<T> configEntry) {
         this.configEntry = configEntry;
@@ -33,7 +35,7 @@ public abstract class ValueConfigEntry<T> extends ConfigBaseEntry {
         this.children.add(undo);
         this.children.add(reset);
 
-        VALUE_WIDGET_WIDTH = WIDGET_WIDTH - (undo.getWidth() + reset.getWidth());
+        FINAL_WIDGET_WIDTH = BASE_WIDGET_WIDTH - (undo.getWidth() + reset.getWidth()) - 1;
     }
 
     @Override
