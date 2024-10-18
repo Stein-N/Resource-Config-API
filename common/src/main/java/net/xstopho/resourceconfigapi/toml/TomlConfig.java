@@ -78,8 +78,7 @@ public class TomlConfig implements Config, Serializable {
         }
         if (entries.containsKey(key)) {
             return convertValue(entries, key, clazz);
-        }
-        return null;
+        } throw new IllegalStateException(KEY_NOT_PRESENT);
     }
 
     @Override
