@@ -29,15 +29,17 @@ public class TomlConfig implements Config, Serializable {
 
     @Override
     public boolean contains(String key) {
-        String path = createKey(key.split("\\."));
-        String valueName = getValueName(key);
+        if (key.contains(".")) {
+            String path = createKey(key.split("\\."));
+            String valueName = getValueName(key);
 
-        Object value = entries.get(path);
+            Object value = entries.get(path);
 
-        if (value instanceof Map<?,?> map) {
-            return map.containsKey(valueName);
+            if (value instanceof Map<?,?> map) {
+                return map.containsKey(valueName);
+            }
         }
-        return entries.containsKey(valueName);
+        return entries.containsKey(key);
     }
 
 
@@ -76,7 +78,8 @@ public class TomlConfig implements Config, Serializable {
         }
         if (entries.containsKey(key)) {
             return convertValue(entries, key, clazz);
-        } else throw new IllegalStateException(KEY_NOT_PRESENT);
+        }
+        return null;
     }
 
     @Override
