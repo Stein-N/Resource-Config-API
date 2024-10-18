@@ -27,7 +27,7 @@ public abstract class ConfigBaseEntry extends ContainerObjectSelectionList.Entry
                 int xMax = xPos + font.width(component.getString());
                 int yMax = yPos + font.lineHeight;
                 if (xPos <= mouseX && xMax >= mouseX && yPos <= mouseY && yMax >= mouseY) {
-                    guiGraphics.renderTooltip(font, font.split(tooltip, 50),
+                    guiGraphics.renderTooltip(font, font.split(tooltip, 150),
                             EntryLabelTooltipPosition.INSTANCE, mouseX, mouseY);
                 }
             }
