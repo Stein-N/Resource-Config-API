@@ -15,8 +15,6 @@ public class ResourceConfigTest implements ModInitializer {
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
     public static ResourceModConfig CONFIG = ConfigRegistry.register(MOD_ID, ConfigType.COMMON, ExampleCommonConfig.BUILDER);
-    public static ResourceModConfig CONFIG_CLIENT = ConfigRegistry.register(MOD_ID, ConfigType.CLIENT, ExampleCommonConfig.BUILDER);
-    public static ResourceModConfig CONFIG_SERVER = ConfigRegistry.register(MOD_ID, ConfigType.SERVER, ExampleCommonConfig.BUILDER);
 
     @Override
     public void onInitialize() {
