@@ -2,6 +2,7 @@ package net.xstopho.resourceconfigapi.gui.widgets.entries;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.screens.inventory.tooltip.MenuTooltipPositioner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.ResourceConfigConstants;
@@ -48,6 +49,14 @@ public abstract class ValueConfigEntry<T> extends ConfigBaseEntry {
 
         undo.setX(xPos + entryWidth - undo.getWidth() - reset.getWidth());
         undo.setY(yPos);
+
+        // Render Undo Button Tooltip
+        int xMax = undo.getX() + undo.getWidth();
+        int yMax = undo.getY() + undo.getHeight();
+        if (undo.getX() < mouseX && xMax > mouseX && undo.getY() < mouseY && yMax > mouseY) {
+            guiGraphics.renderTooltip(font, font.split(ResourceConfigConstants.UNDO_TOOLTIP, 150),
+                    new MenuTooltipPositioner(undo.getRectangle()), mouseX, mouseY);
+        }
 
         reset.setX(xPos + entryWidth - reset.getWidth());
         reset.setY(yPos);
