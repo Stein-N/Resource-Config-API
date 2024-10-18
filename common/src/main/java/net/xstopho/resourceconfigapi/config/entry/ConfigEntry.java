@@ -24,6 +24,10 @@ public class ConfigEntry<T> implements Supplier<T> {
         return value;
     }
 
+    public T getDefaultValue() {
+        return configValue.get();
+    }
+
     public void setValue(T value) {
         this.value = value;
     }
