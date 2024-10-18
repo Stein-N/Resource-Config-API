@@ -1,5 +1,6 @@
 package net.xstopho.resourceconfigapi.gui.widgets.entries;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.util.ComponentCreator;
@@ -9,7 +10,7 @@ public class CategoryEntry extends ConfigBaseEntry {
     private final Component label, tooltip;
 
     public CategoryEntry(String category) {
-        this.label = ComponentCreator.label(category);
+        this.label = ComponentCreator.label(category).copy().withStyle(ChatFormatting.GOLD);
         this.tooltip = ComponentCreator.tooltip(category);
     }
 
