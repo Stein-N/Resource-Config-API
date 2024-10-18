@@ -1,6 +1,5 @@
 package net.xstopho.resourceconfigapi.example_configs;
 
-import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.config.builder.ResourceConfigBuilder;
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 
