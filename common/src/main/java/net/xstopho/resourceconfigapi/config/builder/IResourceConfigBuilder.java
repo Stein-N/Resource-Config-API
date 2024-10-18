@@ -41,17 +41,6 @@ public interface IResourceConfigBuilder extends Serializable {
     <T extends Enum<T>> ConfigEntry<T> define(String key, T defaultValue);
     <T> ConfigEntry<List<T>> define(String key, List<T> defaultValue);
 
-    ConfigEntry<Integer[]> define(String key, Integer[] defaultValue);
-    ConfigEntry<Long[]> define(String key, Long[] defaultValue);
-    ConfigEntry<Short[]> define(String key, Short[] defaultValue);
-    ConfigEntry<Double[]> define(String key, Double[] defaultValue);
-    ConfigEntry<Float[]> define(String key, Float[] defaultValue);
-    ConfigEntry<Byte[]> define(String key, Byte[] defaultValue);
-    ConfigEntry<Boolean[]> define(String key, Boolean[] defaultValue);
-    ConfigEntry<String[]> define(String key, String[] defaultValue);
-    ConfigEntry<Character[]> define(String key, Character[] defaultValue);
-    <T extends Enum<T>> ConfigEntry<T[]> define(String key, T[] defaultValue);
-
     default boolean isEmpty(String string) {
         return string == null || string.isEmpty() || string.isBlank();
     }

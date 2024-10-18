@@ -15,8 +15,6 @@ public class ResourceConfigConstants {
 	public static final Component CLOSE = Component.literal("Close");
 	public static final Component RESET = Component.literal("Reset");
 	public static final Component RESET_ALL = Component.literal("Reset All");
-	public static final Component UNDO = Component.literal("");
-	public static final Component EDIT = Component.literal("Edit");
 
 	public static final Component RESET_TOOLTIP = Component.literal("Placeholder Tooltip for Reset Button");
 	public static final Component UNDO_TOOLTIP = Component.literal("Placeholder Tooltip for Undo Button");

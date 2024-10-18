@@ -1,9 +1,7 @@
 package net.xstopho.resourceconfigapi.config.builder;
 
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
-import net.xstopho.resourceconfigapi.config.value.arrays.*;
 import net.xstopho.resourceconfigapi.config.value.primitiv.*;
-import net.xstopho.resourceconfigapi.config.value.reference.EnumArrayConfigValue;
 import net.xstopho.resourceconfigapi.config.value.reference.EnumConfigValue;
 import net.xstopho.resourceconfigapi.config.value.reference.ListConfigValue;
 
@@ -93,55 +91,5 @@ public class ResourceConfigBuilder extends ResourceConfigBuilderBase {
     @Override
     public <T> ConfigEntry<List<T>> define(String key, List<T> defaultValue) {
         return createEntry(createKey(key), new ListConfigValue<>(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Integer[]> define(String key, Integer[] defaultValue) {
-        return createEntry(key, new IntegerArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Long[]> define(String key, Long[] defaultValue) {
-        return createEntry(key, new LongArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Short[]> define(String key, Short[] defaultValue) {
-        return createEntry(key, new ShortArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Double[]> define(String key, Double[] defaultValue) {
-        return createEntry(key, new DoubleArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Float[]> define(String key, Float[] defaultValue) {
-        return createEntry(key, new FloatArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Byte[]> define(String key, Byte[] defaultValue) {
-        return createEntry(key, new ByteArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Boolean[]> define(String key, Boolean[] defaultValue) {
-        return createEntry(key, new BooleanArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<String[]> define(String key, String[] defaultValue) {
-        return createEntry(key, new StringArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public ConfigEntry<Character[]> define(String key, Character[] defaultValue) {
-        return createEntry(key, new CharacterArrayConfigValue(defaultValue));
-    }
-
-    @Override
-    public <T extends Enum<T>> ConfigEntry<T[]> define(String key, T[] defaultValue) {
-        return createEntry(key, new EnumArrayConfigValue<>(defaultValue));
     }
 }
