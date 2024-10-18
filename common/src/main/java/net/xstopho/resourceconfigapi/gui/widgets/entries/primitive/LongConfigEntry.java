@@ -21,7 +21,7 @@ public class LongConfigEntry extends ValueConfigEntry<Long> {
         this.editBox.setValue(configEntry.get().toString());
         this.editBox.setResponder(value -> setUndo(!Objects.equals(value, configEntry.get().toString())));
 
-        this.children.add(editBox);
+        this.add(editBox);
     }
 
     @Override
