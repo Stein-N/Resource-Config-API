@@ -1,5 +1,6 @@
 package net.xstopho.resourceconfigapi.example_configs;
 
+import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.config.builder.ResourceConfigBuilder;
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 
@@ -18,8 +19,8 @@ public class ExampleCommonConfig {
     public static final ConfigEntry<Integer> INTEGER, CATEGORY_INTEGER;
     public static final ConfigEntry<Long> LONG, CATEGORY_LONG;
     public static final ConfigEntry<Short> SHORT, CATEGORY_SHORT;
-    //public static final ConfigEntry<String> STRING, CATEGORY_STRING;
-    //public static final ConfigEntry<ConfigType> ENUM, CATEGORY_ENUM;
+    public static final ConfigEntry<String> STRING, CATEGORY_STRING;
+    public static final ConfigEntry<ConfigType> ENUM, CATEGORY_ENUM;
 
     //public static final ConfigEntry<List<Integer>> INTEGER_LIST, CATEGORY_INTEGER_LIST;
 
@@ -32,9 +33,9 @@ public class ExampleCommonConfig {
         INTEGER = BUILDER.define("integer", 100);
         LONG = BUILDER.define("long", 983649816749124L);
         SHORT = BUILDER.define("short", (short) 345);
-        //STRING = BUILDER.define("string", "Hello World!");
+        STRING = BUILDER.define("string", "Hello World!");
+        ENUM = BUILDER.define("enum", ConfigType.CLIENT);
         //INTEGER_LIST = BUILDER.define("integerList", integerList);
-        //ENUM = BUILDER.define("enum", ConfigType.CLIENT);
 
         BUILDER.push("Category");
 
@@ -49,8 +50,8 @@ public class ExampleCommonConfig {
         CATEGORY_INTEGER = BUILDER.define("integer", 388);
         CATEGORY_LONG = BUILDER.define("long", 238745L);
         CATEGORY_SHORT = BUILDER.define("short", (short) 457);
-        //CATEGORY_STRING = BUILDER.define("string", "Category String");
-        //CATEGORY_ENUM = BUILDER.define("enum", ConfigType.COMMON);
+        CATEGORY_STRING = BUILDER.define("string", "Category String");
+        CATEGORY_ENUM = BUILDER.define("enum", ConfigType.COMMON);
         //CATEGORY_INTEGER_LIST = BUILDER.define("integerList", integerList);
     }
 }
