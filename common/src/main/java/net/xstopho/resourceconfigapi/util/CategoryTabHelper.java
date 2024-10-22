@@ -3,6 +3,8 @@ package net.xstopho.resourceconfigapi.util;
 import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
 import net.xstopho.resourceconfigapi.gui.widgets.entries.ValueConfigEntry;
 import net.xstopho.resourceconfigapi.gui.widgets.entries.primitive.*;
+import net.xstopho.resourceconfigapi.gui.widgets.entries.reference.EnumConfigEntry;
+import net.xstopho.resourceconfigapi.gui.widgets.entries.reference.StringConfigEntry;
 
 public class CategoryTabHelper {
 
@@ -17,6 +19,8 @@ public class CategoryTabHelper {
         if (clazz == Integer.class) return new IntegerConfigEntry((ConfigEntry<Integer>) configEntry);
         if (clazz == Long.class) return new LongConfigEntry((ConfigEntry<Long>) configEntry);
         if (clazz == Short.class) return new ShortConfigEntry((ConfigEntry<Short>) configEntry);
+        if (clazz == String.class) return new StringConfigEntry((ConfigEntry<String>) configEntry);
+        if (clazz.isEnum()) return new EnumConfigEntry((ConfigEntry<Enum<?>>) configEntry);
         return null;
     }
 }
