@@ -13,14 +13,12 @@ sourceSets {
 
 dependencies {
     testmodImplementation sourceSets.main.output
+
+    testmodImplementation project(':common').sourceSets.testmod.output
 }
 
 neoForge {
     version = neoforge_version
-
-    var at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) accessTransformers = [at.absolutePath]
-
 
     parchment {
         minecraftVersion = parchment_mc_version
@@ -32,20 +30,28 @@ neoForge {
             client()
             sourceSet = sourceSets.testmod
             ideName = "NeoForge Test Client (${project.path})"
-            gameDirectory = project.file("runs/client")
+            gameDirectory = file("../common/runs/client")
         }
         testServer {
             server()
             sourceSet = sourceSets.testmod
             programArguments.add('nogui')
             ideName = "NeoForge Test Server (${project.path})"
-            gameDirectory = project.file("runs/server")
+            gameDirectory = file("../common/runs/server")
         }
     }
     mods {
         "${mod_id}" { sourceSet sourceSets.main }
         "${mod_id}_test" { sourceSet sourceSets.testmod }
     }
+}
+
+compileTestmodJava {
+    source(project(':common').sourceSets.testmod.allSource)
+}
+processTestmodResources {
+    from project(':common').sourceSets.testmod.resources
+    from file('src/generated/resources')
 }
 
 publishMods {

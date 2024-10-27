@@ -3,6 +3,13 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath;
+        compileClasspath += main.compileClasspath;
+    }
+}
+
 neoForge {
     neoFormVersion = neoform_version
 
@@ -14,6 +21,8 @@ neoForge {
 
 dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+
+    testmodCompileOnly sourceSets.main.output
 
     implementation "com.electronwill.night-config:toml:${night_config}"
 }
