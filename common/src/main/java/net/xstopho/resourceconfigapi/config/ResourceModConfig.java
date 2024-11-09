@@ -71,12 +71,13 @@ public class ResourceModConfig {
     }
 
     void createFile(File file) {
-        try {
-            if (file.createNewFile()) {
+        if (file.getParentFile().mkdirs()) {
+            try {
+                file.createNewFile();
                 ResourceConfigConstants.LOG.info("Created Config for Mod: {} in Path: {}", modId, file.getPath());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch(IOException e) {
-            ResourceConfigConstants.LOG.error("Error while creating Config File: {} for Mod: {}\nError Message: {}", file.getName(), modId, e.getMessage());
         }
     }
 
