@@ -24,7 +24,7 @@ minecraft {
 
     runs {
         client {
-            workingDirectory project.file('runs/client')
+            workingDirectory file('../common/runs/client')
             ideaModule "${rootProject.name}.${project.name}.testmod"
             taskName "TestClient"
             mods {
@@ -34,7 +34,7 @@ minecraft {
             }
         }
         server {
-            workingDirectory project.file('runs/server')
+            workingDirectory file('../common/runs/client')
             ideaModule "${rootProject.name}.${project.name}.testmod"
             taskName "TestServer"
             args '--nogui'
