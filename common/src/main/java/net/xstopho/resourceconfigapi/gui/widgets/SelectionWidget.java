@@ -48,11 +48,11 @@ public class SelectionWidget<T extends SelectionWidget.SelectionEntry<?>> extend
 
     @Override
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        graphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
+        //graphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
         ResourceLocation location = BUTTON_SPRITES.get(this.isActive(), this.isMouseOver(mouseX, mouseY));
-        graphics.blitSprite(location, this.getX(), this.getY(), this.getWidth(), this.getHeight()/*, 20, 4, 200, 20, 0, 66*/);
+        graphics.blitSprite(RenderType::guiTextured, location, this.getX(), this.getY(), this.getWidth(), this.getHeight()/*, 20, 4, 200, 20, 0, 66*/);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (selected != null)
@@ -69,7 +69,7 @@ public class SelectionWidget<T extends SelectionWidget.SelectionEntry<?>> extend
             graphics.fill(RenderType.gui(), getX(),     getY() + ENTRY_HEIGHT - 1, getX() + width,     getY() + ENTRY_HEIGHT + boxHeight - 1, 0xFFFFFFFF);
             graphics.fill(RenderType.gui(), getX() + 1, getY() + ENTRY_HEIGHT,     getX() + width - 1, getY() + ENTRY_HEIGHT + boxHeight - 2, 0xFF000000);
 
-            graphics.blitSprite(SORT_UP_SPRITE, getX() + width - 22, getY() + 1, 20, 18);
+            graphics.blitSprite(RenderType::guiTextured, SORT_UP_SPRITE, getX() + width - 22, getY() + 1, 20, 18);
 
             T hoverEntry = getEntryAtPosition(mouseX, mouseY);
 
@@ -96,7 +96,7 @@ public class SelectionWidget<T extends SelectionWidget.SelectionEntry<?>> extend
             graphics.pose().popPose();
         }
         else {
-            graphics.blitSprite(SORT_DOWN_SPRITE, getX() + width - 22, getY() + 1, 20, 18);
+            graphics.blitSprite(RenderType::guiTextured, SORT_DOWN_SPRITE, getX() + width - 22, getY() + 1, 20, 18);
         }
     }
 

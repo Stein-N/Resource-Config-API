@@ -9,6 +9,7 @@ import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.ResourceConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
@@ -66,7 +67,7 @@ public class ResourceConfigScreen extends Screen {
         this.renderBackground(guiGraphics, mouseX, mouseY, ticks);
         super.render(guiGraphics, mouseX, mouseY, ticks);
 
-        guiGraphics.blit(Screen.FOOTER_SEPARATOR, 0, this.height - this.layout.getHeaderHeight() - 10, 0.0F, 0.0F, this.width, 2, 32, 2);
+        guiGraphics.blit(RenderType::guiTextured, Screen.FOOTER_SEPARATOR, 0, this.height - this.layout.getHeaderHeight() - 10, 0F, 0F, this.width, 2, 32, 2);
     }
 
     @Override
