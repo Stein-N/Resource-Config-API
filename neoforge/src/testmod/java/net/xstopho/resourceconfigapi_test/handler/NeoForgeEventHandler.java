@@ -27,7 +27,6 @@ public class NeoForgeEventHandler {
             context.getSource().sendSystemMessage(Component.literal("Long: " + ExampleCommonConfig.LONG.get()));
             context.getSource().sendSystemMessage(Component.literal("Short: " + ExampleCommonConfig.SHORT.get()));
             context.getSource().sendSystemMessage(Component.literal("String: " + ExampleCommonConfig.STRING.get()));
-            context.getSource().sendSystemMessage(Component.literal("Integer List: " + ExampleCommonConfig.INTEGER_LIST.get()));
             context.getSource().sendSystemMessage(Component.literal("Enum: " + ExampleCommonConfig.ENUM.get()));
 
             return 0;
