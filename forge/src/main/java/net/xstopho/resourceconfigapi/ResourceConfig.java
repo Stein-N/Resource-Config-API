@@ -4,7 +4,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.SimpleChannel;
 
-@Mod(ResourceConfigConstants.MOD_ID)
+@Mod(Constants.MOD_ID)
 public class ResourceConfig {
 
     public static SimpleChannel NETWORK;

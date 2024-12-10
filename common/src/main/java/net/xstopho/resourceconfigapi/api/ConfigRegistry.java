@@ -1,18 +1,22 @@
 package net.xstopho.resourceconfigapi.api;
 
-import net.xstopho.resourceconfigapi.ResourceConfigConstants;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.config.ModConfig;
-import net.xstopho.resourceconfigapi.util.ConfigType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConfigRegistry {
 
-    public static ModConfig register(Class<?> clazz, ConfigType type, String modId) {
+    public static final Map<String, ModConfig> CONFIGS = new HashMap<>();
+
+    public static ModConfig register(Class<?> clazz, String modId) {
         if (clazz.isAnnotationPresent(Config.class)) {
             Config config = clazz.getAnnotation(Config.class);
 
-            ResourceConfigConstants.LOG.info("Register config '{}' for mod '{}'", config.fileName(), modId);
-            return new ModConfig(clazz, type, modId);
+            Constants.LOG.info("Register config '{}' for mod '{}'", config.fileName(), modId);
+            return CONFIGS.put(config.fileName(), new ModConfig(clazz, config.type(), modId));
         }
         throw new IllegalArgumentException("You try to register an class that isn't flagged as a Config!");
     }

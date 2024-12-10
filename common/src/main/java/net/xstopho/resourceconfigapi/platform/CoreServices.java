@@ -1,7 +1,7 @@
 package net.xstopho.resourceconfigapi.platform;
 
 
-import net.xstopho.resourceconfigapi.ResourceConfigConstants;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.platform.services.IPlatformHelper;
 
 import java.nio.file.Path;
@@ -21,7 +21,7 @@ public class CoreServices {
         final T loadedService = ServiceLoader.load(clazz)
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
-        ResourceConfigConstants.LOG.debug("Loaded {} for service {}", loadedService, clazz);
+        Constants.LOG.debug("Loaded {} for service {}", loadedService, clazz);
         return loadedService;
     }
 }

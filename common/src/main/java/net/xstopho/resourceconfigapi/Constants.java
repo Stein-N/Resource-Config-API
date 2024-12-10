@@ -2,10 +2,11 @@ package net.xstopho.resourceconfigapi;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ResourceConfigConstants {
+public class Constants {
 
 	public static final String MOD_ID = "resourceconfigapi";
 	public static final String MOD_NAME = "Resource Config API";
@@ -21,4 +22,8 @@ public class ResourceConfigConstants {
 
 	public static final Component BOOLEAN_ENABLED = Component.literal("Enabled").withStyle(ChatFormatting.GREEN);
 	public static final Component BOOLEAN_DISABLED = Component.literal("Disabled").withStyle(ChatFormatting.RED);
+
+	public static ResourceLocation of(String id) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
+	}
 }
