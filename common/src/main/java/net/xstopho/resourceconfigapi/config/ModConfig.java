@@ -81,8 +81,7 @@ public class ModConfig {
         try {
             obj = gson.fromJson(value, field.getType());
         } catch (JsonSyntaxException | IllegalStateException e) {
-            System.out.println("Failed to read value for key: " + field.getName());
-            System.out.println("Value is set to default value");
+            Constants.LOG.error("Failed to read value for '{}', value is set to its default!", field.getName());
         }
         return obj != null ? obj : field.get(null);
     }
