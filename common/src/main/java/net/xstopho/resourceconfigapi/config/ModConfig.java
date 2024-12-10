@@ -133,6 +133,9 @@ public class ModConfig {
         writeConfig(config);
     }
 
+    public void syncWithServerConfig(Class<?> clazz) {
+
+    }
 
     private void writeConfig(JsonObject config) {
         final String json = gson.toJson(config);

@@ -1,7 +1,6 @@
 package net.xstopho.resourceconfigapi_test;
 
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
-import net.xstopho.resourceconfigapi.util.ConfigType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,9 @@ public class TestConstants {
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
     public static void commonInit() {
-        ConfigRegistry.register(TestConfigs.CommonConfig.class, ConfigType.COMMON, MOD_ID);
+        ConfigRegistry.register(TestConfigs.CommonConfig.class, MOD_ID);
+        ConfigRegistry.register(TestConfigs.ClientConfig.class, MOD_ID);
+        ConfigRegistry.register(TestConfigs.ServerConfig.class, MOD_ID);
     }
 
     public static void clientInit() {
