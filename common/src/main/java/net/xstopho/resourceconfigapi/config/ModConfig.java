@@ -21,11 +21,13 @@ public class ModConfig {
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final File configFile;
+    private final String modId;
 
     private final Class<?> clazz;
 
     public ModConfig(Class<?> clazz, ConfigType type, String modId) {
         this.clazz = clazz;
+        this.modId = modId;
 
         this.configFile = new File(CoreServices.getConfigPath() + "/" + modId + "/" + type.name().toLowerCase(),
                 clazz.getAnnotation(Config.class).fileName() + ".json");
@@ -133,7 +135,17 @@ public class ModConfig {
     }
 
     public void syncWithServerConfig(Class<?> clazz) {
+        Map<Field, ConfigEntry> serverEntryMap = getConfigEntries(clazz);
 
+        for (Map.Entry<Field, ConfigEntry> entry : serverEntryMap.entrySet()) {
+            Field serverField = entry.getKey();
+            try {
+                Field clientField = this.clazz.getDeclaredField(serverField.getName());
+                clientField.set(null, serverField.get(null));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException("Failed to sync field: " + serverField.getName(), e);
+            }
+        }
     }
 
     private void writeConfig(JsonObject config) {
@@ -178,5 +190,13 @@ public class ModConfig {
 
     private boolean notEmpty(String string) {
         return string != null && !string.isBlank();
+    }
+
+    public String getModId() {
+        return modId;
+    }
+
+    public Class<?> getClazz() {
+        return clazz;
     }
 }
