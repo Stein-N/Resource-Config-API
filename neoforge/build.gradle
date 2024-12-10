@@ -13,6 +13,8 @@ sourceSets {
 
 dependencies {
     testmodImplementation sourceSets.main.output
+
+    testmodImplementation project(':common').sourceSets.testmod.output
 }
 
 neoForge {

@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class ResourceModMenuCompat implements ModMenuApi {
 
-    //TODO: correct implementation when gui is finished
     @Override
     public Map<String, ConfigScreenFactory<?>> getProvidedConfigScreenFactories() {
         return null;
