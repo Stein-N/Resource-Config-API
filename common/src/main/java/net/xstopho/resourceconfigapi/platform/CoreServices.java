@@ -7,7 +7,7 @@ import net.xstopho.resourceconfigapi.platform.services.IPlatformHelper;
 import java.nio.file.Path;
 import java.util.ServiceLoader;
 
-public class Services {
+public class CoreServices {
 
     public static Path getConfigPath() {
         return load(IPlatformHelper.class).getConfigDir();
