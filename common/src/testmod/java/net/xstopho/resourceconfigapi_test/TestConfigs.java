@@ -4,10 +4,12 @@ import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 
+import java.io.Serializable;
+
 public class TestConfigs {
 
     @Config(fileName = "general", type = ConfigType.COMMON)
-    public static class CommonConfig {
+    public static class CommonConfig implements Serializable {
 
         @ConfigEntry(category = "Compatibilities")
         public static boolean disableModMenuCompat = false;
