@@ -54,6 +54,10 @@ sourceSets.each {
     it.java.destinationDirectory = dir
 }
 
+compileTestmodJava {
+    source(project(':common').sourceSets.testmod.allSource)
+}
+
 // Loader Specific Settings
 publishMods {
     file = jar.archiveFile

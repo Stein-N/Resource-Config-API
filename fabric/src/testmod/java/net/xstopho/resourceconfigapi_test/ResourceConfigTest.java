@@ -6,12 +6,8 @@ import org.slf4j.LoggerFactory;
 
 public class ResourceConfigTest implements ModInitializer {
 
-    public static final String MOD_ID = "resourceconfigapi_test";
-    public static final String MOD_NAME = "Resource Config API Test";
-    public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
-
     @Override
     public void onInitialize() {
-
+        TestConstants.commonInit();
     }
 }

@@ -50,6 +50,10 @@ neoForge {
     }
 }
 
+compileTestmodJava {
+    source(project(':common').sourceSets.testmod.allSource)
+}
+
 publishMods {
     file = jar.archiveFile
     modLoaders.add("neoforge")

@@ -1,6 +1,5 @@
 modLoader = "javafml"
 loaderVersion = "[51,)"
-license = "${mod_license}"
 
 [[mods]]
     modId = "resourceconfigapi_test"
