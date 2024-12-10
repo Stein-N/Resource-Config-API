@@ -1,6 +1,7 @@
 package net.xstopho.resourceconfigapi.config;
 
 import com.google.gson.*;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.platform.CoreServices;
@@ -34,7 +35,7 @@ public class ModConfig {
 
     private void setup() {
         if (configFile.exists()) {
-            Map<Field, ConfigEntry> entries = getConfigEntries();
+            Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
             JsonObject config = readConfig();
 
@@ -87,7 +88,7 @@ public class ModConfig {
     }
 
     private void saveConfig() {
-        Map<Field, ConfigEntry> entries = getConfigEntries();
+        Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
         JsonObject config = new JsonObject();
 
         for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
@@ -156,7 +157,7 @@ public class ModConfig {
         }
     }
 
-    private Map<Field, ConfigEntry> getConfigEntries() {
+    private Map<Field, ConfigEntry> getConfigEntries(Class<?> clazz) {
         Map<Field, ConfigEntry> entries = new HashMap<>();
 
         for (Field field : clazz.getDeclaredFields()) {
