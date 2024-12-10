@@ -16,7 +16,6 @@ java {
 repositories {
     mavenCentral()
     maven { url 'https://raw.githubusercontent.com/Stein-N/resources/main/maven' }
-    maven { url 'https://maven.terraformersmc.com/' }
     maven { url 'https://maven.parchmentmc.org/' }
     maven { url 'https://api.modrinth.com/maven' }
 }
