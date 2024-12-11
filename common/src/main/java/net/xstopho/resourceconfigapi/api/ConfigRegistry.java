@@ -19,7 +19,11 @@ public class ConfigRegistry {
             ResourceLocation configLoc = of(modId, config.type(), config.fileName());
 
             Constants.LOG.info("Register config '{}' for mod '{}'", config.fileName(), modId);
-            return CONFIGS.put(configLoc, new ModConfig(clazz, config.type(), modId));
+            if (!CONFIGS.containsKey(configLoc)) {
+                return CONFIGS.put(configLoc, new ModConfig(clazz, config.type(), modId));
+            } else {
+                throw new IllegalStateException("You try to register " + configLoc + " twice");
+            }
         }
         throw new IllegalArgumentException("You try to register an class that isn't flagged as a Config!");
     }
