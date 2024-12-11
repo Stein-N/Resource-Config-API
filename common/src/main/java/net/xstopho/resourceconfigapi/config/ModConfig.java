@@ -134,16 +134,38 @@ public class ModConfig {
         writeConfig(config);
     }
 
-    public void syncWithServerConfig(Class<?> clazz) {
-        Map<Field, ConfigEntry> serverEntryMap = getConfigEntries(clazz);
+    public void syncWithServerConfig(JsonObject config) {
+        Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
-        for (Map.Entry<Field, ConfigEntry> entry : serverEntryMap.entrySet()) {
-            Field serverField = entry.getKey();
+        for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
+            Field field = entry.getKey();
+            ConfigEntry annotation = entry.getValue();
+
+            JsonObject category = null;
+            if (notEmpty(annotation.category()) && config.has(annotation.category())) {
+                category = config.getAsJsonObject(annotation.category());
+            }
+
+            String key = field.getName();
+            JsonObject valueObject;
+            if (category != null) {
+                valueObject = category.getAsJsonObject(key);
+            } else {
+                valueObject = config.getAsJsonObject(key);
+            }
+
             try {
-                Field clientField = this.clazz.getDeclaredField(serverField.getName());
-                clientField.set(null, serverField.get(null));
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                throw new RuntimeException("Failed to sync field: " + serverField.getName(), e);
+                Object value = null;
+                if (valueObject != null) {
+                    value = readValue(valueObject.get("value"), field);
+                }
+
+                if (value != null) {
+                    field.set(field, value);
+                }
+
+            } catch(IllegalAccessException e) {
+                throw new RuntimeException("Failed to set Key: " + key, e);
             }
         }
     }
@@ -162,7 +184,7 @@ public class ModConfig {
         }
     }
 
-    private JsonObject readConfig() {
+    public JsonObject readConfig() {
         try(FileReader reader = new FileReader(configFile)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
 
