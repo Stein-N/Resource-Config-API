@@ -4,6 +4,10 @@ import net.minecraft.network.chat.Component;
 
 public class ConfigUtils {
 
+    public static Component createTitle(String id) {
+        return Component.translatable("config." + id + ".title");
+    }
+
     public static Component createLabel(String key) {
         return Component.translatable("config." + key + ".label");
     }
