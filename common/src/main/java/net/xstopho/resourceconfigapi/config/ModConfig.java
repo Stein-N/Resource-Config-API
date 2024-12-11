@@ -37,55 +37,16 @@ public class ModConfig {
 
     private void setup() {
         if (configFile.exists()) {
-            Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
-
             JsonObject config = readConfig();
 
-            for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
-                Field field = entry.getKey();
-                ConfigEntry annotation = entry.getValue();
-
-                JsonObject category = null;
-                if (notEmpty(annotation.category()) && config.has(annotation.category())) {
-                    category = config.getAsJsonObject(annotation.category());
-                }
-
-                String key = field.getName();
-                JsonObject valueObject;
-                if (category != null) {
-                    valueObject = category.getAsJsonObject(key);
-                } else {
-                    valueObject = config.getAsJsonObject(key);
-                }
-
-                try {
-                    Object value = null;
-                    if (valueObject != null) {
-                        value = readValue(valueObject.get("value"), field);
-                    }
-
-                    if (value != null) {
-                        field.set(field, value);
-                    }
-
-                } catch(IllegalAccessException e) {
-                    throw new RuntimeException("Failed to set Key: " + key, e);
-                }
-            }
-
+            applyJsonObject(config);
         }
 
         saveConfig();
     }
 
-    private Object readValue(JsonElement value, Field field) throws IllegalAccessException {
-        Object obj = null;
-        try {
-            obj = gson.fromJson(value, field.getType());
-        } catch (JsonSyntaxException | IllegalStateException e) {
-            Constants.LOG.error("Failed to read value for '{}', value is set to its default!", field.getName());
-        }
-        return obj != null ? obj : field.get(null);
+    public void syncWithServerConfig(JsonObject config) {
+        applyJsonObject(config);
     }
 
     private void saveConfig() {
@@ -134,7 +95,7 @@ public class ModConfig {
         writeConfig(config);
     }
 
-    public void syncWithServerConfig(JsonObject config) {
+    private void applyJsonObject(JsonObject config) {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
         for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
@@ -170,6 +131,25 @@ public class ModConfig {
         }
     }
 
+    public JsonObject readConfig() {
+        try(FileReader reader = new FileReader(configFile)) {
+            return JsonParser.parseReader(reader).getAsJsonObject();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read Config File: " + configFile.getName(), e);
+        }
+    }
+
+    private Object readValue(JsonElement value, Field field) throws IllegalAccessException {
+        Object obj = null;
+        try {
+            obj = gson.fromJson(value, field.getType());
+        } catch (JsonSyntaxException | IllegalStateException e) {
+            Constants.LOG.error("Failed to read value for '{}', value is set to its default!", field.getName());
+        }
+        return obj != null ? obj : field.get(null);
+    }
+
     private void writeConfig(JsonObject config) {
         final String json = gson.toJson(config);
 
@@ -181,15 +161,6 @@ public class ModConfig {
             FileUtils.writeStringToFile(configFile, json, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Failed to write config file: " + configFile.getName(), e);
-        }
-    }
-
-    public JsonObject readConfig() {
-        try(FileReader reader = new FileReader(configFile)) {
-            return JsonParser.parseReader(reader).getAsJsonObject();
-
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read Config File: " + configFile.getName(), e);
         }
     }
 
