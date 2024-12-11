@@ -8,7 +8,6 @@ public @interface ConfigEntry {
 
     String category() default "";
     String comment() default "";
-    boolean sync() default false;
 
     @interface Ranged {
 
