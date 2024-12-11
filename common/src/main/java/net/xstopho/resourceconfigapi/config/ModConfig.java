@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,6 +85,11 @@ public class ModConfig {
                 throw new RuntimeException(e);
             }
 
+            if (value instanceof Collection<?> || value instanceof Map<?,?>) {
+                Constants.LOG.error("List and Maps aren't supported. Value '{}' was skipped", key);
+                continue;
+            }
+
             JsonElement valueElement = gson.toJsonTree(value);
             valueObject.add("value", valueElement);
 
@@ -118,15 +124,15 @@ public class ModConfig {
                 valueObject = config.getAsJsonObject(key);
             }
 
-            try {
-                Object value = null;
-                if (valueObject != null) {
-                    value = readValue(valueObject.get("value"), field);
-                }
+            // If an unsupported type is declared
+            if (valueObject == null) {
+                continue;
+            }
 
-                if (value != null) {
-                    field.set(field, value);
-                }
+            try {
+                Object value;
+                value = readValue(valueObject.get("value"), field);
+                field.set(field, value);
 
             } catch(IllegalAccessException e) {
                 throw new RuntimeException("Failed to set Key: " + key, e);
