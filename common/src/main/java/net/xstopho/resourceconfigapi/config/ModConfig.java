@@ -104,6 +104,7 @@ public class ModConfig {
         writeConfig(config);
     }
 
+    // TODO: Ranged annotation is ignored currently
     private void applyJsonObject(JsonObject config) {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
