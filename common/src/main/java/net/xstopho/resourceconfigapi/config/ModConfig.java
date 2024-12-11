@@ -29,8 +29,11 @@ public class ModConfig {
         this.clazz = clazz;
         this.modId = modId;
 
-        this.configFile = new File(CoreServices.getConfigPath() + "/" + modId + "/" + type.name().toLowerCase(),
-                clazz.getAnnotation(Config.class).fileName() + ".json");
+        this.configFile = new File(String.format("%s/%s/%s/%s.json",
+                CoreServices.getConfigPath(),
+                modId,
+                type.name().toLowerCase(),
+                clazz.getAnnotation(Config.class).fileName()));
 
         setup();
     }
