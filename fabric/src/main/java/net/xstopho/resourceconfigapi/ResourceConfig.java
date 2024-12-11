@@ -2,6 +2,7 @@ package net.xstopho.resourceconfigapi;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
@@ -19,10 +20,11 @@ public class ResourceConfig implements ModInitializer {
 
             for (ModConfig config : ConfigRegistry.CONFIGS.values()) {
                 Config annotation = config.getClazz().getAnnotation(Config.class);
+                ResourceLocation configLoc = ConfigRegistry.of(config.getModId(), annotation.type(), annotation.fileName());
 
                 Constants.LOG.info("Syncing Config '{}' from Mod '{}'", annotation.fileName(), config.getModId());
 
-                sender.sendPacket(new SyncConfigPayload(annotation.fileName(), config.readConfig().toString()));
+                sender.sendPacket(new SyncConfigPayload(configLoc.toString(), config.readConfig().toString()));
             }
         });
     }

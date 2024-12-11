@@ -7,6 +7,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
@@ -22,8 +23,9 @@ public record SyncConfigPayload(String file, String json) implements CustomPacke
     public static void handle(SyncConfigPayload payload, ClientPlayNetworking.Context context) {
         context.client().execute(() -> {
             JsonObject jsonObject = JsonParser.parseString(payload.json()).getAsJsonObject();
+            ResourceLocation configLoc = ResourceLocation.parse(payload.file());
 
-            ModConfig modConfig = ConfigRegistry.CONFIGS.get(payload.file());
+            ModConfig modConfig = ConfigRegistry.CONFIGS.get(configLoc);
 
             modConfig.syncWithServerConfig(jsonObject);
         });
