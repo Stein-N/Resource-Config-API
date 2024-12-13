@@ -12,4 +12,9 @@ public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
 
     @Override
     protected void renderListSeparators(GuiGraphics guiGraphics) {}
+
+    @Override
+    public int getRowWidth() {
+        return this.width - 20;
+    }
 }

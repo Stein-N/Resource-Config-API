@@ -29,6 +29,8 @@ public class ResourceConfigScreen extends Screen {
 
     private Map<ResourceLocation, ModConfig> configs = new HashMap<>();
 
+    //TODO: - add Save and Close, Reset and Close Buttons
+    //      - find a way to apply button presses to every BaseEntry in every Tab
     public ResourceConfigScreen(Screen previous, String modId) {
         super(Component.literal("Config Screen - " + modId));
 

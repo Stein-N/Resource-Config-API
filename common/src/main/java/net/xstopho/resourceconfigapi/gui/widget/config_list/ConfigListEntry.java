@@ -8,6 +8,7 @@ import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.BaseEntry;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.CategoryEntry;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueEntry;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
@@ -60,7 +61,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
                     entries.add(new CategoryEntry(currentCategory));
                 }
 
-                entries.add(new CategoryEntry(field.getName()));
+                entries.add(new ValueEntry(field.getName(), field));
             }
         }
 
@@ -69,5 +70,9 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
 
     private boolean notEmpty(String string) {
         return string != null && !string.isBlank();
+    }
+
+    public LinkedList<BaseEntry> getEntryList() {
+        return entryList;
     }
 }
