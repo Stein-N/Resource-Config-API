@@ -12,10 +12,8 @@ import java.util.List;
 
 public class ConfigUtils {
 
-    private static final Font font = Minecraft.getInstance().font;
-
     public static Font getFont() {
-        return font;
+        return Minecraft.getInstance().font;
     }
 
     public static Component createTitle(String key) {
@@ -36,23 +34,23 @@ public class ConfigUtils {
 
     public static void drawStringWithTooltip(GuiGraphics guiGraphics, Component title, Component tooltip, int xPos, int yPos, int mouseX, int mouseY, boolean hovered) {
         if (title != null) {
-            guiGraphics.drawString(font, title, xPos, yPos, -1, false);
+            guiGraphics.drawString(getFont(), title, xPos, yPos, -1, false);
 
             if (tooltip != null && hovered) {
                 if (inBounds(title, xPos, yPos, mouseX, mouseY)) {
-                    guiGraphics.renderTooltip(font, splitTooltip(tooltip, 170), mouseX, mouseY);
+                    guiGraphics.renderTooltip(getFont(), splitTooltip(tooltip, 170), mouseX, mouseY);
                 }
             }
         }
     }
 
     public static List<FormattedCharSequence> splitTooltip(Component component, int width) {
-        return font.split(component, width);
+        return getFont().split(component, width);
     }
 
     public static boolean inBounds(Component title, int xPos, int yPos, int mouseX, int mouseY) {
-        int xMax = font.width(title.getString());
-        int yMax = font.lineHeight;
+        int xMax = getFont().width(title.getString());
+        int yMax = getFont().lineHeight;
         return xPos <= mouseX && xMax >= mouseX
                 && yPos <= mouseY && yMax >= mouseY;
     }
