@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
-import net.xstopho.resourceconfigapi.Constants;
+import net.xstopho.resourceconfigapi.gui.util.EntryLabelTooltipPosition;
 
 import java.util.List;
 
@@ -36,9 +36,10 @@ public class ConfigUtils {
         if (title != null) {
             guiGraphics.drawString(getFont(), title, xPos, yPos, -1, false);
 
-            if (tooltip != null && hovered) {
-                if (inBounds(title, xPos, yPos, mouseX, mouseY)) {
-                    guiGraphics.renderTooltip(getFont(), splitTooltip(tooltip, 170), mouseX, mouseY);
+            if (tooltip != null) {
+               if (inBounds(title, xPos, yPos, mouseX, mouseY)) {
+                    guiGraphics.renderTooltip(getFont(), splitTooltip(tooltip, 170),
+                            EntryLabelTooltipPosition.INSTANCE, mouseX, mouseY);
                 }
             }
         }
@@ -49,8 +50,8 @@ public class ConfigUtils {
     }
 
     public static boolean inBounds(Component title, int xPos, int yPos, int mouseX, int mouseY) {
-        int xMax = getFont().width(title.getString());
-        int yMax = getFont().lineHeight;
+        int xMax = xPos + getFont().width(title.getString());
+        int yMax = yPos + getFont().lineHeight;
         return xPos <= mouseX && xMax >= mouseX
                 && yPos <= mouseY && yMax >= mouseY;
     }
@@ -58,8 +59,6 @@ public class ConfigUtils {
     public static boolean hasTranslation(Component component) {
         String key = getComponentKey(component);
         String translated = ClientLanguage.getInstance().getOrDefault(key);
-
-        Constants.LOG.error("Key: {}\tTranslation: {}", key, translated);
 
         return !translated.equals(key);
     }

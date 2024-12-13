@@ -3,6 +3,7 @@ package net.xstopho.resourceconfigapi.gui.widget.value_list;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
@@ -19,7 +20,7 @@ public class ValueEntry extends BaseEntry {
         this.field = field;
 
         reset = Button.builder(Constants.RESET, button -> Constants.LOG.error("Test press {}", field.getName()))
-                .bounds(0, 0, 50, 20).build();
+                .bounds(0, 0, 50, 20).tooltip(Tooltip.create(Constants.RESET)).build();
 
         this.children.add(reset);
     }
