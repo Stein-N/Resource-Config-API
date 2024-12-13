@@ -47,9 +47,9 @@ public class ResourceConfigScreen extends Screen {
         TabNavigationBar.Builder builder = TabNavigationBar.builder(this.manager, this.width);
 
         builder.addTabs(
-                new ConfigTab(previous, ConfigType.COMMON, this.configs),
-                new ConfigTab(previous, ConfigType.CLIENT, this.configs),
-                new ConfigTab(previous, ConfigType.SERVER, this.configs));
+                new ConfigTab(ConfigType.COMMON, this.configs),
+                new ConfigTab(ConfigType.CLIENT, this.configs),
+                new ConfigTab(ConfigType.SERVER, this.configs));
 
         this.navigationBar = builder.build();
         this.addRenderableWidget(navigationBar);
