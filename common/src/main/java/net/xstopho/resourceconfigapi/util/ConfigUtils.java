@@ -18,16 +18,20 @@ public class ConfigUtils {
         return font;
     }
 
-    public static Component createTitle(String id) {
-        return Component.translatable("config." + id + ".title");
+    public static Component createTitle(String key) {
+        return Component.translatable("config." + convertKey(key) + ".title");
     }
 
     public static Component createLabel(String key) {
-        return Component.translatable("config." + key + ".label");
+        return Component.translatable("config." + convertKey(key) + ".label");
     }
 
     public static Component createTooltip(String key) {
-        return Component.translatable("config." + key + ".tooltip");
+        return Component.translatable("config." + convertKey(key) + ".tooltip");
+    }
+
+    private static String convertKey(String key) {
+        return key.toLowerCase().replace(" ", "_");
     }
 
     public static void drawStringWithTooltip(GuiGraphics guiGraphics, Component title, Component tooltip, int xPos, int yPos, int mouseX, int mouseY, boolean hovered) {
