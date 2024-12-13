@@ -1,15 +1,10 @@
 package net.xstopho.resourceconfigapi_test;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TestConfigs {
 
@@ -21,12 +16,13 @@ public class TestConfigs {
 
         @ConfigEntry
         public static int testInteger = 100;
+    }
 
-        @ConfigEntry
-        public static List<Item> itemList = List.of(Items.DIAMOND, Items.RAW_IRON, Items.NETHERITE_INGOT);
+    @Config(fileName = "generator", type = ConfigType.COMMON)
+    public static class GeneratorConfig {
 
-        @ConfigEntry
-        public static Map<String, String> hashMap = new HashMap<>(){{put("Hello", "World");}};
+        @ConfigEntry(category = "SolarPanels")
+        public static int generateByDay = 500;
     }
 
     @Config(fileName = "rendering", type = ConfigType.CLIENT)
