@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.ClientLanguage;
-import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.xstopho.resourceconfigapi.Constants;
@@ -14,7 +13,10 @@ import java.util.List;
 public class ConfigUtils {
 
     private static final Font font = Minecraft.getInstance().font;
-    private static final LanguageManager languageManager = Minecraft.getInstance().getLanguageManager();
+
+    public static Font getFont() {
+        return font;
+    }
 
     public static Component createTitle(String id) {
         return Component.translatable("config." + id + ".title");
