@@ -19,7 +19,7 @@ public class ConfigListWidget extends ObjectSelectionList<ConfigListEntry> {
     }
 
     private void addConfigEntries(ModConfig config) {
-        this.addEntry(new ConfigListEntry(config.getClazz(), this.valueListWidget));
+        this.addEntry(new ConfigListEntry(config, this.valueListWidget));
     }
 
     @Override

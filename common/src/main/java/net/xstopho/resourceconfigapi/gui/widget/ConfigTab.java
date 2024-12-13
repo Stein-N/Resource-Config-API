@@ -7,6 +7,8 @@ import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.config.ModConfig;
+import net.xstopho.resourceconfigapi.gui.widget.config_list.ConfigListWidget;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
@@ -17,8 +19,11 @@ import java.util.function.Consumer;
 
 public class ConfigTab implements Tab {
 
+    private final Minecraft client = Minecraft.getInstance();
+
     private List<ModConfig> configList = new ArrayList<>();
     private final ConfigListWidget configListWidget;
+    private final ValueListWidget valueListWidget;
     private final ConfigType type;
 
     public ConfigTab(ConfigType type, Map<ResourceLocation, ModConfig> configs) {
@@ -26,7 +31,10 @@ public class ConfigTab implements Tab {
 
         configs.forEach(this::processConfigs);
 
-        this.configListWidget = new ConfigListWidget(Minecraft.getInstance(), 0, 0, 0, 15, configList);
+        this.valueListWidget = new ValueListWidget(client, 0, 0, 0, 24);
+
+        this.configListWidget = new ConfigListWidget(client, 0, 0, 0, 15, configList, valueListWidget);
+        this.configListWidget.setSelectedIndex(0);
     }
 
     private void processConfigs(ResourceLocation location, ModConfig config) {
@@ -46,10 +54,12 @@ public class ConfigTab implements Tab {
     @Override
     public void visitChildren(Consumer<AbstractWidget> consumer) {
         consumer.accept(this.configListWidget);
+        consumer.accept(this.valueListWidget);
     }
 
     @Override
     public void doLayout(ScreenRectangle screenRectangle) {
         this.configListWidget.setRectangle(100, screenRectangle.height() - 13, 5 , 30);
+        this.valueListWidget.setRectangle(screenRectangle.right() - 130, screenRectangle.height() - 11, 125 , 29);
     }
 }
