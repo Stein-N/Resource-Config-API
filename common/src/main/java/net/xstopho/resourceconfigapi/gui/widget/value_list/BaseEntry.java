@@ -1,11 +1,13 @@
 package net.xstopho.resourceconfigapi.gui.widget.value_list;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.util.ArrayList;
@@ -15,6 +17,13 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
 
     protected final List<AbstractWidget> children = new ArrayList<>();
     protected final Font font = ConfigUtils.getFont();
+
+    protected final Component label, tooltip;
+
+    public BaseEntry(String key, ChatFormatting chatFormatting) {
+        this.label = ConfigUtils.createLabel(key).copy().withStyle(chatFormatting);
+        this.tooltip = ConfigUtils.createTooltip(key);
+    }
 
     @Override
     public List<? extends NarratableEntry> narratables() {
