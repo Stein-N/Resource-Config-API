@@ -7,6 +7,7 @@ import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.config.ModConfig;
+import net.xstopho.resourceconfigapi.gui.widget.config_list.ConfigListEntry;
 import net.xstopho.resourceconfigapi.gui.widget.config_list.ConfigListWidget;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.util.ConfigType;
@@ -35,6 +36,12 @@ public class ConfigTab implements Tab {
 
         this.configListWidget = new ConfigListWidget(client, 0, 0, 0, 15, configList, valueListWidget);
         this.configListWidget.setSelectedIndex(0);
+
+        ConfigListEntry entry = configListWidget.getSelected();
+        if (entry != null && entry.getEntryList() != null) {
+            this.valueListWidget.replaceEntries(entry.getEntryList());
+        }
+
     }
 
     private void processConfigs(ResourceLocation location, ModConfig config) {
@@ -60,6 +67,6 @@ public class ConfigTab implements Tab {
     @Override
     public void doLayout(ScreenRectangle screenRectangle) {
         this.configListWidget.setRectangle(100, screenRectangle.height() - 13, 5 , 30);
-        this.valueListWidget.setRectangle(screenRectangle.right() - 130, screenRectangle.height() - 11, 125 , 29);
+        this.valueListWidget.setRectangle(screenRectangle.width() - configListWidget.getWidth() - 15, screenRectangle.height() - 11, 125 , 29);
     }
 }
