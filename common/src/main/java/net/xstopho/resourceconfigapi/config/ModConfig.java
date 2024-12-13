@@ -86,8 +86,7 @@ public class ModConfig {
             }
 
             if (value instanceof Collection<?> || value instanceof Map<?,?>) {
-                Constants.LOG.error("List and Maps aren't supported. Value '{}' was skipped", key);
-                continue;
+                throw new IllegalStateException("List and Maps aren't supported.");
             }
 
             JsonElement valueElement = gson.toJsonTree(value);
@@ -127,7 +126,7 @@ public class ModConfig {
 
             // If an unsupported type is declared
             if (valueObject == null) {
-                continue;
+                throw new IllegalStateException("Failed to load or apply existing config!");
             }
 
             try {
