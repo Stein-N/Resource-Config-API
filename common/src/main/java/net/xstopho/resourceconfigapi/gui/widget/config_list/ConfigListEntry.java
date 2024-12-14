@@ -14,6 +14,8 @@ import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> {
 
@@ -54,6 +56,8 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
         for (Field field : clazz.getDeclaredFields()) {
             ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
 
+            if (unsupportedDatatype(field)) continue;
+
             if (entry != null) {
                 String fieldCategory = entry.category();
                 if (notEmpty(fieldCategory) && !fieldCategory.equals(currentCategory)) {
@@ -66,6 +70,19 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
         }
 
         return entries;
+    }
+
+    private boolean unsupportedDatatype(Field field) {
+        try {
+            Object value = field.get(null);
+            if (value instanceof List<?> || value instanceof Map<?,?>) {
+                return true;
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
     }
 
     private boolean notEmpty(String string) {
