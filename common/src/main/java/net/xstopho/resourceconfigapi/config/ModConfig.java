@@ -86,7 +86,8 @@ public class ModConfig {
             }
 
             if (value instanceof Collection<?> || value instanceof Map<?,?>) {
-                throw new IllegalStateException("List and Maps aren't supported.");
+                Constants.LOG.error("List and Maps aren't supported, Key '{}' was skipped", key);
+                continue;
             }
 
             JsonElement valueElement = gson.toJsonTree(value);
@@ -103,7 +104,9 @@ public class ModConfig {
         writeConfig(config);
     }
 
-    // TODO: Ranged annotation is ignored currently
+    // TODO:    - Ranged annotation is ignored currently
+    //          - Better handling for non supported DataTypes
+    //          - Reset single values when value object is null
     private void applyJsonObject(JsonObject config) {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
@@ -124,9 +127,10 @@ public class ModConfig {
                 valueObject = config.getAsJsonObject(key);
             }
 
-            // If an unsupported type is declared
+            // If th category/value name was changed or an unsupported Datatype was parsed
             if (valueObject == null) {
-                throw new IllegalStateException("Failed to load or apply existing config!");
+                Constants.LOG.error("Failed to set Value for '{}'! The reason can be newly added Values, changed Category/Value name or unsupported Datatypes.",  key);
+                continue;
             }
 
             try {
