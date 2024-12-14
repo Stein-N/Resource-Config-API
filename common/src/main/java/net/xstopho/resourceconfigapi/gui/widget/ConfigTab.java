@@ -27,8 +27,8 @@ public class ConfigTab implements Tab {
     private final ConfigType type;
 
     public ConfigTab(ConfigType type, Map<ResourceLocation, ModConfig> configs) {
-        configs.forEach(this::processConfigs);
         this.type = type;
+        configs.forEach(this::processConfigs);
 
         this.valueListWidget = new ValueListWidget(0, 0, 0, 24);
 
