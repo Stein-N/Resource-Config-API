@@ -8,7 +8,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.xstopho.resourceconfigapi.gui.util.EntryLabelTooltipPosition;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class ConfigUtils {
 
@@ -37,7 +40,7 @@ public class ConfigUtils {
             guiGraphics.drawString(getFont(), title, xPos, yPos, -1, false);
 
             if (tooltip != null) {
-               if (inBounds(title, xPos, yPos, mouseX, mouseY)) {
+               if (hasTranslation(tooltip) && inBounds(title, xPos, yPos, mouseX, mouseY)) {
                     guiGraphics.renderTooltip(getFont(), splitTooltip(tooltip, 170),
                             EntryLabelTooltipPosition.INSTANCE, mouseX, mouseY);
                 }
@@ -66,5 +69,18 @@ public class ConfigUtils {
     private static String getComponentKey(Component component) {
         String fullKey = component.toString();
         return fullKey.substring(17, fullKey.length() - 11);
+    }
+
+    public static boolean unsupportedDatatype(Field field) {
+        try {
+            Object value = field.get(null);
+            if (value instanceof Collection<?> || value instanceof Map<?,?>) {
+                return true;
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
     }
 }

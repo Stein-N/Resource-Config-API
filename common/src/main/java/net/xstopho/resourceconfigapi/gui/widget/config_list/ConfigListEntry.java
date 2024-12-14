@@ -57,7 +57,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
         for (Field field : clazz.getDeclaredFields()) {
             ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
 
-            if (unsupportedDatatype(field)) continue;
+            if (ConfigUtils.unsupportedDatatype(field)) continue;
 
             if (entry != null) {
                 String fieldCategory = entry.category();
@@ -73,18 +73,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
         return entries;
     }
 
-    private boolean unsupportedDatatype(Field field) {
-        try {
-            Object value = field.get(null);
-            if (value instanceof List<?> || value instanceof Map<?,?>) {
-                return true;
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
 
-        return false;
-    }
 
     private boolean notEmpty(String string) {
         return string != null && !string.isBlank();

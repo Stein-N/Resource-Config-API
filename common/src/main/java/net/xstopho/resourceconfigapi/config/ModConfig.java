@@ -6,6 +6,7 @@ import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.platform.CoreServices;
 import net.xstopho.resourceconfigapi.util.ConfigType;
+import net.xstopho.resourceconfigapi.util.ConfigUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +61,11 @@ public class ModConfig {
             Field field = entry.getKey();
             ConfigEntry annotation = entry.getValue();
 
+            if (ConfigUtils.unsupportedDatatype(field)) {
+                Constants.LOG.error("List and Maps aren't supported, Key '{}' was skipped", field.getName());
+                continue;
+            }
+
             JsonObject category = null;
             if (notEmpty(annotation.category()) && config.has(annotation.category())) {
                 category = config.getAsJsonObject(annotation.category());
@@ -83,11 +88,6 @@ public class ModConfig {
                 value = field.get(null);
             } catch(IllegalAccessException e) {
                 throw new RuntimeException(e);
-            }
-
-            if (value instanceof Collection<?> || value instanceof Map<?,?>) {
-                Constants.LOG.error("List and Maps aren't supported, Key '{}' was skipped", key);
-                continue;
             }
 
             JsonElement valueElement = gson.toJsonTree(value);
