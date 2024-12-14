@@ -14,20 +14,18 @@ import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> {
 
     private final ValueListWidget valueListWidget;
     private LinkedList<BaseEntry> entryList = new LinkedList<>();
-    private final Component fileName;
+    private final String fileName;
 
     public ConfigListEntry(ModConfig modConfig, ValueListWidget valueListWidget) {
         this.valueListWidget = valueListWidget;
 
         Config annotation = modConfig.getClazz().getAnnotation(Config.class);
-        this.fileName = Component.literal(annotation.fileName());
+        this.fileName = annotation.fileName();
 
         this.entryList = createEntries(modConfig.getClazz());
     }
@@ -41,7 +39,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
 
     @Override
     public Component getNarration() {
-        return fileName;
+        return Component.literal(fileName);
     }
 
     @Override
@@ -63,10 +61,10 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
                 String fieldCategory = entry.category();
                 if (notEmpty(fieldCategory) && !fieldCategory.equals(currentCategory)) {
                     currentCategory = fieldCategory;
-                    entries.add(new CategoryEntry(currentCategory));
+                    entries.add(new CategoryEntry(fileName, currentCategory));
                 }
 
-                entries.add(new ValueEntry(field.getName(), field));
+                entries.add(new ValueEntry(fileName, field.getName(), field));
             }
         }
 

@@ -7,8 +7,8 @@ import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 public class CategoryEntry extends BaseEntry {
 
-    public CategoryEntry(String category) {
-        super(category, ChatFormatting.GOLD);
+    public CategoryEntry(String fileName, String key) {
+        super(fileName, key, ChatFormatting.GOLD);
     }
 
     @Override

@@ -21,9 +21,15 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
 
     protected final Component label, tooltip;
 
-    public BaseEntry(String key, ChatFormatting chatFormatting) {
-        this.label = ConfigUtils.createLabel(key).copy().withStyle(chatFormatting);
-        this.tooltip = ConfigUtils.createTooltip(key);
+    /**
+     *
+     * @param fileName is the fileName of the given config
+     * @param key is the Category or Value name
+     * @param chatFormatting is formatting for the label, tooltips cant be changed currently
+     */
+    public BaseEntry(String fileName, String key, ChatFormatting chatFormatting) {
+        this.label = ConfigUtils.createLabel(fileName + "." + key).copy().withStyle(chatFormatting);
+        this.tooltip = ConfigUtils.createTooltip(fileName + "." + key);
     }
 
     @Override
