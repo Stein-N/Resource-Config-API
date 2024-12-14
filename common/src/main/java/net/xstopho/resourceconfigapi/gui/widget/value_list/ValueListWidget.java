@@ -6,8 +6,8 @@ import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 
 public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
 
-    public ValueListWidget(Minecraft minecraft, int width, int height, int y, int itemHeight) {
-        super(minecraft, width, height, y, itemHeight);
+    public ValueListWidget(int width, int height, int y, int itemHeight) {
+        super(Minecraft.getInstance(), width, height, y, itemHeight);
     }
 
     @Override
