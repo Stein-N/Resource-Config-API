@@ -19,8 +19,10 @@ public class ValueEntry extends BaseEntry {
         super(fileName, category, ChatFormatting.WHITE);
         this.field = field;
 
-        reset = Button.builder(Constants.RESET, button -> Constants.LOG.error("Test press {}", field.getName()))
-                .bounds(0, 0, 50, 20).tooltip(Tooltip.create(Constants.RESET)).build();
+        reset = Button.builder(Constants.RESET, button -> resetValues())
+                .bounds(0, 0, 50, 20)
+                .tooltip(ConfigUtils.hasTranslation(Constants.RESET) ? Tooltip.create(Constants.RESET) : null)
+                .build();
 
         this.children.add(reset);
     }
