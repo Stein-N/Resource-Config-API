@@ -5,6 +5,7 @@ import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class TestConfigs {
 
@@ -21,8 +22,44 @@ public class TestConfigs {
     @Config(fileName = "generator", type = ConfigType.COMMON)
     public static class GeneratorConfig {
 
-        @ConfigEntry(category = "SolarPanels")
-        public static int generateByDay = 500;
+        @ConfigEntry(category = "Basic Solar Panel")
+        public static int basicTier = 1;
+
+        @ConfigEntry(category = "Basic Solar Panel")
+        public static int basicGenerateByDay = 500;
+
+        @ConfigEntry(category = "Basic Solar Panel")
+        public static int basicGenerateByNight = 50;
+
+        @ConfigEntry(category = "Basic Solar Panel")
+        public static int basicMaxExtract = 500;
+
+        @ConfigEntry(category = "Advanced Solar Panel")
+        public static int advancedTier = 1;
+
+        @ConfigEntry(category = "Advanced Solar Panel")
+        public static int advancedGenerateByDay = 500;
+
+        @ConfigEntry(category = "Advanced Solar Panel")
+        public static int advancedGenerateByNight = 50;
+
+        @ConfigEntry(category = "Advanced Solar Panel")
+        public static int advancedMaxExtract = 500;
+
+        @ConfigEntry(category = "Industrial Solar Panel")
+        public static int industrialTier = 1;
+
+        @ConfigEntry(category = "Industrial Solar Panel")
+        public static int industrialGenerateByDay = 500;
+
+        @ConfigEntry(category = "Industrial Solar Panel")
+        public static int industrialGenerateByNight = 50;
+
+        @ConfigEntry(category = "Industrial Solar Panel")
+        public static int industrialMaxExtract = 500;
+
+        @ConfigEntry(category = "unsupported")
+        public static List<String> testList = List.of("Hello", "World");
     }
 
     @Config(fileName = "rendering", type = ConfigType.CLIENT)

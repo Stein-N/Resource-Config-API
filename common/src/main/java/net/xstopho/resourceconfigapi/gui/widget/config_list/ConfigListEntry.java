@@ -35,6 +35,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
     @Override
     public boolean mouseClicked(double p_331676_, double p_330254_, int p_331536_) {
         this.valueListWidget.replaceEntries(entryList);
+        this.valueListWidget.setScrollAmount(0);
         return super.mouseClicked(p_331676_, p_330254_, p_331536_);
     }
 

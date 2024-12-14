@@ -52,7 +52,6 @@ public class ConfigTab implements Tab {
         }
     }
 
-
     @Override
     public Component getTabTitle() {
         return ConfigUtils.createTitle(this.type.name().toLowerCase());
