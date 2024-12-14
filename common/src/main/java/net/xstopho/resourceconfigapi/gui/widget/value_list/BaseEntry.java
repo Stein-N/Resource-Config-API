@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.util.ArrayList;
@@ -39,9 +40,15 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
     public abstract void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,
                        int rowHeight, int mouseX, int mouseY, boolean hovered, float delta);
 
-    public void saveValues() {}
+    public void saveValues() {
+        Constants.LOG.error("Saving Values for: {}", this.label.getString());
+    }
 
-    public void undoChanges() {}
+    public void undoChanges() {
+        Constants.LOG.error("Undo Changes for: {}", this.label.getString());
+    }
 
-    public void resetValues() {}
+    public void resetValues() {
+        Constants.LOG.error("Reset Values for: {}", this.label.getString());
+    }
 }
