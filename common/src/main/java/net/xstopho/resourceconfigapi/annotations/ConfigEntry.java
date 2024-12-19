@@ -7,12 +7,4 @@ import java.lang.annotation.RetentionPolicy;
 public @interface ConfigEntry {
 
     String category() default "";
-    String comment() default "";
-
-    @interface Ranged {
-
-        int defaultValue();
-        int min();
-        int max();
-    }
 }

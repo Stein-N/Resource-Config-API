@@ -65,14 +65,14 @@ public class TestConfigs {
     @Config(fileName = "rendering", type = ConfigType.CLIENT)
     public static class ClientConfig {
 
-        @ConfigEntry(comment = "Item Rendering multiplier")
+        @ConfigEntry
         public static int itemSizeMultiplier = 1;
     }
 
     @Config(fileName = "payloads", type = ConfigType.SERVER)
     public static class ServerConfig {
 
-        @ConfigEntry(category = "Payloads", comment = "Ticks between sending update packets")
+        @ConfigEntry(category = "Payloads")
         public static int updateSpeed = 5;
     }
 }
