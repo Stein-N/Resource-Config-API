@@ -58,8 +58,10 @@ public class ModConfig {
         JsonObject config = new JsonObject();
 
         for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
-            Field field = entry.getKey();
             ConfigEntry annotation = entry.getValue();
+            Field field = entry.getKey();
+
+            String categoryKey = notEmpty(annotation.category()) ? annotation.category() : null;
 
             if (ConfigUtils.unsupportedDatatype(field)) {
                 Constants.LOG.error("List and Maps aren't supported, Key '{}' was skipped", field.getName());
@@ -67,20 +69,15 @@ public class ModConfig {
             }
 
             JsonObject category = null;
-            if (notEmpty(annotation.category()) && config.has(annotation.category())) {
-                category = config.getAsJsonObject(annotation.category());
-            } else if (notEmpty(annotation.category())){
+            if (categoryKey != null && config.has(categoryKey)) {
+                category = config.getAsJsonObject(categoryKey);
+            } else if (categoryKey != null){
                 category = new JsonObject();
             }
 
-            String key = field.getName();
-            if (category != null && category.has(key)) {
-                throw new IllegalStateException("Something bad happened, duplicate key found: " + key);
-            }
-
-            JsonObject valueObject = new JsonObject();
-            if (notEmpty(annotation.comment())) {
-                valueObject.addProperty("comment", annotation.comment());
+            String valueKey = field.getName();
+            if ((category != null && category.has(valueKey)) || config.has(valueKey)) {
+                throw new IllegalStateException("Something bad happened, duplicate key found: " + valueKey);
             }
 
             Object value;
@@ -91,13 +88,12 @@ public class ModConfig {
             }
 
             JsonElement valueElement = gson.toJsonTree(value);
-            valueObject.add("value", valueElement);
 
             if (category != null) {
-                category.add(key, valueObject);
+                category.add(field.getName(), valueElement);
                 config.add(annotation.category(), category);
             } else {
-                config.add(key, valueObject);
+                config.add(field.getName(), valueElement);
             }
         }
 
@@ -105,41 +101,36 @@ public class ModConfig {
     }
 
     // TODO:    - Ranged annotation is ignored currently
-    //          - Better handling for non supported DataTypes
-    //          - Reset single values when value object is null
     private void applyJsonObject(JsonObject config) {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
         for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
-            Field field = entry.getKey();
             ConfigEntry annotation = entry.getValue();
+            Field field = entry.getKey();
+
+            String categoryKey = notEmpty(annotation.category()) ? annotation.category() : null;
 
             JsonObject category = null;
-            if (notEmpty(annotation.category()) && config.has(annotation.category())) {
-                category = config.getAsJsonObject(annotation.category());
+            if (categoryKey != null && config.has(categoryKey)) {
+                category = config.getAsJsonObject(categoryKey);
             }
 
-            String key = field.getName();
-            JsonObject valueObject;
-            if (category != null) {
-                valueObject = category.getAsJsonObject(key);
-            } else {
-                valueObject = config.getAsJsonObject(key);
-            }
+            String valueKey = field.getName();
+            JsonElement valueElement = category != null ? category.get(valueKey) : config.get(valueKey);
 
-            // If th category/value name was changed or an unsupported Datatype was parsed
-            if (valueObject == null) {
-                Constants.LOG.error("Failed to set Value for '{}'! The reason can be newly added Values, changed Category/Value name or unsupported Datatypes.",  key);
+            // If the category/value name was changed or an unsupported Datatype was parsed
+            if (valueElement == null) {
+                Constants.LOG.error("Failed to set Value for '{}'! The reason can be newly added Values, changed Category/Value name or unsupported Datatypes.",  valueKey);
                 continue;
             }
 
             try {
                 Object value;
-                value = readValue(valueObject.get("value"), field);
-                field.set(field, value);
+                value = readValue(valueElement, field);
 
+                field.set(field, value);
             } catch(IllegalAccessException e) {
-                throw new RuntimeException("Failed to set Key: " + key, e);
+                throw new RuntimeException("Failed to set Key: " + valueKey, e);
             }
         }
     }
@@ -163,6 +154,7 @@ public class ModConfig {
         return obj != null ? obj : field.get(null);
     }
 
+    @SuppressWarnings("all")
     private void writeConfig(JsonObject config) {
         final String json = gson.toJson(config);
 
