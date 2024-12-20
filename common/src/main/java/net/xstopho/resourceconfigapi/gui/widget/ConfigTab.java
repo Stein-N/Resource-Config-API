@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 public class ConfigTab implements Tab {
 
     private final List<ModConfig> configList = new ArrayList<>();
-    private List<ConfigListEntry> valueEntries;
+    private final List<ConfigListEntry> valueEntries;
     private final ConfigListWidget configListWidget;
     private final ValueListWidget valueListWidget;
     private final ConfigType type;

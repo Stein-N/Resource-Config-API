@@ -23,7 +23,7 @@ public class TestConfigs {
     @Config(fileName = "generator", type = ConfigType.COMMON)
     public static class GeneratorConfig {
 
-        @ConfigEntry(category = "Basic Solar Panel")
+        @ConfigEntry(category = "Basic Solar Panel", translation = "tier")
         public static int basicTier = 1;
 
         @ConfigEntry(category = "Basic Solar Panel")
@@ -35,7 +35,7 @@ public class TestConfigs {
         @ConfigEntry(category = "Basic Solar Panel")
         public static int basicMaxExtract = 500;
 
-        @ConfigEntry(category = "Advanced Solar Panel")
+        @ConfigEntry(category = "Advanced Solar Panel", translation = "tier")
         public static int advancedTier = 1;
 
         @ConfigEntry(category = "Advanced Solar Panel")
@@ -47,7 +47,7 @@ public class TestConfigs {
         @ConfigEntry(category = "Advanced Solar Panel")
         public static int advancedMaxExtract = 500;
 
-        @ConfigEntry(category = "Industrial Solar Panel")
+        @ConfigEntry(category = "Industrial Solar Panel", translation = "tier")
         public static int industrialTier = 1;
 
         @ConfigEntry(category = "Industrial Solar Panel")

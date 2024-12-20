@@ -15,8 +15,8 @@ public class ValueEntry extends BaseEntry {
 
     protected final Button reset;
 
-    public ValueEntry(String fileName, String category, Field field) {
-        super(fileName, category, ChatFormatting.WHITE);
+    public ValueEntry(String fileName, String translationKey, Field field) {
+        super(fileName, translationKey, ChatFormatting.WHITE);
         this.field = field;
 
         reset = Button.builder(Constants.RESET, button -> resetValues())

@@ -63,8 +63,9 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
                     currentCategory = fieldCategory;
                     entries.add(new CategoryEntry(fileName, currentCategory));
                 }
-                // TODO: respect translation annotation
-                entries.add(new ValueEntry(fileName, field.getName(), field));
+
+               String translationKey = notEmpty(entry.translation()) ? entry.translation() : field.getName();
+                entries.add(new ValueEntry(fileName, translationKey, field));
             }
         }
 
