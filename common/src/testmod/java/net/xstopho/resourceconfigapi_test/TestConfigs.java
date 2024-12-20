@@ -2,6 +2,7 @@ package net.xstopho.resourceconfigapi_test;
 
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
+import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 
 import java.io.Serializable;
@@ -57,6 +58,15 @@ public class TestConfigs {
 
         @ConfigEntry(category = "Industrial Solar Panel")
         public static int industrialMaxExtract = 500;
+
+        @ConfigEntry(category = "Droprates")
+        @RangedEntry(minValue = 0, maxValue = 1)
+        public static int diamondDropChance = 1;
+
+        @ConfigEntry(category = "Droprates")
+        @RangedEntry(minValue = 0, maxValue = 1)
+        public static char testChar = 'd';
+
 
         @ConfigEntry(category = "unsupported")
         public static List<String> testList = List.of("Hello", "World");

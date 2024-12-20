@@ -4,6 +4,7 @@ import com.google.gson.*;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
+import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.platform.CoreServices;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
@@ -25,6 +26,7 @@ public class ModConfig {
     private final String modId;
 
     private final Class<?> clazz;
+    private final Map<Field, Object> defaultValueMap;
 
     public ModConfig(Class<?> clazz, ConfigType type, String modId) {
         this.clazz = clazz;
@@ -35,6 +37,8 @@ public class ModConfig {
                 modId,
                 type.name().toLowerCase(),
                 clazz.getAnnotation(Config.class).fileName()));
+
+        this.defaultValueMap = getDefaultValueMap();
 
         setup();
     }
@@ -100,7 +104,6 @@ public class ModConfig {
         writeConfig(config);
     }
 
-    // TODO:    - Ranged annotation is ignored currently
     private void applyJsonObject(JsonObject config) {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
@@ -151,6 +154,22 @@ public class ModConfig {
         } catch (JsonSyntaxException | IllegalStateException e) {
             Constants.LOG.error("Failed to read value for '{}', value is set to its default!", field.getName());
         }
+
+        if (field.getType().isPrimitive() && field.isAnnotationPresent(RangedEntry.class)) {
+            if (field.getType() == char.class || field.getType() == Character.class) {
+                Constants.LOG.error("You assign the RangedEntry to an Character, this will be ignored!");
+
+            } else {
+                RangedEntry annotation = field.getAnnotation(RangedEntry.class);
+                Number objectNumber = (Number) obj;
+
+                if (objectNumber != null && !inRange(objectNumber, annotation)) {
+                    Constants.LOG.error("Value {} is not in range, using default Value!", field.getName());
+                    obj = field.get(null);
+                }
+            }
+        }
+
         return obj != null ? obj : field.get(null);
     }
 
@@ -177,13 +196,40 @@ public class ModConfig {
                 continue;
             }
             if (!Modifier.isStatic(field.getModifiers())) {
-                throw new IllegalStateException("Config entries must be static!");
+                throw new IllegalStateException("Config entries must be static! Add the static Modifier to the value: " + field.getName());
             }
+            if (Modifier.isFinal(field.getModifiers())) {
+                throw new IllegalStateException("Config entries can't be final! Remove the final Modifier from value: " + field.getName());
+            }
+
             ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
             entries.put(field, entry);
         }
 
         return entries;
+    }
+
+    private Map<Field, Object> getDefaultValueMap() {
+        if (this.defaultValueMap != null) {
+            return defaultValueMap;
+        }
+
+        Map<Field, Object> defaultValues = new HashMap<>();
+
+        try {
+            for (Field field : this.clazz.getDeclaredFields()) {
+                defaultValues.put(field, field.get(null));
+            }
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("Something went wrong while creating the default values map!");
+        }
+
+        return defaultValues;
+    }
+
+    private boolean inRange(Number number, RangedEntry annotation) {
+        return number.floatValue() <= annotation.maxValue() &&
+                number.floatValue() >= annotation.minValue();
     }
 
     private boolean notEmpty(String string) {
