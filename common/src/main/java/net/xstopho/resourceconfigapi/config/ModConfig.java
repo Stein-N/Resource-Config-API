@@ -225,7 +225,7 @@ public class ModConfig {
 
     public Object getDefaultValue(Field field) {
         if (this.defaultValueMap != null) {
-            this.defaultValueMap.get(field);
+            return this.defaultValueMap.get(field);
         }
         throw new IllegalStateException("Can't receive default Value for field: " + field.getName());
     }
