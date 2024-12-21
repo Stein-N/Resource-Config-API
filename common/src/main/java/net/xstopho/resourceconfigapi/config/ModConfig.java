@@ -38,7 +38,7 @@ public class ModConfig {
                 type.name().toLowerCase(),
                 clazz.getAnnotation(Config.class).fileName()));
 
-        this.defaultValueMap = getDefaultValueMap();
+        this.defaultValueMap = createDefaultValueMap();
 
         setup();
     }
@@ -209,11 +209,7 @@ public class ModConfig {
         return entries;
     }
 
-    private Map<Field, Object> getDefaultValueMap() {
-        if (this.defaultValueMap != null) {
-            return defaultValueMap;
-        }
-
+    private Map<Field, Object> createDefaultValueMap() {
         Map<Field, Object> defaultValues = new HashMap<>();
 
         try {
@@ -225,6 +221,13 @@ public class ModConfig {
         }
 
         return defaultValues;
+    }
+
+    public Object getDefaultValue(Field field) {
+        if (this.defaultValueMap != null) {
+            this.defaultValueMap.get(field);
+        }
+        throw new IllegalStateException("Can't receive default Value for field: " + field.getName());
     }
 
     private boolean inRange(Number number, RangedEntry annotation) {

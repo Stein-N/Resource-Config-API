@@ -66,7 +66,9 @@ public class ResourceConfigScreen extends Screen {
         this.renderBackground(guiGraphics, mouseX, mouseY, ticks);
         super.render(guiGraphics, mouseX, mouseY, ticks);
 
-        guiGraphics.blit(RenderType::guiTextured, Screen.FOOTER_SEPARATOR, 0, this.height - this.layout.getHeaderHeight() - 10, 0F, 0F, this.width, 2, 32, 2);
+        guiGraphics.blit(RenderType::guiTextured, Screen.FOOTER_SEPARATOR, 0,
+                this.height - this.layout.getHeaderHeight() - 10,
+                0F, 0F, this.width, 2, 32, 2);
     }
 
     @Override

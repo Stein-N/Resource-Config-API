@@ -12,12 +12,14 @@ import java.lang.reflect.Field;
 public class ValueEntry extends BaseEntry {
 
     private final Field field;
+    private final Object defaultValue;
 
     protected final Button reset;
 
-    public ValueEntry(String fileName, String translationKey, Field field) {
+    public ValueEntry(String fileName, String translationKey, Field field, Object defaultValue) {
         super(fileName, translationKey, ChatFormatting.WHITE);
         this.field = field;
+        this.defaultValue = defaultValue;
 
         reset = Button.builder(Constants.RESET, button -> resetValues())
                 .bounds(0, 0, 50, 20)

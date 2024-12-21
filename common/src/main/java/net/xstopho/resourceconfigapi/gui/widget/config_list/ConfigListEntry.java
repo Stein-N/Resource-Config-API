@@ -27,7 +27,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
         Config annotation = modConfig.getClazz().getAnnotation(Config.class);
         this.fileName = annotation.fileName();
 
-        this.entryList = createEntries(modConfig.getClazz());
+        this.entryList = createEntries(modConfig);
     }
 
     @Override
@@ -48,11 +48,11 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
         guiGraphics.drawString(ConfigUtils.getFont(), fileName, xPos + 2, yPos + 2, -1, false);
     }
 
-    private LinkedList<BaseEntry> createEntries(Class<?> clazz) {
+    private LinkedList<BaseEntry> createEntries(ModConfig config) {
         LinkedList<BaseEntry> entries = new LinkedList<>();
         String currentCategory = "";
 
-        for (Field field : clazz.getDeclaredFields()) {
+        for (Field field : config.getClazz().getDeclaredFields()) {
             ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
 
             if (ConfigUtils.unsupportedDatatype(field)) continue;
@@ -65,7 +65,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
                 }
 
                String translationKey = notEmpty(entry.translation()) ? entry.translation() : field.getName();
-                entries.add(new ValueEntry(fileName, translationKey, field));
+                entries.add(new ValueEntry(fileName, translationKey, field, config.getDefaultValue(field)));
             }
         }
 
