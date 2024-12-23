@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.xstopho.resourceconfigapi.Constants;
+import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.lang.reflect.Field;
@@ -23,7 +24,7 @@ public class ValueEntry extends BaseEntry {
 
         reset = Button.builder(Constants.RESET, button -> resetValues())
                 .bounds(0, 0, 50, 20)
-                .tooltip(ConfigUtils.hasTranslation(Constants.RESET) ? Tooltip.create(Constants.RESET) : null)
+                .tooltip(ConfigUtils.hasTranslation(Constants.RESET_TOOLTIP) ? Tooltip.create(Constants.RESET_TOOLTIP) : null)
                 .build();
 
         this.children.add(reset);
@@ -43,4 +44,7 @@ public class ValueEntry extends BaseEntry {
         reset.render(guiGraphics, mouseX, mouseY, delta);
     }
 
+    private boolean isRanged() {
+        return field.isAnnotationPresent(RangedEntry.class);
+    }
 }
