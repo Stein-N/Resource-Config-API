@@ -2,21 +2,27 @@ package net.xstopho.resourceconfigapi.gui.screen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.tabs.TabManager;
 import net.minecraft.client.gui.components.tabs.TabNavigationBar;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
+import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.gui.widget.ConfigTab;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.BaseEntry;
+import net.xstopho.resourceconfigapi.util.ConfigHolder;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class ResourceConfigScreen extends Screen {
 
@@ -27,10 +33,8 @@ public class ResourceConfigScreen extends Screen {
     private final TabManager manager;
     private TabNavigationBar navigationBar;
 
-    private Map<ResourceLocation, ModConfig> configs = new HashMap<>();
+    private Map<ResourceLocation, ConfigHolder> configs = new HashMap<>();
 
-    //TODO: - add Save and Close, Reset and Close Buttons
-    //      - find a way to apply button presses to every BaseEntry in every Tab
     public ResourceConfigScreen(Screen previous, String modId) {
         super(Component.literal("Config Screen - " + modId));
 
@@ -41,7 +45,6 @@ public class ResourceConfigScreen extends Screen {
         manager = new TabManager(this::addRenderableWidget, this::removeWidget);
 
         ConfigRegistry.CONFIGS.forEach(this::processConfigs);
-
     }
 
     @Override
@@ -51,10 +54,24 @@ public class ResourceConfigScreen extends Screen {
         builder.addTabs(
                 new ConfigTab(ConfigType.COMMON, this.configs),
                 new ConfigTab(ConfigType.CLIENT, this.configs),
-                new ConfigTab(ConfigType.SERVER, this.configs));
+                new ConfigTab(ConfigType.SERVER, this.configs)
+        );
 
         this.navigationBar = builder.build();
         this.addRenderableWidget(navigationBar);
+
+        LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
+        footer.addChild(Button.builder(Constants.SAVE_AND_CLOSE, button -> {
+            consumeAction(BaseEntry::saveValues);
+            //this.onClose();
+        }).width(100).build());
+
+        footer.addChild(Button.builder(Constants.RESET_ALL, button -> consumeAction(BaseEntry::resetValues)).width(100).build());
+        footer.addChild(Button.builder(Constants.CLOSE, button -> {
+            consumeAction(BaseEntry::undoChanges);
+            this.onClose();
+        }).width(100).build());
+
 
         this.layout.visitWidgets(this::addRenderableWidget);
         this.navigationBar.selectTab(0, true);
@@ -100,7 +117,13 @@ public class ResourceConfigScreen extends Screen {
 
     private void processConfigs(ResourceLocation location, ModConfig config) {
         if (location.getNamespace().equals(this.modId)) {
-            this.configs.put(location, config);
+            this.configs.put(location, new ConfigHolder(config));
+        }
+    }
+
+    private void consumeAction(Consumer<BaseEntry> consumer) {
+        for (Map.Entry<ResourceLocation, ConfigHolder> entry : this.configs.entrySet()) {
+            entry.getValue().getEntryList().forEach(consumer);
         }
     }
 }
