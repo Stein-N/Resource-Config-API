@@ -57,7 +57,7 @@ public class ModConfig {
         applyJsonObject(config);
     }
 
-    private void saveConfig() {
+    public void saveConfig() {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
         JsonObject config = new JsonObject();
 

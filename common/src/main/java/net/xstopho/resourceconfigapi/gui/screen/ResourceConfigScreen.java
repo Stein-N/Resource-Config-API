@@ -63,7 +63,8 @@ public class ResourceConfigScreen extends Screen {
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
         footer.addChild(Button.builder(Constants.SAVE_AND_CLOSE, button -> {
             consumeAction(BaseEntry::saveValues);
-            //this.onClose();
+            configs.forEach(this::saveConfigChanges);
+            this.onClose();
         }).width(100).build());
 
         footer.addChild(Button.builder(Constants.RESET_ALL, button -> consumeAction(BaseEntry::resetValues)).width(100).build());
@@ -119,6 +120,11 @@ public class ResourceConfigScreen extends Screen {
         if (location.getNamespace().equals(this.modId)) {
             this.configs.put(location, new ConfigHolder(config));
         }
+    }
+
+    private void saveConfigChanges(ResourceLocation location, ConfigHolder holder) {
+        Constants.LOG.info("Saving '{}' config from mod '{}'", holder.getFileName(), holder.getConfig().getModId());
+        holder.getConfig().saveConfig();
     }
 
     private void consumeAction(Consumer<BaseEntry> consumer) {
