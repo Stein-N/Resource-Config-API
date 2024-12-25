@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.gui.widget.config_list.ConfigListEntry;
 import net.xstopho.resourceconfigapi.gui.widget.config_list.ConfigListWidget;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueListWidget;
-import net.xstopho.resourceconfigapi.util.ConfigHolder;
+import net.xstopho.resourceconfigapi.config.ConfigHolder;
 import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 

@@ -3,7 +3,7 @@ package net.xstopho.resourceconfigapi.gui.widget.config_list;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueListWidget;
-import net.xstopho.resourceconfigapi.util.ConfigHolder;
+import net.xstopho.resourceconfigapi.config.ConfigHolder;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package net.xstopho.resourceconfigapi.util;
+package net.xstopho.resourceconfigapi.config;
 
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
-import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.gui.util.ValueEntryCreator;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.CategoryEntry;
+import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;
