@@ -16,7 +16,7 @@ import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.gui.widget.ConfigTab;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.BaseEntry;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.util.ConfigHolder;
 import net.xstopho.resourceconfigapi.util.ConfigType;
 

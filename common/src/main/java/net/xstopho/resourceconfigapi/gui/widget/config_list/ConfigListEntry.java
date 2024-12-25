@@ -3,7 +3,7 @@ package net.xstopho.resourceconfigapi.gui.widget.config_list;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.network.chat.Component;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.BaseEntry;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.util.ConfigHolder;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;

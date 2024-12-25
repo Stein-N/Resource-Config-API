@@ -3,9 +3,9 @@ package net.xstopho.resourceconfigapi.util;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.BaseEntry;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.CategoryEntry;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.ValueEntry;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.CategoryEntry;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;

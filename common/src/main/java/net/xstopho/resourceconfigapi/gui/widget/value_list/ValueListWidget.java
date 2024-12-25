@@ -3,6 +3,7 @@ package net.xstopho.resourceconfigapi.gui.widget.value_list;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
 
 public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
 

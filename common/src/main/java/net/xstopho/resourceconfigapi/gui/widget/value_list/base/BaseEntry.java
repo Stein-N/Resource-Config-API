@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.gui.widget.value_list;
+package net.xstopho.resourceconfigapi.gui.widget.value_list.base;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
