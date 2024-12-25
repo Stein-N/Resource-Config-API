@@ -1,0 +1,6 @@
+{
+  "config.general.widget_tests.label": "Widget Test Category",
+  "config.general.testboolean.label": "Test Boolean",
+  "config.general.normalbyte.label": "Normal Byte",
+  "config.general.rangedbyte.label": "Ranged Byte"
+}
