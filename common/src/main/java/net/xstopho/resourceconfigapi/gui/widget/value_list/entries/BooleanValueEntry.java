@@ -30,8 +30,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
                        int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
         super.render(guiGraphics, index, yPos, xPos, rowWidth, rowHeight, mouseX, mouseY, hovered, delta);
 
-        button.setX(xPos + rowWidth - getWidgetWidth());
-        button.setY(yPos);
+        button.setPosition(xPos + rowWidth - getWidgetWidth(), yPos);
         button.setWidth(getCorrectedWidgetWidth());
 
         button.render(guiGraphics, mouseX, mouseX, delta);
@@ -52,15 +51,15 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
 
     @Override
     public void undoChanges() {
-        button.setMessage(getFieldValue() ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
         state = getFieldValue();
+        button.setMessage(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
         changeUndoState(false);
     }
 
     @Override
     public void resetValues() {
-        button.setMessage((boolean) this.defaultValue ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
         state = (boolean) this.defaultValue;
+        button.setMessage(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
         changeUndoState(!Objects.equals(state, getFieldValue()));
     }
 }

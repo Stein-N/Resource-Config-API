@@ -59,15 +59,11 @@ public abstract class ValueEntry<T> extends BaseEntry {
         ConfigUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
                 xPos, yPos + 6, mouseX, mouseY, hovered);
 
-        undo.setX(xPos + rowWidth - undo.getWidth() - reset.getWidth());
-        undo.setY(yPos);
-
-        reset.setX(xPos + rowWidth - reset.getWidth());
-        reset.setY(yPos);
+        undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
+        reset.setPosition(xPos + rowWidth - reset.getWidth(), yPos);
 
         if (valueWidget != null) {
-            valueWidget.setX(xPos + rowWidth - getWidgetWidth());
-            valueWidget.setY(yPos);
+            valueWidget.setPosition(xPos + rowWidth - getWidgetWidth(), yPos);
             valueWidget.setWidth(getCorrectedWidgetWidth());
 
             valueWidget.render(guiGraphics, mouseX, mouseY, delta);
