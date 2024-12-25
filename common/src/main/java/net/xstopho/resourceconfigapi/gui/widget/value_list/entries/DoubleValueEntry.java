@@ -1,0 +1,41 @@
+package net.xstopho.resourceconfigapi.gui.widget.value_list.entries;
+
+import net.minecraft.client.gui.components.EditBox;
+import net.xstopho.resourceconfigapi.annotations.RangedEntry;
+import net.xstopho.resourceconfigapi.gui.widget.RangedEntrySlider;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
+
+import java.lang.reflect.Field;
+import java.util.regex.Pattern;
+
+public class DoubleValueEntry extends ValueEntry<Double> {
+
+    private final Pattern pattern = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
+
+    public DoubleValueEntry(String fileName, String translationKey, Field field, Object defaultValue) {
+        super(fileName, translationKey, field, defaultValue);
+
+        if (isRanged()) {
+            RangedEntry range = field.getAnnotation(RangedEntry.class);
+            valueWidget = createSlider(range.minValue(), range.maxValue(), false);
+
+        } else {
+            valueWidget = createEditBox(pattern);
+        }
+    }
+
+    @Override
+    public Double getValue() {
+        if (valueWidget instanceof RangedEntrySlider slider) {
+            return slider.getValue();
+        }
+
+        if (valueWidget instanceof EditBox editBox) {
+            if (editBox.getValue().isEmpty()) {
+                return getFieldValue();
+            }
+            return Double.valueOf(editBox.getValue());
+        }
+        throw new IllegalStateException("Failed to get Float value from Widget for field: " + field.getName());
+    }
+}

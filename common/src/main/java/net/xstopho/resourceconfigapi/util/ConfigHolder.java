@@ -3,9 +3,9 @@ package net.xstopho.resourceconfigapi.util;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
+import net.xstopho.resourceconfigapi.gui.util.ValueEntryCreator;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.CategoryEntry;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;
@@ -43,7 +43,7 @@ public class ConfigHolder {
                 }
 
                 String translationKey = notEmpty(entry.translation()) ? entry.translation() : field.getName();
-                entries.add(new ValueEntry(fileName, translationKey, field, config.getDefaultValue(field)));
+                entries.add(ValueEntryCreator.create(fileName, translationKey, field, config.getDefaultValue(field)));
             }
         }
 
