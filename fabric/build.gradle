@@ -45,6 +45,10 @@ loom {
     }
 }
 
+processTestmodResources {
+    from file('../common/src/testmod/resources')
+}
+
 // Loader Specific Settings
 publishMods {
     file = remapJar.archiveFile
