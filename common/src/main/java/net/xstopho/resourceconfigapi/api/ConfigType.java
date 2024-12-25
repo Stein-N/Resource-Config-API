@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.util;
+package net.xstopho.resourceconfigapi.api;
 
 public enum ConfigType {
     COMMON, SERVER, CLIENT;

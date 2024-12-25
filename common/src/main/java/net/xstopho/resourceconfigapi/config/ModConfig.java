@@ -6,7 +6,7 @@ import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.platform.CoreServices;
-import net.xstopho.resourceconfigapi.util.ConfigType;
+import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 import org.apache.commons.io.FileUtils;
 

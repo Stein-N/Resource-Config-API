@@ -18,7 +18,7 @@ import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.gui.widget.ConfigTab;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.util.ConfigHolder;
-import net.xstopho.resourceconfigapi.util.ConfigType;
+import net.xstopho.resourceconfigapi.api.ConfigType;
 
 import java.util.HashMap;
 import java.util.Map;

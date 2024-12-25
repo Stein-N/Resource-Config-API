@@ -1,7 +1,7 @@
 package net.xstopho.resourceconfigapi.annotations;
 
 
-import net.xstopho.resourceconfigapi.util.ConfigType;
+import net.xstopho.resourceconfigapi.api.ConfigType;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

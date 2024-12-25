@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.config.ModConfig;
-import net.xstopho.resourceconfigapi.util.ConfigType;
 
 import java.util.HashMap;
 import java.util.Map;
