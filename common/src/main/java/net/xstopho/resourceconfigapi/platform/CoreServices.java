@@ -13,6 +13,10 @@ public class CoreServices {
         return load(IPlatformHelper.class).getConfigDir();
     }
 
+    public static boolean isDevelopmentEnvironment() {
+        return load(IPlatformHelper.class).isDevelopmentEnvironment();
+    }
+
     public static String getModName(String modId) {
         return load(IPlatformHelper.class).getModName(modId);
     }
