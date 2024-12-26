@@ -21,6 +21,5 @@ public class ConfigNetwork {
                 .decoder(SyncConfigPayload::decode)
                 .consumerNetworkThread(SyncConfigPayload::handle)
                 .add();
-
     }
 }

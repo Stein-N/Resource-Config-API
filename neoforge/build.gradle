@@ -54,6 +54,10 @@ compileTestmodJava {
     source(project(':common').sourceSets.testmod.allSource)
 }
 
+processTestmodResources {
+    from file('../common/src/testmod/resources')
+}
+
 publishMods {
     file = jar.archiveFile
     modLoaders.add("neoforge")
