@@ -1,31 +1,28 @@
 package net.xstopho.resourceconfigapi.gui.util;
 
 import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.BooleanValueEntry;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.ByteValueEntry;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.DoubleValueEntry;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.FloatValueEntry;
+import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.*;
 
 import java.lang.reflect.Field;
 
 public class ValueEntryCreator {
 
-    public static ValueEntry<?> create(String modId, String fileName, String translation, Field field, Object defaultValue) {
-        Class<?> clazz = field.getType();
+public static ValueEntry<?> create(String modId, String fileName, String translation, Field field, Object defaultValue) {
+    Class<?> clazz = field.getType();
 
-        if (clazz == Boolean.class || clazz == boolean.class) {
-            return new BooleanValueEntry(modId, fileName, translation, field, defaultValue);
+    return switch (clazz.getSimpleName().toLowerCase()) {
+        case "boolean" -> new BooleanValueEntry(modId, fileName, translation, field, defaultValue);
+        case "byte" -> new ByteValueEntry(modId, fileName, translation, field, defaultValue);
+        case "double" -> new DoubleValueEntry(modId, fileName, translation, field, defaultValue);
+        case "float" -> new FloatValueEntry(modId, fileName, translation, field, defaultValue);
+        case "int" -> new IntegerValueEntry(modId, fileName, translation, field, defaultValue);
+        case "long" -> new LongValueEntry(modId, fileName, translation, field, defaultValue);
+        case "short" -> new ShortValueEntry(modId, fileName, translation, field, defaultValue);
+        case "string" -> new StringValueEntry(modId, fileName, translation, field, defaultValue);
+        default -> {
+            if (clazz.isEnum()) yield new EnumValueEntry<>(modId, fileName, translation, field, defaultValue);
+            throw new IllegalStateException(String.format("Something went wrong while creating a ValueEntry for Field '%s'!", field.getName()));
         }
-        if (clazz == Byte.class || clazz == byte.class) {
-            return new ByteValueEntry(modId, fileName, translation, field, defaultValue);
-        }
-        if (clazz == Double.class || clazz == double.class) {
-            return new DoubleValueEntry(modId, fileName, translation, field, defaultValue);
-        }
-        if (clazz == Float.class || clazz == float.class) {
-            return new FloatValueEntry(modId, fileName, translation, field, defaultValue);
-        }
-
-        throw new IllegalStateException(String.format("Something went wrong while creating a ValueEntry for Field '%s'!", field.getName()));
-    }
+    };
+}
 }
