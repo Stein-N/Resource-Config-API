@@ -13,8 +13,8 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     private final Button button;
     private boolean state;
 
-    public BooleanValueEntry(String fileName, String translationKey, Field field, Object defaultValue) {
-        super(fileName, translationKey, field, defaultValue);
+    public BooleanValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
+        super(modId, fileName, translationKey, field, defaultValue);
 
         this.state = this.getFieldValue();
 

@@ -10,20 +10,20 @@ import java.lang.reflect.Field;
 
 public class ValueEntryCreator {
 
-    public static ValueEntry<?> create(String fileName, String translation, Field field, Object defaultValue) {
+    public static ValueEntry<?> create(String modId, String fileName, String translation, Field field, Object defaultValue) {
         Class<?> clazz = field.getType();
 
         if (clazz == Boolean.class || clazz == boolean.class) {
-            return new BooleanValueEntry(fileName, translation, field, defaultValue);
+            return new BooleanValueEntry(modId, fileName, translation, field, defaultValue);
         }
         if (clazz == Byte.class || clazz == byte.class) {
-            return new ByteValueEntry(fileName, translation, field, defaultValue);
+            return new ByteValueEntry(modId, fileName, translation, field, defaultValue);
         }
         if (clazz == Double.class || clazz == double.class) {
-            return new DoubleValueEntry(fileName, translation, field, defaultValue);
+            return new DoubleValueEntry(modId, fileName, translation, field, defaultValue);
         }
         if (clazz == Float.class || clazz == float.class) {
-            return new FloatValueEntry(fileName, translation, field, defaultValue);
+            return new FloatValueEntry(modId, fileName, translation, field, defaultValue);
         }
 
         throw new IllegalStateException(String.format("Something went wrong while creating a ValueEntry for Field '%s'!", field.getName()));

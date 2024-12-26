@@ -13,26 +13,26 @@ import java.util.LinkedList;
 public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> {
 
     private final ValueListWidget valueListWidget;
-    private final LinkedList<BaseEntry> entryList;
-    private final String fileName;
+    private final ConfigHolder configHolder;
+    private final Component fileName;
 
     public ConfigListEntry(ConfigHolder configHolder, ValueListWidget valueListWidget) {
         this.valueListWidget = valueListWidget;
 
-        this.fileName = configHolder.getFileName();
-        this.entryList = configHolder.getEntryList();
+        this.configHolder = configHolder;
+        this.fileName = ConfigUtils.createConfigLabel(configHolder.getModId(), configHolder.getFileName());
     }
 
     @Override
     public boolean mouseClicked(double p_331676_, double p_330254_, int p_331536_) {
-        this.valueListWidget.replaceEntries(entryList);
+        this.valueListWidget.replaceEntries(configHolder.getEntryList());
         this.valueListWidget.setScrollAmount(0);
         return super.mouseClicked(p_331676_, p_330254_, p_331536_);
     }
 
     @Override
     public Component getNarration() {
-        return Component.literal(fileName);
+        return fileName;
     }
 
     @Override
@@ -42,6 +42,6 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
     }
 
     public LinkedList<BaseEntry> getEntryList() {
-        return entryList;
+        return configHolder.getEntryList();
     }
 }

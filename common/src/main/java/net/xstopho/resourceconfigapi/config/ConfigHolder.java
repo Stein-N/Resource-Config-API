@@ -39,11 +39,11 @@ public class ConfigHolder {
                 String fieldCategory = entry.category();
                 if (notEmpty(fieldCategory) && !fieldCategory.equals(currentCategory)) {
                     currentCategory = fieldCategory;
-                    entries.add(new CategoryEntry(fileName, currentCategory));
+                    entries.add(new CategoryEntry(getModId(), fileName, currentCategory));
                 }
 
                 String translationKey = notEmpty(entry.translation()) ? entry.translation() : field.getName();
-                entries.add(ValueEntryCreator.create(fileName, translationKey, field, config.getDefaultValue(field)));
+                entries.add(ValueEntryCreator.create(getModId(), fileName, translationKey, field, config.getDefaultValue(field)));
             }
         }
 

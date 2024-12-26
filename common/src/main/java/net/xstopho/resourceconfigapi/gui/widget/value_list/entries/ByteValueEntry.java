@@ -12,8 +12,8 @@ public class ByteValueEntry extends ValueEntry<Byte> {
 
     private final Pattern pattern = Pattern.compile("^(?:12[0-7]|1[01][0-9]|[1-9]?[0-9])?$");
 
-    public ByteValueEntry(String fileName, String translationKey, Field field, Object defaultValue) {
-        super(fileName, translationKey, field, defaultValue);
+    public ByteValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
+        super(modId, fileName, translationKey, field, defaultValue);
 
         if (isRanged()) {
             RangedEntry range = field.getAnnotation(RangedEntry.class);

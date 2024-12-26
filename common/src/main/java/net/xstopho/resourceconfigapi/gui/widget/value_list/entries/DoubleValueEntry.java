@@ -12,8 +12,8 @@ public class DoubleValueEntry extends ValueEntry<Double> {
 
     private final Pattern pattern = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
 
-    public DoubleValueEntry(String fileName, String translationKey, Field field, Object defaultValue) {
-        super(fileName, translationKey, field, defaultValue);
+    public DoubleValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
+        super(modId, fileName, translationKey, field, defaultValue);
 
         if (isRanged()) {
             RangedEntry range = field.getAnnotation(RangedEntry.class);

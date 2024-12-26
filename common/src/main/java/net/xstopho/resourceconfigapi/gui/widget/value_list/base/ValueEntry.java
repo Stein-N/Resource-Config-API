@@ -30,8 +30,8 @@ public abstract class ValueEntry<T> extends BaseEntry {
     protected final Button reset, undo;
     protected AbstractWidget valueWidget;
 
-    public ValueEntry(String fileName, String translationKey, Field field, Object defaultValue) {
-        super(fileName, translationKey, ChatFormatting.WHITE);
+    public ValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
+        super(modId, fileName, translationKey, ChatFormatting.WHITE);
         this.field = field;
         this.defaultValue = defaultValue;
 

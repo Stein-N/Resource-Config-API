@@ -26,9 +26,9 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
      * @param key is the Category or Value name
      * @param chatFormatting is formatting for the label, tooltips cant be changed currently
      */
-    public BaseEntry(String fileName, String key, ChatFormatting chatFormatting) {
-        this.label = ConfigUtils.createLabel(fileName + "." + key).copy().withStyle(chatFormatting);
-        this.tooltip = ConfigUtils.createTooltip(fileName + "." + key);
+    public BaseEntry(String modId, String fileName, String key, ChatFormatting chatFormatting) {
+        this.label = ConfigUtils.createModLabel(modId, fileName + "." + key).copy().withStyle(chatFormatting);
+        this.tooltip = ConfigUtils.createModTooltip(modId, fileName + "." + key);
     }
 
     @Override
