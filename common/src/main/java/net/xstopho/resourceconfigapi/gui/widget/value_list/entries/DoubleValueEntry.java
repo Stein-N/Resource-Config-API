@@ -31,11 +31,9 @@ public class DoubleValueEntry extends ValueEntry<Double> {
         }
 
         if (valueWidget instanceof EditBox editBox) {
-            if (editBox.getValue().isEmpty()) {
-                return getFieldValue();
-            }
-            return Double.valueOf(editBox.getValue());
+            String value = editBox.getValue();
+            return value.isEmpty() ? getFieldValue() : Double.valueOf(value);
         }
-        throw new IllegalStateException("Failed to get Float value from Widget for field: " + field.getName());
+        throw new IllegalStateException("Failed to get Double value from Widget for field: " + field.getName());
     }
 }

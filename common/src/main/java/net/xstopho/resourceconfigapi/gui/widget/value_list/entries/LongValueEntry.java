@@ -8,32 +8,31 @@ import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
-public class ByteValueEntry extends ValueEntry<Byte> {
+public class LongValueEntry extends ValueEntry<Long> {
 
-    private final Pattern pattern = Pattern.compile("^(?:12[0-7]|1[01][0-9]|[1-9]?[0-9])?$");
+    private final Pattern pattern = Pattern.compile("[0-9]{0,15}");
 
-    public ByteValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
+    public LongValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
         super(modId, fileName, translationKey, field, defaultValue);
 
         if (isRanged()) {
             RangedEntry range = field.getAnnotation(RangedEntry.class);
-            valueWidget = createSlider(range.minValue(), range.maxValue(), true);
-
+            this.valueWidget = createSlider(range.minValue(), range.maxValue(), true);
         } else {
-            valueWidget = createEditBox(pattern);
+            this.valueWidget = createEditBox(pattern);
         }
     }
 
     @Override
-    public Byte getValue() {
+    public Long getValue() {
         if (valueWidget instanceof RangedEntrySlider slider) {
-            return (byte) slider.getValue();
+            return (long) slider.getValue();
         }
 
         if (valueWidget instanceof EditBox editBox) {
             String value = editBox.getValue();
-            return value.isEmpty() ? getFieldValue() : Byte.valueOf(value);
+            return value.isEmpty() ? getFieldValue() : Long.valueOf(value);
         }
-        throw new IllegalStateException("Failed to get Byte value from Widget for field: " + field.getName());
+        throw new IllegalStateException("Failed to get Long value from Widget for field: " + field.getName());
     }
 }

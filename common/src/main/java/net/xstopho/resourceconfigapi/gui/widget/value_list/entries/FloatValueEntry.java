@@ -31,10 +31,8 @@ public class FloatValueEntry extends ValueEntry<Float> {
         }
 
         if (valueWidget instanceof EditBox editBox) {
-            if (editBox.getValue().isEmpty()) {
-                return getFieldValue();
-            }
-            return Float.valueOf(editBox.getValue());
+            String value = editBox.getValue();
+            return value.isEmpty() ? getFieldValue() : Float.valueOf(value);
         }
         throw new IllegalStateException("Failed to get Float value from Widget for field: " + field.getName());
     }

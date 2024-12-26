@@ -36,13 +36,13 @@ public abstract class ValueEntry<T> extends BaseEntry {
         this.defaultValue = defaultValue;
 
         reset = Button.builder(Constants.RESET, button -> resetValues())
-                .bounds(0, 0, 50, 20)
                 .tooltip(ConfigUtils.hasTranslation(Constants.RESET_TOOLTIP) ? Tooltip.create(Constants.RESET_TOOLTIP) : null)
+                .bounds(0, 0, 50, 20)
                 .build();
 
         undo = Button.builder(Component.empty(), button -> undoChanges())
-                .bounds(0, 0, 20, 20)
                 .tooltip(ConfigUtils.hasTranslation(Constants.UNDO_TOOLTIP) ? Tooltip.create(Constants.UNDO_TOOLTIP) : null)
+                .bounds(0, 0, 20, 20)
                 .build();
 
         undo.active = false;
@@ -152,9 +152,13 @@ public abstract class ValueEntry<T> extends BaseEntry {
 
     protected EditBox createEditBox(Pattern pattern) {
         EditBox editBox = new EditBox(getFont(), 0, 0, widgetWidth, 18, Component.empty());
-        editBox.setFilter(s -> pattern.matcher(s).matches());
         editBox.setValue(getFieldValue().toString());
         editBox.setResponder(s -> changeUndoState(!Objects.equals(s, getFieldValue().toString())));
+
+        if (pattern != null) {
+            editBox.setFilter(s -> pattern.matcher(s).matches());
+        }
+
         this.children.add(editBox);
 
         return editBox;

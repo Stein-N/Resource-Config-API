@@ -6,6 +6,7 @@ import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.api.ConfigType;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class TestConfigs {
 
@@ -35,5 +36,35 @@ public class TestConfigs {
         @ConfigEntry(category = "Widget Tests")
         @RangedEntry(minValue = 0, maxValue = 1)
         public static float rangedFloat = 0.04f;
+
+        @ConfigEntry(category = "Widget Tests")
+        public static int normalInteger = 23;
+
+        @ConfigEntry(category = "Widget Tests")
+        @RangedEntry(minValue = 0, maxValue = 50)
+        public static int rangedInteger = 10;
+
+        @ConfigEntry(category = "Widget Tests")
+        public static long normalLong = 23;
+
+        @ConfigEntry(category = "Widget Tests")
+        @RangedEntry(minValue = 0, maxValue = 50)
+        public static long rangedLong = 10;
+
+        @ConfigEntry(category = "Widget Tests")
+        public static short normalShort = 45;
+
+        @ConfigEntry(category = "Widget Tests")
+        @RangedEntry(minValue = 0, maxValue = 20)
+        public static short rangedShort = 10;
+
+        @ConfigEntry(category = "Widget Tests")
+        public static String string = "Hello World";
+
+        @ConfigEntry(category = "Widget Tests")
+        public static ConfigType configType = ConfigType.COMMON;
+
+        @ConfigEntry(category = "Widget Tests")
+        public static List<String> list = List.of("Hello", "World");
     }
 }

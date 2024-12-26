@@ -2,8 +2,10 @@ package net.xstopho.resourceconfigapi.gui.widget.value_list.entries;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
+import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -19,6 +21,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
         this.state = this.getFieldValue();
 
         this.button = Button.builder(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED, this::changeState)
+                .tooltip(ConfigUtils.hasTranslation(tooltip) ? Tooltip.create(tooltip) : null)
                 .bounds(0, 0, getWidgetWidth(), 20)
                 .build();
 
@@ -61,5 +64,6 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
         state = (boolean) this.defaultValue;
         button.setMessage(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
         changeUndoState(!Objects.equals(state, getFieldValue()));
+        super.resetValues();
     }
 }
