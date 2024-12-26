@@ -3,86 +3,37 @@ package net.xstopho.resourceconfigapi_test;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
-import net.xstopho.resourceconfigapi.util.ConfigType;
+import net.xstopho.resourceconfigapi.api.ConfigType;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class TestConfigs {
 
     @Config(fileName = "general", type = ConfigType.COMMON)
     public static class CommonConfig implements Serializable {
 
-        @ConfigEntry(category = "Compatibilities")
-        public static boolean disableModMenuCompat = false;
+        @ConfigEntry(category = "Widget Tests")
+        public static boolean testBoolean = true;
 
-        @ConfigEntry
-        public static int testInteger = 100;
-    }
+        @ConfigEntry(category = "Widget Tests")
+        public static byte normalByte = 100;
 
-    @Config(fileName = "generator", type = ConfigType.COMMON)
-    public static class GeneratorConfig {
+        @ConfigEntry(category = "Widget Tests")
+        @RangedEntry(minValue = 0, maxValue = 50)
+        public static byte rangedByte = 25;
 
-        @ConfigEntry(category = "Basic Solar Panel", translation = "tier")
-        public static int basicTier = 1;
+        @ConfigEntry(category = "Widget Tests")
+        public static double normalDouble = 2.3;
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int basicGenerateByDay = 500;
+        @ConfigEntry(category = "Widget Tests")
+        @RangedEntry(minValue = 0, maxValue = 10)
+        public static double rangedDouble = 2.38;
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int basicGenerateByNight = 50;
+        @ConfigEntry(category = "Widget Tests")
+        public static float normalFloat = 23.4f;
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int basicMaxExtract = 500;
-
-        @ConfigEntry(category = "Advanced Solar Panel", translation = "tier")
-        public static int advancedTier = 1;
-
-        @ConfigEntry(category = "Advanced Solar Panel")
-        public static int advancedGenerateByDay = 500;
-
-        @ConfigEntry(category = "Advanced Solar Panel")
-        public static int advancedGenerateByNight = 50;
-
-        @ConfigEntry(category = "Advanced Solar Panel")
-        public static int advancedMaxExtract = 500;
-
-        @ConfigEntry(category = "Industrial Solar Panel", translation = "tier")
-        public static int industrialTier = 1;
-
-        @ConfigEntry(category = "Industrial Solar Panel")
-        public static int industrialGenerateByDay = 500;
-
-        @ConfigEntry(category = "Industrial Solar Panel")
-        public static int industrialGenerateByNight = 50;
-
-        @ConfigEntry(category = "Industrial Solar Panel")
-        public static int industrialMaxExtract = 500;
-
-        @ConfigEntry(category = "Droprates")
+        @ConfigEntry(category = "Widget Tests")
         @RangedEntry(minValue = 0, maxValue = 1)
-        public static int diamondDropChance = 1;
-
-        @ConfigEntry(category = "Droprates")
-        @RangedEntry(minValue = 0, maxValue = 1)
-        public static char testChar = 'd';
-
-
-        @ConfigEntry(category = "unsupported")
-        public static List<String> testList = List.of("Hello", "World");
-    }
-
-    @Config(fileName = "rendering", type = ConfigType.CLIENT)
-    public static class ClientConfig {
-
-        @ConfigEntry
-        public static int itemSizeMultiplier = 1;
-    }
-
-    @Config(fileName = "payloads", type = ConfigType.SERVER)
-    public static class ServerConfig {
-
-        @ConfigEntry(category = "Payloads")
-        public static int updateSpeed = 5;
+        public static float rangedFloat = 0.04f;
     }
 }
