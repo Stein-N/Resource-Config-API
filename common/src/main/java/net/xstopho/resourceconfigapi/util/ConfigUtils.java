@@ -23,8 +23,20 @@ public class ConfigUtils {
         return Component.translatable("config." + convertKey(key) + ".title");
     }
 
+    public static Component createConfigLabel(String modId, String fileName) {
+        return Component.translatable("config." + modId + "." + fileName);
+    }
+
+    public static Component createModLabel(String modId, String key) {
+        return createLabel(modId + "." + key);
+    }
+
     public static Component createLabel(String key) {
         return Component.translatable("config." + convertKey(key) + ".label");
+    }
+
+    public static Component createModTooltip(String modId, String key) {
+        return createTooltip(modId + "." + key);
     }
 
     public static Component createTooltip(String key) {

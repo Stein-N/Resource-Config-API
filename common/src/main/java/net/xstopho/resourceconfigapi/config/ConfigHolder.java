@@ -62,6 +62,10 @@ public class ConfigHolder {
         return fileName;
     }
 
+    public String getModId() {
+        return config.getModId();
+    }
+
     private boolean notEmpty(String string) {
         return string != null && !string.isBlank();
     }
