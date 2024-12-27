@@ -5,6 +5,7 @@ import net.minecraft.client.gui.components.tabs.Tab;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.xstopho.resourceconfigapi.ClientConstants;
 import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
 import net.xstopho.resourceconfigapi.gui.widget.config_list.ConfigListEntry;
@@ -37,6 +38,13 @@ public class ConfigTab implements Tab {
         ConfigListEntry entry = configListWidget.getSelected();
         if (entry != null && entry.getEntryList() != null) {
             this.valueListWidget.replaceEntries(entry.getEntryList());
+        }
+
+        if ((type.equals(ConfigType.COMMON) || type.equals(ConfigType.SERVER)) && !ClientConstants.isOperator) {
+            valueListWidget.visible = false;
+            valueListWidget.active = false;
+            configListWidget.visible = false;
+            configListWidget.active = false;
         }
     }
 

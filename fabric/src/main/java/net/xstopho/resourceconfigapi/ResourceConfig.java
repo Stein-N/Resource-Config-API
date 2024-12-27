@@ -7,7 +7,9 @@ import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.network.ConfigNetwork;
+import net.xstopho.resourceconfigapi.network.server.OperatorStatusPayload;
 import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
+import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 public class ResourceConfig implements ModInitializer {
 
@@ -16,6 +18,9 @@ public class ResourceConfig implements ModInitializer {
         ConfigNetwork.initServer();
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            Constants.LOG.info("Sync Operator status.");
+            sender.sendPacket(new OperatorStatusPayload(ConfigUtils.isPlayerOperator(handler.player)));
+
             Constants.LOG.info("Syncing Configs with Client");
 
             for (ModConfig config : ConfigRegistry.CONFIGS.values()) {
