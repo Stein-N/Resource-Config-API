@@ -20,6 +20,7 @@ import net.xstopho.resourceconfigapi.config.ConfigHolder;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.gui.widget.ConfigTab;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
+import net.xstopho.resourceconfigapi.util.ClientConfigUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class ResourceConfigScreen extends Screen {
 
         if (clientTab.containsConfigs()) builder.addTabs(clientTab);
         if (commonTab.containsConfigs() && ClientConstants.isOperator) builder.addTabs(commonTab);
-        if (serverTab.containsConfigs() && ClientConstants.isOperator) builder.addTabs(serverTab);
+        if (serverTab.containsConfigs() && ClientConstants.isOperator && ClientConfigUtils.isMultiplayer()) builder.addTabs(serverTab);
 
         this.navigationBar = builder.build();
 

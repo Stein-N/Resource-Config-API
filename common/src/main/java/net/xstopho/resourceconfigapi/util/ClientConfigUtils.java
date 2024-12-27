@@ -3,6 +3,8 @@ package net.xstopho.resourceconfigapi.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
@@ -52,7 +54,17 @@ public class ClientConfigUtils {
         return fullKey.substring(17, fullKey.length() - 11);
     }
 
-    public static boolean isInWorld() {
-        return Minecraft.getInstance().level != null;
+    public static boolean isSingleplayer() {
+        Minecraft minecraft = Minecraft.getInstance();
+        ClientPacketListener connection = minecraft.getConnection();
+        if (connection != null) {
+            ServerData server = connection.getServerData();
+            return server != null;
+        }
+        return false;
+    }
+
+    public static boolean isMultiplayer() {
+        return !isSingleplayer();
     }
 }
