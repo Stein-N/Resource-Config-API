@@ -54,6 +54,7 @@ public class ModConfig {
     }
 
     public void syncWithServerConfig(JsonObject config) {
+        Constants.LOG.info("Receiving Config data for Config: {}", configFile.getName());
         applyJsonObject(config);
     }
 
