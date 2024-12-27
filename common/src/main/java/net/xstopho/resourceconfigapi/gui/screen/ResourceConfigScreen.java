@@ -34,7 +34,7 @@ public class ResourceConfigScreen extends Screen {
     private final TabManager manager;
     private TabNavigationBar navigationBar;
 
-    private Map<ResourceLocation, ConfigHolder> configs = new HashMap<>();
+    private final Map<ResourceLocation, ConfigHolder> configs = new HashMap<>();
 
     private final ConfigTab commonTab, clientTab, serverTab;
 
@@ -59,11 +59,11 @@ public class ResourceConfigScreen extends Screen {
         TabNavigationBar.Builder builder = TabNavigationBar.builder(this.manager, this.width);
 
         if (clientTab.containsConfigs()) builder.addTabs(clientTab);
-        if (commonTab.containsConfigs()) builder.addTabs(commonTab);
-        if (serverTab.containsConfigs()) builder.addTabs(serverTab);
+        if (commonTab.containsConfigs() && ClientConstants.isOperator) builder.addTabs(commonTab);
+        if (serverTab.containsConfigs() && ClientConstants.isOperator) builder.addTabs(serverTab);
 
         this.navigationBar = builder.build();
-        this.addRenderableWidget(navigationBar);
+
 
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
         footer.addChild(Button.builder(ClientConstants.SAVE_AND_CLOSE, button -> {
@@ -80,7 +80,12 @@ public class ResourceConfigScreen extends Screen {
 
 
         this.layout.visitWidgets(this::addRenderableWidget);
-        this.navigationBar.selectTab(0, true);
+
+        if (!this.navigationBar.children().isEmpty()) {
+            this.addRenderableWidget(navigationBar);
+            this.navigationBar.selectTab(0, true);
+        }
+
         this.repositionElements();
     }
 
@@ -90,7 +95,7 @@ public class ResourceConfigScreen extends Screen {
         super.render(guiGraphics, mouseX, mouseY, ticks);
 
         guiGraphics.blit(RenderType::guiTextured, Screen.FOOTER_SEPARATOR, 0,
-                this.height - this.layout.getHeaderHeight() - 10,
+                this.height - 35,
                 0F, 0F, this.width, 2, 32, 2);
     }
 
@@ -105,15 +110,14 @@ public class ResourceConfigScreen extends Screen {
 
     @Override
     protected void repositionElements() {
-        if (this.navigationBar != null) {
+        if (this.navigationBar != null && !this.navigationBar.children().isEmpty()) {
             this.navigationBar.setWidth(this.width);
             this.navigationBar.arrangeElements();
             int i = this.navigationBar.getRectangle().bottom();
             ScreenRectangle screenRectangle = new ScreenRectangle(0, i, this.width, this.height - (i * 2) - 10);
             this.manager.setTabArea(screenRectangle);
-            this.layout.setHeaderHeight(i);
-            this.layout.arrangeElements();
         }
+        this.layout.arrangeElements();
     }
 
     @Override

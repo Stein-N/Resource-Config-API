@@ -39,13 +39,6 @@ public class ConfigTab implements Tab {
         if (entry != null && entry.getEntryList() != null) {
             this.valueListWidget.replaceEntries(entry.getEntryList());
         }
-
-        if ((type.equals(ConfigType.COMMON) || type.equals(ConfigType.SERVER)) && !ClientConstants.isOperator) {
-            valueListWidget.visible = false;
-            valueListWidget.active = false;
-            configListWidget.visible = false;
-            configListWidget.active = false;
-        }
     }
 
     private void processConfigs(ResourceLocation location, ConfigHolder configHolder) {
