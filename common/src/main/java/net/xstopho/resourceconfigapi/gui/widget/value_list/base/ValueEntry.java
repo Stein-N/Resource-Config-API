@@ -58,7 +58,7 @@ public abstract class ValueEntry<T> extends BaseEntry {
                        int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
 
         ClientConfigUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
-                xPos, yPos + 6, mouseX, mouseY, hovered);
+                xPos, yPos + 6, mouseX, mouseY);
 
         undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
         reset.setPosition(xPos + rowWidth - reset.getWidth(), yPos);

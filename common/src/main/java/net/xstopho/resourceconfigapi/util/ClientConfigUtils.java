@@ -16,7 +16,7 @@ public class ClientConfigUtils {
         return Minecraft.getInstance().font;
     }
 
-    public static void drawStringWithTooltip(GuiGraphics guiGraphics, Component title, Component tooltip, int xPos, int yPos, int mouseX, int mouseY, boolean hovered) {
+    public static void drawStringWithTooltip(GuiGraphics guiGraphics, Component title, Component tooltip, int xPos, int yPos, int mouseX, int mouseY) {
         if (title != null) {
             guiGraphics.drawString(getFont(), title, xPos, yPos, -1, false);
 
@@ -50,5 +50,9 @@ public class ClientConfigUtils {
     private static String getComponentKey(Component component) {
         String fullKey = component.toString();
         return fullKey.substring(17, fullKey.length() - 11);
+    }
+
+    public static boolean isInWorld() {
+        return Minecraft.getInstance().level != null;
     }
 }

@@ -17,6 +17,6 @@ public class CategoryEntry extends BaseEntry {
                        int mouseX, int mouseY, boolean hovered, float delta) {
         ClientConfigUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
                 xPos + (rowWidth / 2) - (font.width(label.getString()) / 2),
-                yPos + 6, mouseX, mouseY, hovered);
+                yPos + 6, mouseX, mouseY);
     }
 }
