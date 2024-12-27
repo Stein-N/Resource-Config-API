@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.gui.widget.value_list.base;
+package net.xstopho.resourceconfigapi.client.gui.widget.value_list.base;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,11 +9,11 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.xstopho.resourceconfigapi.ClientConstants;
+import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
-import net.xstopho.resourceconfigapi.gui.widget.RangedEntrySlider;
-import net.xstopho.resourceconfigapi.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.gui.widget.RangedEntrySlider;
+import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
 
 import java.lang.reflect.Field;
 import java.util.Objects;

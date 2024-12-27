@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.util;
+package net.xstopho.resourceconfigapi.client.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -8,7 +8,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
-import net.xstopho.resourceconfigapi.gui.util.EntryLabelTooltipPosition;
+import net.xstopho.resourceconfigapi.client.gui.util.EntryLabelTooltipPosition;
 
 import java.util.List;
 

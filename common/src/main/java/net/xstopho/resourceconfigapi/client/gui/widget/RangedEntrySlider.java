@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.gui.widget;
+package net.xstopho.resourceconfigapi.client.gui.widget;
 
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;

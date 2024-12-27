@@ -1,6 +1,7 @@
-package net.xstopho.resourceconfigapi.gui.util;
+package net.xstopho.resourceconfigapi.client.gui.util;
 
-import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
+import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ValueEntry;
+import net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries.*;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.entries.*;
 
 import java.lang.reflect.Field;

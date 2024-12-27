@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi;
+package net.xstopho.resourceconfigapi.client;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

@@ -1,9 +1,9 @@
-package net.xstopho.resourceconfigapi.gui.widget.value_list.entries;
+package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.base.BaseEntry;
-import net.xstopho.resourceconfigapi.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
+import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
 
 
 public class CategoryEntry extends BaseEntry {

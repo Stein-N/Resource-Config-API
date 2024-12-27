@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.gui.widget.value_list.base;
+package net.xstopho.resourceconfigapi.client.gui.widget.value_list.base;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
-import net.xstopho.resourceconfigapi.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.util.ArrayList;

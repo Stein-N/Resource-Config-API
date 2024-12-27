@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.gui.util;
+package net.xstopho.resourceconfigapi.client.gui.util;
 
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import org.joml.Vector2i;

@@ -1,12 +1,11 @@
-package net.xstopho.resourceconfigapi.gui.widget.value_list.entries;
+package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
-import net.xstopho.resourceconfigapi.util.ClientConfigUtils;
-import net.xstopho.resourceconfigapi.util.ConfigUtils;
+import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ValueEntry;
+import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

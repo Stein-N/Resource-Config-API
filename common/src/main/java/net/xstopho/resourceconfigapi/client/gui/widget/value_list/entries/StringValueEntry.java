@@ -1,7 +1,7 @@
-package net.xstopho.resourceconfigapi.gui.widget.value_list.entries;
+package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 
 import net.minecraft.client.gui.components.EditBox;
-import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
+import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ValueEntry;
 
 import java.lang.reflect.Field;
 
