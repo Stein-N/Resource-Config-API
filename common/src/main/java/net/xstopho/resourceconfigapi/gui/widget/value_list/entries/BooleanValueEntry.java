@@ -3,8 +3,9 @@ package net.xstopho.resourceconfigapi.gui.widget.value_list.entries;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.xstopho.resourceconfigapi.Constants;
+import net.xstopho.resourceconfigapi.ClientConstants;
 import net.xstopho.resourceconfigapi.gui.widget.value_list.base.ValueEntry;
+import net.xstopho.resourceconfigapi.util.ClientConfigUtils;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.lang.reflect.Field;
@@ -20,8 +21,8 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
 
         this.state = this.getFieldValue();
 
-        this.button = Button.builder(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED, this::changeState)
-                .tooltip(ConfigUtils.hasTranslation(tooltip) ? Tooltip.create(tooltip) : null)
+        this.button = Button.builder(state ? ClientConstants.BOOLEAN_ENABLED : ClientConstants.BOOLEAN_DISABLED, this::changeState)
+                .tooltip(ClientConfigUtils.hasTranslation(tooltip) ? Tooltip.create(tooltip) : null)
                 .bounds(0, 0, getWidgetWidth(), 20)
                 .build();
 
@@ -42,7 +43,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     private void changeState(Button button) {
         state = !state;
 
-        button.setMessage(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
+        button.setMessage(state ? ClientConstants.BOOLEAN_ENABLED : ClientConstants.BOOLEAN_DISABLED);
 
         changeUndoState(!Objects.equals(state, getFieldValue()));
     }
@@ -55,14 +56,14 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     @Override
     public void undoChanges() {
         state = getFieldValue();
-        button.setMessage(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
+        button.setMessage(state ? ClientConstants.BOOLEAN_ENABLED : ClientConstants.BOOLEAN_DISABLED);
         changeUndoState(false);
     }
 
     @Override
     public void resetValues() {
         state = (boolean) this.defaultValue;
-        button.setMessage(state ? Constants.BOOLEAN_ENABLED : Constants.BOOLEAN_DISABLED);
+        button.setMessage(state ? ClientConstants.BOOLEAN_ENABLED : ClientConstants.BOOLEAN_DISABLED);
         changeUndoState(!Objects.equals(state, getFieldValue()));
         super.resetValues();
     }

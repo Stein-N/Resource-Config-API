@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.xstopho.resourceconfigapi.ClientConstants;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.api.ConfigType;
@@ -61,14 +62,14 @@ public class ResourceConfigScreen extends Screen {
         this.addRenderableWidget(navigationBar);
 
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
-        footer.addChild(Button.builder(Constants.SAVE_AND_CLOSE, button -> {
+        footer.addChild(Button.builder(ClientConstants.SAVE_AND_CLOSE, button -> {
             consumeAction(BaseEntry::saveValues);
             configs.forEach(this::saveConfigChanges);
             this.onClose();
         }).width(100).build());
 
-        footer.addChild(Button.builder(Constants.RESET_ALL, button -> consumeAction(BaseEntry::resetValues)).width(100).build());
-        footer.addChild(Button.builder(Constants.CLOSE, button -> {
+        footer.addChild(Button.builder(ClientConstants.RESET_ALL, button -> consumeAction(BaseEntry::resetValues)).width(100).build());
+        footer.addChild(Button.builder(ClientConstants.CLOSE, button -> {
             consumeAction(BaseEntry::undoChanges);
             this.onClose();
         }).width(100).build());

@@ -9,10 +9,11 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.xstopho.resourceconfigapi.ClientConstants;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.gui.widget.RangedEntrySlider;
-import net.xstopho.resourceconfigapi.util.ConfigUtils;
+import net.xstopho.resourceconfigapi.util.ClientConfigUtils;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -35,13 +36,13 @@ public abstract class ValueEntry<T> extends BaseEntry {
         this.field = field;
         this.defaultValue = defaultValue;
 
-        reset = Button.builder(Constants.RESET, button -> resetValues())
-                .tooltip(ConfigUtils.hasTranslation(Constants.RESET_TOOLTIP) ? Tooltip.create(Constants.RESET_TOOLTIP) : null)
+        reset = Button.builder(ClientConstants.RESET, button -> resetValues())
+                .tooltip(ClientConfigUtils.hasTranslation(ClientConstants.RESET_TOOLTIP) ? Tooltip.create(ClientConstants.RESET_TOOLTIP) : null)
                 .bounds(0, 0, 50, 20)
                 .build();
 
         undo = Button.builder(Component.empty(), button -> undoChanges())
-                .tooltip(ConfigUtils.hasTranslation(Constants.UNDO_TOOLTIP) ? Tooltip.create(Constants.UNDO_TOOLTIP) : null)
+                .tooltip(ClientConfigUtils.hasTranslation(ClientConstants.UNDO_TOOLTIP) ? Tooltip.create(ClientConstants.UNDO_TOOLTIP) : null)
                 .bounds(0, 0, 20, 20)
                 .build();
 
@@ -56,7 +57,7 @@ public abstract class ValueEntry<T> extends BaseEntry {
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,
                        int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
 
-        ConfigUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
+        ClientConfigUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
                 xPos, yPos + 6, mouseX, mouseY, hovered);
 
         undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
