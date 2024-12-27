@@ -12,15 +12,15 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.api.ConfigType;
-import net.xstopho.resourceconfigapi.config.ConfigHolder;
-import net.xstopho.resourceconfigapi.config.ModConfig;
+import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.widget.ConfigTab;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.config.ConfigHolder;
+import net.xstopho.resourceconfigapi.config.ModConfig;
 
 import java.util.HashMap;
 import java.util.Map;

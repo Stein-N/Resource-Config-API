@@ -9,9 +9,9 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
+import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.widget.RangedEntrySlider;
 import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
 
