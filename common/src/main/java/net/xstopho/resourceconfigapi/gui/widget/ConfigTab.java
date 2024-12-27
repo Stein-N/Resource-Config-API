@@ -72,4 +72,8 @@ public class ConfigTab implements Tab {
         this.configListWidget.setRectangle(100, screenRectangle.height() - 13, 5 , 30);
         this.valueListWidget.setRectangle(screenRectangle.width() - configListWidget.getWidth() - 15, screenRectangle.height() - 11, 125 , 29);
     }
+
+    public boolean containsConfigs() {
+        return !configHolderList.isEmpty();
+    }
 }

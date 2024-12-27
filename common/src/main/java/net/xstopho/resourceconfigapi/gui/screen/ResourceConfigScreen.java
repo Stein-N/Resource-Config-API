@@ -36,6 +36,8 @@ public class ResourceConfigScreen extends Screen {
 
     private Map<ResourceLocation, ConfigHolder> configs = new HashMap<>();
 
+    private final ConfigTab commonTab, clientTab, serverTab;
+
     public ResourceConfigScreen(Screen previous, String modId) {
         super(Component.literal("Config Screen - " + modId));
 
@@ -46,17 +48,19 @@ public class ResourceConfigScreen extends Screen {
         manager = new TabManager(this::addRenderableWidget, this::removeWidget);
 
         ConfigRegistry.CONFIGS.forEach(this::processConfigs);
+
+        this.commonTab = new ConfigTab(ConfigType.COMMON, this.configs);
+        this.clientTab = new ConfigTab(ConfigType.CLIENT, this.configs);
+        this.serverTab = new ConfigTab(ConfigType.SERVER, this.configs);
     }
 
     @Override
     protected void init() {
         TabNavigationBar.Builder builder = TabNavigationBar.builder(this.manager, this.width);
 
-        builder.addTabs(
-                new ConfigTab(ConfigType.COMMON, this.configs),
-                new ConfigTab(ConfigType.CLIENT, this.configs),
-                new ConfigTab(ConfigType.SERVER, this.configs)
-        );
+        if (clientTab.containsConfigs()) builder.addTabs(clientTab);
+        if (commonTab.containsConfigs()) builder.addTabs(commonTab);
+        if (serverTab.containsConfigs()) builder.addTabs(serverTab);
 
         this.navigationBar = builder.build();
         this.addRenderableWidget(navigationBar);
