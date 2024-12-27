@@ -1,6 +1,7 @@
 package net.xstopho.resourceconfigapi.api;
 
 import net.minecraft.resources.ResourceLocation;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 
@@ -11,19 +12,16 @@ public class ConfigRegistry {
 
     public static final Map<ResourceLocation, ModConfig> CONFIGS = new HashMap<>();
 
-    public static ModConfig register(Class<?> clazz, String modId) {
-        if (clazz.isAnnotationPresent(Config.class)) {
-            Config config = clazz.getAnnotation(Config.class);
-            ResourceLocation configLoc = of(modId, config.type(), config.fileName());
-
-            //Constants.LOG.info("Register config '{}' for mod '{}'", config.fileName(), modId);
-            if (!CONFIGS.containsKey(configLoc)) {
-                return CONFIGS.put(configLoc, new ModConfig(clazz, config.type(), modId));
-            } else {
-                throw new IllegalStateException("You try to register " + configLoc + " twice");
-            }
+    public static void register(Class<?> clazz, String modId) {
+        if (!clazz.isAnnotationPresent(Config.class)) {
+            Constants.LOG.error("You try to register '{}', this class isn't flagged as a Config and was skipped!", clazz.getName());
+            return;
         }
-        throw new IllegalArgumentException("You try to register an class that isn't flagged as a Config!");
+
+        Config annotation = clazz.getAnnotation(Config.class);
+        ResourceLocation config = of(modId, annotation.type(), annotation.fileName());
+
+        CONFIGS.putIfAbsent(config, new ModConfig(clazz, annotation.type(), modId));
     }
 
     public static ResourceLocation of(String modId, ConfigType type, String fileName) {

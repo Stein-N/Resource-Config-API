@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class ModConfig {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final File configFile;
     private final String modId;
+    private final ConfigType type;
 
     private final Class<?> clazz;
     private final Map<Field, Object> defaultValueMap;
@@ -31,9 +33,17 @@ public class ModConfig {
     public ModConfig(Class<?> clazz, ConfigType type, String modId) {
         this.clazz = clazz;
         this.modId = modId;
+        this.type = type;
+
+        Path configPath;
+        if (CoreServices.isServer() && type.equals(ConfigType.SERVER)) {
+            configPath = CoreServices.getServerConfigPath();
+        } else {
+            configPath = CoreServices.getConfigPath();
+        }
 
         this.configFile = new File(String.format("%s/%s/%s/%s.json",
-                CoreServices.getConfigPath(),
+                configPath,
                 modId,
                 type.name().toLowerCase(),
                 clazz.getAnnotation(Config.class).fileName()));
@@ -50,6 +60,16 @@ public class ModConfig {
             applyJsonObject(config);
         }
 
+        if (type.equals(ConfigType.CLIENT) && CoreServices.isServer()) {
+            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, type);
+            return;
+        }
+
+        if (type.equals(ConfigType.SERVER) && !CoreServices.isServer()) {
+            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, type);
+            return;
+        }
+
         saveConfig();
     }
 
@@ -59,6 +79,10 @@ public class ModConfig {
     }
 
     public void saveConfig() {
+        writeConfig(toJson());
+    }
+
+    public JsonObject toJson() {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
         JsonObject config = new JsonObject();
 
@@ -102,7 +126,7 @@ public class ModConfig {
             }
         }
 
-        writeConfig(config);
+        return config;
     }
 
     private void applyJsonObject(JsonObject config) {

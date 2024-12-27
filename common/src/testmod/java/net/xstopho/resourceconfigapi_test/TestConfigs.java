@@ -67,4 +67,18 @@ public class TestConfigs {
         @ConfigEntry(category = "Widget Tests")
         public static List<String> list = List.of("Hello", "World");
     }
+
+    @Config(fileName = "general", type = ConfigType.SERVER)
+    public static class ServerConfig {
+
+        @ConfigEntry
+        public static boolean syncOperatorStatus = true;
+    }
+
+    @Config(fileName = "general", type = ConfigType.CLIENT)
+    public static class ClientConfig {
+
+        @ConfigEntry
+        public static boolean renderItemShape = true;
+    }
 }

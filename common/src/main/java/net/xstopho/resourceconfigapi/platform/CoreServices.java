@@ -22,6 +22,10 @@ public class CoreServices {
         return Minecraft.getInstance().level != null;
     }
 
+    public static boolean isServer() {
+        return load(IPlatformHelper.class).isServer();
+    }
+
     public static boolean isDevelopmentEnvironment() {
         return load(IPlatformHelper.class).isDevelopmentEnvironment();
     }
