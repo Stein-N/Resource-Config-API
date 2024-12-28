@@ -13,7 +13,7 @@ import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.widget.RangedEntrySlider;
-import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -37,12 +37,12 @@ public abstract class ValueEntry<T> extends BaseEntry {
         this.defaultValue = defaultValue;
 
         reset = Button.builder(ClientConstants.RESET, button -> resetValues())
-                .tooltip(ClientConfigUtils.hasTranslation(ClientConstants.RESET_TOOLTIP) ? Tooltip.create(ClientConstants.RESET_TOOLTIP) : null)
+                .tooltip(GuiUtils.hasTranslation(ClientConstants.RESET_TOOLTIP) ? Tooltip.create(ClientConstants.RESET_TOOLTIP) : null)
                 .bounds(0, 0, 50, 20)
                 .build();
 
         undo = Button.builder(Component.empty(), button -> undoChanges())
-                .tooltip(ClientConfigUtils.hasTranslation(ClientConstants.UNDO_TOOLTIP) ? Tooltip.create(ClientConstants.UNDO_TOOLTIP) : null)
+                .tooltip(GuiUtils.hasTranslation(ClientConstants.UNDO_TOOLTIP) ? Tooltip.create(ClientConstants.UNDO_TOOLTIP) : null)
                 .bounds(0, 0, 20, 20)
                 .build();
 
@@ -57,7 +57,7 @@ public abstract class ValueEntry<T> extends BaseEntry {
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,
                        int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
 
-        ClientConfigUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
+        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
                 xPos, yPos + 6, mouseX, mouseY);
 
         undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);

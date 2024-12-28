@@ -3,7 +3,7 @@ package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
-import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 
 public class CategoryEntry extends BaseEntry {
@@ -15,7 +15,7 @@ public class CategoryEntry extends BaseEntry {
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth, int rowHeight,
                        int mouseX, int mouseY, boolean hovered, float delta) {
-        ClientConfigUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
+        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
                 xPos + (rowWidth / 2) - (font.width(label.getString()) / 2),
                 yPos + 6, mouseX, mouseY);
     }

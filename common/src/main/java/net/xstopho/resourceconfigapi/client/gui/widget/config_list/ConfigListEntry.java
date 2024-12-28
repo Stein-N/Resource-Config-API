@@ -5,7 +5,7 @@ import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
-import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
@@ -39,7 +39,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,
                                 int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
-        guiGraphics.drawString(ClientConfigUtils.getFont(), fileName, xPos + 2, yPos + 2, -1, false);
+        guiGraphics.drawString(GuiUtils.getFont(), fileName, xPos + 2, yPos + 2, -1, false);
     }
 
     public LinkedList<BaseEntry> getEntryList() {

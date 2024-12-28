@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
-import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseEntry> {
 
     protected final List<AbstractWidget> children = new ArrayList<>();
-    protected final Font font = ClientConfigUtils.getFont();
+    protected final Font font = GuiUtils.getFont();
 
     protected final Component label, tooltip;
 
