@@ -32,7 +32,7 @@ public record SyncConfigPayload(String file, String json) {
 
             ModConfig modConfig = ConfigRegistry.CONFIGS.get(configLoc);
 
-            modConfig.syncWithServerConfig(jsonObject);
+            modConfig.fromJson(jsonObject);
         });
     }
 }

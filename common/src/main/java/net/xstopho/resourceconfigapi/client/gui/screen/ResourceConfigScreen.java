@@ -133,8 +133,9 @@ public class ResourceConfigScreen extends Screen {
     }
 
     private void saveConfigChanges(ResourceLocation location, ConfigHolder holder) {
-        Constants.LOG.info("Saving '{}' config from mod '{}'", holder.getFileName(), holder.getConfig().getModId());
-        holder.getConfig().saveConfig();
+        ModConfig config = holder.getConfig();
+        Constants.LOG.info("Saving '{}' config from mod '{}'", holder.getFileName(), config.modId);
+        config.writeConfig(config.toJson());
     }
 
     private void consumeAction(Consumer<BaseEntry> consumer) {

@@ -22,32 +22,29 @@ import java.util.Map;
 
 public class ModConfig {
 
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final ConfigType configType;
     private final File configFile;
-    private final String modId;
-    private final ConfigType type;
+    public final String modId;
 
-    private final Class<?> clazz;
     private final Map<Field, Object> defaultValueMap;
+    public final Class<?> clazz;
 
-
-    //TODO: rebuild for better use and better logging, reduce the amount of methods in general
-    public ModConfig(Class<?> clazz, ConfigType type, String modId) {
+    public ModConfig(Class<?> clazz, ConfigType configType, String modId) {
+        this.configType = configType;
         this.clazz = clazz;
         this.modId = modId;
-        this.type = type;
 
         Path configPath;
-        if (CoreServices.isServer() && type.equals(ConfigType.SERVER)) {
+        if (CoreServices.isServer() && configType.equals(ConfigType.SERVER)) {
             configPath = CoreServices.getServerConfigPath();
         } else {
             configPath = CoreServices.getConfigPath();
         }
 
         this.configFile = new File(String.format("%s/%s/%s/%s.json",
-                configPath,
-                modId,
-                type.name().toLowerCase(),
+                configPath, modId,
+                configType.name().toLowerCase(),
                 clazz.getAnnotation(Config.class).fileName()));
 
         this.defaultValueMap = createDefaultValueMap();
@@ -55,145 +52,131 @@ public class ModConfig {
         setup();
     }
 
-    //TODO: better exclusion of Sided configs
     private void setup() {
         if (configFile.exists()) {
-            JsonObject config = readConfig();
-
-            applyJsonObject(config);
+            fromJson(readConfig());
         }
 
-        if (type.equals(ConfigType.CLIENT) && CoreServices.isServer()) {
-            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, type);
+        if (configType.equals(ConfigType.CLIENT) && CoreServices.isServer()) {
+            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
             return;
         }
 
-        if (type.equals(ConfigType.SERVER) && !CoreServices.isServer()) {
-            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, type);
+        if (configType.equals(ConfigType.SERVER) && !CoreServices.isServer()) {
+            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
             return;
         }
 
-        saveConfig();
-    }
-
-    public void syncWithServerConfig(JsonObject config) {
-        Constants.LOG.info("Receiving Config data for Config: {}", configFile.getName());
-        applyJsonObject(config);
-    }
-
-    public void saveConfig() {
         writeConfig(toJson());
     }
 
+    /**
+     * Converts the given HashMap from getConfigEntries to a JsonObject, that can be used to save the config
+     * to a json file or syncing the config with the client or server.
+     * @return JsonObject of the declared Config Class
+     */
     public JsonObject toJson() {
-        Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
         JsonObject config = new JsonObject();
 
-        for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
+        for (Map.Entry<Field, ConfigEntry> entry : getConfigEntries().entrySet()) {
             ConfigEntry annotation = entry.getValue();
             Field field = entry.getKey();
 
-            String categoryKey = notEmpty(annotation.category()) ? annotation.category() : null;
+            String category = ConfigUtils.isNotEmpty(annotation.category()) ? annotation.category() : null;
 
             if (ConfigUtils.unsupportedDatatype(field)) {
-                Constants.LOG.error("List and Maps aren't supported, Key '{}' was skipped", field.getName());
+                Constants.LOG.error("Field '{}' is an unsupported Datatype and was skipped.", field.getName());
                 continue;
             }
 
-            JsonObject category = null;
-            if (categoryKey != null && config.has(categoryKey)) {
-                category = config.getAsJsonObject(categoryKey);
-            } else if (categoryKey != null){
-                category = new JsonObject();
+            JsonObject jsonObject = null;
+            if (category != null && config.has(category)) {
+                jsonObject = config.getAsJsonObject(category);
+            } else if (category != null) {
+                jsonObject = new JsonObject();
             }
 
-            String valueKey = field.getName();
-            if ((category != null && category.has(valueKey)) || config.has(valueKey)) {
-                throw new IllegalStateException("Something bad happened, duplicate key found: " + valueKey);
-            }
-
-            Object value;
+            String value = field.getName();
+            Object obj;
             try {
-                value = field.get(null);
-            } catch(IllegalAccessException e) {
-                throw new RuntimeException(e);
+                obj = field.get(null);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Failed to access field: " + value, e);
             }
 
-            JsonElement valueElement = gson.toJsonTree(value);
+            JsonElement jsonElement = gson.toJsonTree(obj);
 
-            if (category != null) {
-                category.add(field.getName(), valueElement);
-                config.add(annotation.category(), category);
+            if (jsonObject != null) {
+                jsonObject.add(value, jsonElement);
+                config.add(category, jsonObject);
             } else {
-                config.add(field.getName(), valueElement);
+                config.add(value, jsonElement);
             }
         }
 
         return config;
     }
 
-    //TODO: can be combined with syncWithServerConfig by adding boolean to indicate sync status and Log that.
-    private void applyJsonObject(JsonObject config) {
-        Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
-
-        for (Map.Entry<Field, ConfigEntry> entry : entries.entrySet()) {
+    /**
+     * Apply the given JsonObject to the declared fields.<br>
+     * This method is used to apply the Config Values parsed from the config file or
+     * apply the values that the server send to the client.
+     * @param config config converted into a JsonObject
+     */
+    public void fromJson(JsonObject config) {
+        for (Map.Entry<Field, ConfigEntry> entry : getConfigEntries().entrySet()) {
             ConfigEntry annotation = entry.getValue();
             Field field = entry.getKey();
 
-            String categoryKey = notEmpty(annotation.category()) ? annotation.category() : null;
+            String category = ConfigUtils.isNotEmpty(annotation.category()) ? annotation.category() : null;
 
-            JsonObject category = null;
-            if (categoryKey != null && config.has(categoryKey)) {
-                category = config.getAsJsonObject(categoryKey);
+            JsonObject jsonObject = null;
+            if (category != null && config.has(category)) {
+                jsonObject = config.getAsJsonObject(category);
             }
 
-            String valueKey = field.getName();
-            JsonElement valueElement = category != null ? category.get(valueKey) : config.get(valueKey);
+            String value = field.getName();
+            JsonElement jsonElement = jsonObject != null ? jsonObject.get(value) : config.get(value);
 
-            // If the category/value name was changed or an unsupported Datatype was parsed
-            if (valueElement == null) {
-                Constants.LOG.error("Failed to set Value for '{}'! The reason can be newly added Values, changed Category/Value name or unsupported Datatypes.",  valueKey);
+            if (jsonElement == null) {
+                Constants.LOG.error("Failed to set Value '{}'! Seems to be a new or unsupported Value.", value);
                 continue;
             }
 
             try {
-                Object value;
-                value = readValue(valueElement, field);
-
-                field.set(field, value);
-            } catch(IllegalAccessException e) {
-                throw new RuntimeException("Failed to set Key: " + valueKey, e);
+                Object obj = readValue(jsonElement, field);
+                field.set(field, obj);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Failed to set Value for: " + value, e);
             }
         }
     }
 
-    public JsonObject readConfig() {
-        try(FileReader reader = new FileReader(configFile)) {
-            return JsonParser.parseReader(reader).getAsJsonObject();
-
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read Config File: " + configFile.getName(), e);
-        }
-    }
-
-    private Object readValue(JsonElement value, Field field) throws IllegalAccessException {
+    /**
+     * Tries to read the Value from the given JsonElement, if the value isn't readable or out
+     * of Range, only when it is a Number Value, the default Value will be returned.
+     * @param jsonElement parsed Value
+     * @param field field corresponding to the parsed value
+     * @return parsed or default value.
+     * @throws IllegalAccessException can be thrown when something went wrong by accessing the given field
+     */
+    private Object readValue(JsonElement jsonElement, Field field) throws IllegalAccessException {
         Object obj = null;
         try {
-            obj = gson.fromJson(value, field.getType());
-        } catch (JsonSyntaxException | IllegalStateException e) {
-            Constants.LOG.error("Failed to read value for '{}', value is set to its default!", field.getName());
+            obj = gson.fromJson(jsonElement, field.getType());
+        } catch(JsonSyntaxException | IllegalStateException e) {
+            Constants.LOG.error("Failed to read value '{}', value is set to its default!", field.getName());
         }
 
-        if (field.getType().isPrimitive() && field.isAnnotationPresent(RangedEntry.class)) {
+        if (field.isAnnotationPresent(RangedEntry.class) && field.getType().isPrimitive()) {
             if (field.getType() == char.class || field.getType() == Character.class) {
-                Constants.LOG.error("You assign the RangedEntry to an Character, this will be ignored!");
-
+                Constants.LOG.error("Character with RangedEntry annotation found, this will be ignored");
             } else {
                 RangedEntry annotation = field.getAnnotation(RangedEntry.class);
-                Number objectNumber = (Number) obj;
+                Number number = (Number) obj;
 
-                if (objectNumber != null && !inRange(objectNumber, annotation)) {
-                    Constants.LOG.error("Value {} is not in range, using default Value!", field.getName());
+                if (number != null && outOfRange(number, annotation)) {
+                    Constants.LOG.error("Value {} is out of Range, using default Value!", field.getName());
                     obj = field.get(null);
                 }
             }
@@ -202,57 +185,81 @@ public class ModConfig {
         return obj != null ? obj : field.get(null);
     }
 
-    @SuppressWarnings("all")
-    private void writeConfig(JsonObject config) {
-        final String json = gson.toJson(config);
-
-        if (!configFile.getParentFile().exists()) {
-            configFile.getParentFile().mkdirs();
+    /**
+     * Tries to parse the defined ConfigFile
+     * @return File converted to JsonObject
+     */
+    public JsonObject readConfig() {
+        try(FileReader reader = new FileReader(configFile)) {
+            return JsonParser.parseReader(reader).getAsJsonObject();
+        } catch(IOException e) {
+            throw new RuntimeException("Failed to parse config file: " + configFile.getName(), e);
         }
+    }
 
+    /**
+     * Writes the given JsonObject to the defined Config File.
+     * @param config Config as a JsonObject
+     */
+    public void writeConfig(JsonObject config) {
+        configFile.getParentFile().mkdirs();
         try {
-            FileUtils.writeStringToFile(configFile, json, StandardCharsets.UTF_8);
-        } catch (IOException e) {
+            FileUtils.write(configFile, gson.toJson(config), StandardCharsets.UTF_8);
+        } catch(IOException e) {
             throw new RuntimeException("Failed to write config file: " + configFile.getName(), e);
         }
     }
 
-    private Map<Field, ConfigEntry> getConfigEntries(Class<?> clazz) {
+    /**
+     * Creates a HashMap with all declared fields and there ConfigEntry annotation. <br>
+     * This is used to iterate through all valid fields and apply the values parsed
+     * from the config file or create the config file.
+     * @return HashMap containing all valid ConfigEntry Fields
+     */
+    private Map<Field, ConfigEntry> getConfigEntries() {
         Map<Field, ConfigEntry> entries = new HashMap<>();
 
-        for (Field field : clazz.getDeclaredFields()) {
+        for (Field field : this.clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(ConfigEntry.class)) {
+                Constants.LOG.error("Field '{}' isn't annotated as a ConfigEntry is this correct?", field.getName());
                 continue;
             }
-            if (!Modifier.isStatic(field.getModifiers())) {
-                throw new IllegalStateException("Config entries must be static! Add the static Modifier to the value: " + field.getName());
-            }
-            if (Modifier.isFinal(field.getModifiers())) {
-                throw new IllegalStateException("Config entries can't be final! Remove the final Modifier from value: " + field.getName());
+            if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
+                Constants.LOG.error("Field '{}' isn't static or is final, make sure it is only a static field!", field.getName());
+                continue;
             }
 
-            //TODO: log when a field isn't a ConfigEntry and was skipped or not added to the entryList
-            ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
-            entries.put(field, entry);
+            ConfigEntry annotation = field.getAnnotation(ConfigEntry.class);
+            entries.put(field, annotation);
         }
 
         return entries;
     }
 
+    /**
+     * Creates a HashMap with all declared fields to save the default Values. <br>
+     * This is needed to handle the reset to default action within the ConfigScreen
+     * @return HashMap containing all default Values
+     */
     private Map<Field, Object> createDefaultValueMap() {
         Map<Field, Object> defaultValues = new HashMap<>();
 
-        try {
-            for (Field field : this.clazz.getDeclaredFields()) {
+        for (Field field : clazz.getDeclaredFields()) {
+            try {
                 defaultValues.put(field, field.get(null));
+            } catch (IllegalAccessException e) {
+                throw new IllegalStateException("Error creating default values map!", e);
             }
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException("Something went wrong while creating the default values map!");
         }
 
         return defaultValues;
     }
 
+    /**
+     * Get the Default value of the given Field, those default values where saved at the init state of every ModConfig
+     * @param field Given Field from this ModConfig
+     * @return Default value as a generic Object
+     */
     public Object getDefaultValue(Field field) {
         if (this.defaultValueMap != null) {
             return this.defaultValueMap.get(field);
@@ -260,20 +267,8 @@ public class ModConfig {
         throw new IllegalStateException("Can't receive default Value for field: " + field.getName());
     }
 
-    private boolean inRange(Number number, RangedEntry annotation) {
-        return number.floatValue() <= annotation.maxValue() &&
-                number.floatValue() >= annotation.minValue();
-    }
-
-    private boolean notEmpty(String string) {
-        return string != null && !string.isBlank();
-    }
-
-    public String getModId() {
-        return modId;
-    }
-
-    public Class<?> getClazz() {
-        return clazz;
+    private boolean outOfRange(Number number, RangedEntry annotation) {
+        return number.doubleValue() >= annotation.maxValue() &&
+                number.doubleValue() <= annotation.minValue();
     }
 }

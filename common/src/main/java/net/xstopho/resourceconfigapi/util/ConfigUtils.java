@@ -6,6 +6,10 @@ import java.util.Map;
 
 public class ConfigUtils {
 
+    public static boolean isNotEmpty(String string) {
+        return string != null && !string.isBlank();
+    }
+
     public static boolean unsupportedDatatype(Field field) {
         try {
             Object value = field.get(null);

@@ -21,8 +21,8 @@ public class ForgeHandler {
         Constants.LOG.info("Syncing Configs with Client");
 
         for (ModConfig config : ConfigRegistry.CONFIGS.values()) {
-            Config annotation = config.getClazz().getAnnotation(Config.class);
-            ResourceLocation configLoc = ConfigRegistry.of(config.getModId(), annotation.type(), annotation.fileName());
+            Config annotation = config.clazz.getAnnotation(Config.class);
+            ResourceLocation configLoc = ConfigRegistry.of(config.modId, annotation.type(), annotation.fileName());
 
             Constants.LOG.info("Syncing Config '{}'", configLoc);
 

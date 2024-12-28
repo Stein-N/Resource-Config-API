@@ -1,5 +1,6 @@
 package net.xstopho.resourceconfigapi.platform;
 
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -14,6 +15,11 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public Path getConfigDir() {
         return FMLPaths.CONFIGDIR.get();
+    }
+
+    @Override
+    public boolean isServer() {
+        return FMLLoader.getDist().equals(Dist.DEDICATED_SERVER);
     }
 
     @Override

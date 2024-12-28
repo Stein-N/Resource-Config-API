@@ -20,7 +20,7 @@ public class ConfigHolder {
     public ConfigHolder(ModConfig config) {
         this.config = config;
 
-        Config annotation = config.getClazz().getAnnotation(Config.class);
+        Config annotation = config.clazz.getAnnotation(Config.class);
         this.fileName = annotation.fileName();
 
         this.entryList = createEntries();
@@ -30,7 +30,7 @@ public class ConfigHolder {
         LinkedList<BaseEntry> entries = new LinkedList<>();
         String currentCategory = "";
 
-        for (Field field : config.getClazz().getDeclaredFields()) {
+        for (Field field : config.clazz.getDeclaredFields()) {
             ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
 
             if (ConfigUtils.unsupportedDatatype(field)) continue;
@@ -63,7 +63,7 @@ public class ConfigHolder {
     }
 
     public String getModId() {
-        return config.getModId();
+        return config.modId;
     }
 
     private boolean notEmpty(String string) {

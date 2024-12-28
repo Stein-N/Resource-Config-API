@@ -27,7 +27,7 @@ public record SyncConfigPayload(String file, String json) implements CustomPacke
 
             if (ConfigRegistry.CONFIGS.containsKey(configLoc)) {
                 ModConfig config = ConfigRegistry.CONFIGS.get(configLoc);
-                config.syncWithServerConfig(jsonObject);
+                config.fromJson(jsonObject);
             }
         });
     }

@@ -15,7 +15,7 @@ public static ValueEntry<?> create(String modId, String fileName, String transla
         case "byte" -> new ByteValueEntry(modId, fileName, translation, field, defaultValue);
         case "double" -> new DoubleValueEntry(modId, fileName, translation, field, defaultValue);
         case "float" -> new FloatValueEntry(modId, fileName, translation, field, defaultValue);
-        case "int" -> new IntegerValueEntry(modId, fileName, translation, field, defaultValue);
+        case "int", "integer" -> new IntegerValueEntry(modId, fileName, translation, field, defaultValue);
         case "long" -> new LongValueEntry(modId, fileName, translation, field, defaultValue);
         case "short" -> new ShortValueEntry(modId, fileName, translation, field, defaultValue);
         case "string" -> new StringValueEntry(modId, fileName, translation, field, defaultValue);
