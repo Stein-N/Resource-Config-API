@@ -1,5 +1,6 @@
 package net.xstopho.resourceconfigapi.platform;
 
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.loading.FMLPaths;
@@ -14,6 +15,11 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     @Override
     public Path getConfigDir() {
         return FMLPaths.CONFIGDIR.get();
+    }
+
+    @Override
+    public boolean isServer() {
+        return FMLLoader.getDist().equals(Dist.DEDICATED_SERVER);
     }
 
     @Override

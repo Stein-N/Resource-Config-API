@@ -11,7 +11,7 @@ public class ClientPlayerUtils {
         ClientPacketListener connection = minecraft.getConnection();
         if (connection != null) {
             ServerData server = connection.getServerData();
-            return server != null;
+            return server == null;
         }
         return false;
     }
