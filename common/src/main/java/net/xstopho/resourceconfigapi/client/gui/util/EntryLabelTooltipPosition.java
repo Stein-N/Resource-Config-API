@@ -1,6 +1,7 @@
 package net.xstopho.resourceconfigapi.client.gui.util;
 
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
@@ -9,7 +10,7 @@ public class EntryLabelTooltipPosition implements ClientTooltipPositioner {
     public static final EntryLabelTooltipPosition INSTANCE = new EntryLabelTooltipPosition();
 
     @Override
-    public Vector2ic positionTooltip(int screenWidth, int screenHeight, int mouseX, int mouseY, int tooltipWidth, int tooltipHeight) {
+    public @NotNull Vector2ic positionTooltip(int screenWidth, int screenHeight, int mouseX, int mouseY, int tooltipWidth, int tooltipHeight) {
         Vector2i vector2i = (new Vector2i(mouseX, mouseY)).add(12, 0);
         this.positionTooltip(screenWidth, screenHeight, vector2i, tooltipWidth, tooltipHeight);
         return vector2i;

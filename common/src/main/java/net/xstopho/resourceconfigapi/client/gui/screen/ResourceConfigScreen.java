@@ -39,6 +39,7 @@ public class ResourceConfigScreen extends Screen {
 
     private final ConfigTab commonTab, clientTab, serverTab;
 
+    //TODO: possible to make this class cleaner and slimmer?
     public ResourceConfigScreen(Screen previous, String modId) {
         super(Component.literal("Config Screen - " + modId));
 
