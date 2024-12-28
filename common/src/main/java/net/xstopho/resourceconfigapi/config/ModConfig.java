@@ -30,6 +30,8 @@ public class ModConfig {
     private final Class<?> clazz;
     private final Map<Field, Object> defaultValueMap;
 
+
+    //TODO: rebuild for better use and better logging, reduce the amount of methods in general
     public ModConfig(Class<?> clazz, ConfigType type, String modId) {
         this.clazz = clazz;
         this.modId = modId;
@@ -53,6 +55,7 @@ public class ModConfig {
         setup();
     }
 
+    //TODO: better exclusion of Sided configs
     private void setup() {
         if (configFile.exists()) {
             JsonObject config = readConfig();
@@ -129,6 +132,7 @@ public class ModConfig {
         return config;
     }
 
+    //TODO: can be combined with syncWithServerConfig by adding boolean to indicate sync status and Log that.
     private void applyJsonObject(JsonObject config) {
         Map<Field, ConfigEntry> entries = getConfigEntries(this.clazz);
 
@@ -227,6 +231,7 @@ public class ModConfig {
                 throw new IllegalStateException("Config entries can't be final! Remove the final Modifier from value: " + field.getName());
             }
 
+            //TODO: log when a field isn't a ConfigEntry and was skipped or not added to the entryList
             ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
             entries.put(field, entry);
         }

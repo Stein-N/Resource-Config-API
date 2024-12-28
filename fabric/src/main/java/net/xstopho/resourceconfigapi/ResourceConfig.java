@@ -13,6 +13,8 @@ import net.xstopho.resourceconfigapi.util.PlayerUtils;
 
 public class ResourceConfig implements ModInitializer {
 
+    //TODO: move the ServerPlayConnectionEvent somewhere else
+
     @Override
     public void onInitialize() {
         ConfigNetwork.initServer();

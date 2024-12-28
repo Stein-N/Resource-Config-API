@@ -21,6 +21,10 @@ import java.util.regex.Pattern;
 
 public abstract class ValueEntry<T> extends BaseEntry {
 
+    //TODO: - rebuild and add more JavaDoc
+    //      - try to rebuild inheritors by creating Number, CharSequence and Button ValueEntries
+    //      - eventually use a better sprite for undo button
+
     private final ResourceLocation undoSprite = Constants.of("textures/gui/sprites/icon/undo.png");
 
     protected final Field field;
@@ -51,7 +55,6 @@ public abstract class ValueEntry<T> extends BaseEntry {
         this.children.add(reset);
         this.children.add(undo);
     }
-
 
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,

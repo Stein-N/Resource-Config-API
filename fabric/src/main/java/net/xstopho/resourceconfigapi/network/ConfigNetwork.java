@@ -7,6 +7,9 @@ import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
 
 public class ConfigNetwork {
 
+    //TODO: - adding sendChangedConfig C2S payload and resync that config with all players on the server.
+    //      - eventually rework all payloads
+
     public static void initClient() {
         ClientPlayNetworking.registerGlobalReceiver(SyncConfigPayload.TYPE, SyncConfigPayload::handle);
         ClientPlayNetworking.registerGlobalReceiver(OperatorStatusPayload.TYPE, OperatorStatusPayload::handle);

@@ -9,8 +9,8 @@ import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.client.gui.widget.config_list.ConfigListEntry;
 import net.xstopho.resourceconfigapi.client.gui.widget.config_list.ConfigListWidget;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.ValueListWidget;
+import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
-import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class ConfigTab implements Tab {
 
     @Override
     public Component getTabTitle() {
-        return ConfigUtils.createTitle(this.type.name().toLowerCase());
+        return ComponentUtils.title(this.type.name().toLowerCase());
     }
 
     @Override

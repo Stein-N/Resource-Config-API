@@ -5,9 +5,9 @@ import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
+import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
-import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.util.LinkedList;
 
@@ -21,7 +21,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
         this.valueListWidget = valueListWidget;
 
         this.configHolder = configHolder;
-        this.fileName = ConfigUtils.createConfigLabel(configHolder.getModId(), configHolder.getFileName());
+        this.fileName = ComponentUtils.modConfig(configHolder.getModId(), configHolder.getFileName());
     }
 
     @Override

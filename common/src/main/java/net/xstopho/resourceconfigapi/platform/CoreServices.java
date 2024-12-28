@@ -10,6 +10,8 @@ import java.util.ServiceLoader;
 
 public class CoreServices {
 
+    //TODO: separate Services between Client and Server Services
+
     public static Path getConfigPath() {
         return load(IPlatformHelper.class).getConfigDir();
     }

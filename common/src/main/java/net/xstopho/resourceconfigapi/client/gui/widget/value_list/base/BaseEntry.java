@@ -8,13 +8,15 @@ import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
+import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
-import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseEntry> {
+
+    //TODO: rebuild and add more JavaDoc
 
     protected final List<AbstractWidget> children = new ArrayList<>();
     protected final Font font = GuiUtils.getFont();
@@ -28,8 +30,8 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
      * @param chatFormatting is formatting for the label, tooltips cant be changed currently
      */
     public BaseEntry(String modId, String fileName, String key, ChatFormatting chatFormatting) {
-        this.label = ConfigUtils.createModLabel(modId, fileName + "." + key).copy().withStyle(chatFormatting);
-        this.tooltip = ConfigUtils.createModTooltip(modId, fileName + "." + key);
+        this.label = ComponentUtils.modLabel(modId, fileName, key).copy().withStyle(chatFormatting);
+        this.tooltip = ComponentUtils.modTooltip(modId, fileName, key);
     }
 
     @Override
