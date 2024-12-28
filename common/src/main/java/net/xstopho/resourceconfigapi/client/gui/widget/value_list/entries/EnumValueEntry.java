@@ -5,7 +5,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ValueEntry;
-import net.xstopho.resourceconfigapi.client.util.ClientConfigUtils;
+import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
         }
 
         button = Button.builder(Component.literal(getFieldValue().toString()), this::nextEnum)
-                .tooltip(ClientConfigUtils.hasTranslation(tooltip) ? Tooltip.create(tooltip) : null)
+                .tooltip(GuiUtils.hasTranslation(tooltip) ? Tooltip.create(tooltip) : null)
                 .bounds(0, 0, getWidgetWidth(), 20)
                 .build();
 
