@@ -12,6 +12,13 @@ public class ConfigRegistry {
 
     public static final Map<ResourceLocation, ModConfig> CONFIGS = new HashMap<>();
 
+    /**
+     * Registers the Config class for the given Mod ID. <br>
+     * If the Class doesn't have the {@link Config} annotation, the config class gets
+     * rejected but doesn't throw an Exception
+     * @param clazz Config class with {@link Config} annotation
+     * @param modId Mod id
+     */
     public static void register(Class<?> clazz, String modId) {
         if (!clazz.isAnnotationPresent(Config.class)) {
             Constants.LOG.error("You try to register '{}', this class isn't flagged as a Config and was skipped!", clazz.getName());

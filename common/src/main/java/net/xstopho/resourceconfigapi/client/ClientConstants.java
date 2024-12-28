@@ -6,7 +6,6 @@ import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 
 public class ClientConstants {
 
-    //TODO: find a better way to store the Operator value
     public static boolean isOperator = true;
 
     public static final Component SAVE_AND_CLOSE = ComponentUtils.label("button.save_and_close");

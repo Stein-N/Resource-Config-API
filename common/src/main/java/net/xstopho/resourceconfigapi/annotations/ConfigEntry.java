@@ -8,15 +8,17 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConfigEntry {
 
+    /**
+     * Set the Category for the ConfigEntry.<br>
+     * @return Category name
+     */
     String category() default "";
 
     /**
      * Define a custom translation key, this is useful when multiple config settings
      * have the same purpose but f.e. different Tiers. <br>
      * Only set f.e. maxExtract.<br>
-     * The key will be fully generated when the
-     * {@link ConfigListEntry}
-     * initialized the ValueEntries
+     * The key will be fully generated when the {@link ConfigListEntry} initialized the ValueEntries
      * @return Translation key
      */
     String translation() default "";

@@ -39,7 +39,6 @@ public class ResourceConfigScreen extends Screen {
 
     private final ConfigTab commonTab, clientTab, serverTab;
 
-    //TODO: possible to make this class cleaner and slimmer?
     public ResourceConfigScreen(Screen previous, String modId) {
         super(Component.literal("Config Screen - " + modId));
 
@@ -127,6 +126,11 @@ public class ResourceConfigScreen extends Screen {
         Minecraft.getInstance().setScreen(previous);
     }
 
+    /**
+     *
+     * @param location
+     * @param config
+     */
     private void processConfigs(ResourceLocation location, ModConfig config) {
         if (location.getNamespace().equals(this.modId)) {
             this.configs.put(location, new ConfigHolder(config));
