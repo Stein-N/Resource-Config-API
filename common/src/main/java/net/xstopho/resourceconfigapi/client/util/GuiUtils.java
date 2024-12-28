@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
-import net.xstopho.resourceconfigapi.client.gui.util.EntryLabelTooltipPosition;
+import net.xstopho.resourceconfigapi.client.gui.tooltip.EntryLabelTooltipPosition;
 
 import java.util.List;
 
