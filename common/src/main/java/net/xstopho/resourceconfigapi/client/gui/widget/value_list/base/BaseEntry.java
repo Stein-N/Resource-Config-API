@@ -8,6 +8,8 @@ import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
@@ -16,7 +18,8 @@ import java.util.List;
 
 public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseEntry> {
 
-    //TODO: rebuild and add more JavaDoc
+    public final ResourceLocation undoSprite = Constants.of("textures/gui/sprites/icon/undo.png");
+    private final int widgetWidth = 160;
 
     protected final List<AbstractWidget> children = new ArrayList<>();
     protected final Font font = GuiUtils.getFont();
@@ -50,6 +53,10 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
 
     public Font getFont() {
         return font;
+    }
+
+    public int getWidgetWidth() {
+        return widgetWidth;
     }
 
     public void saveValues() {}

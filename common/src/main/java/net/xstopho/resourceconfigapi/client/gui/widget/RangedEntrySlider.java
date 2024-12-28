@@ -14,8 +14,8 @@ public class RangedEntrySlider extends AbstractSliderButton {
 
     private Consumer<Double> responder;
 
-    public RangedEntrySlider(int x, int y, int width, int height, double currentValue, double minValue, double maxValue, boolean integer) {
-        super(x, y, width, height, Component.empty(), currentValue / maxValue);
+    public RangedEntrySlider(int width, double currentValue, double minValue, double maxValue, boolean integer) {
+        super(0, 0, width, 20, Component.empty(), currentValue / maxValue);
         this.currentValue = currentValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -41,8 +41,9 @@ public class RangedEntrySlider extends AbstractSliderButton {
         }
     }
 
-    public void setResponder(Consumer<Double> consumer) {
+    public RangedEntrySlider setResponder(Consumer<Double> consumer) {
         this.responder = consumer;
+        return this;
     }
 
     public double getValue() {

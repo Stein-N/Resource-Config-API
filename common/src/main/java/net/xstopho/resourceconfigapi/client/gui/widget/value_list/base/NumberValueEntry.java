@@ -8,8 +8,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.widget.RangedEntrySlider;
@@ -19,26 +17,19 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public abstract class ValueEntry<T> extends BaseEntry {
+public abstract class NumberValueEntry<T> extends BaseEntry {
 
-    //TODO: - rebuild and add more JavaDoc
-    //      - try to rebuild inheritors by creating Number, CharSequence and Button ValueEntries
-    //      - eventually use a better sprite for undo button
-
-    private final ResourceLocation undoSprite = Constants.of("textures/gui/sprites/icon/undo.png");
-
+    private final Object defaultValue;
     protected final Field field;
-    protected final Object defaultValue;
 
-    protected final int widgetWidth = 150;
-
-    protected final Button reset, undo;
+    private final Button reset, undo;
     protected AbstractWidget valueWidget;
 
-    public ValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
-        super(modId, fileName, translationKey, ChatFormatting.WHITE);
-        this.field = field;
+
+    public NumberValueEntry(String modId, String fileName, String key, Field field, Object defaultValue, boolean integer, Pattern pattern) {
+        super(modId, fileName, key, ChatFormatting.WHITE);
         this.defaultValue = defaultValue;
+        this.field = field;
 
         reset = Button.builder(ClientConstants.RESET, button -> resetValues())
                 .tooltip(GuiUtils.hasTranslation(ClientConstants.RESET_TOOLTIP) ? Tooltip.create(ClientConstants.RESET_TOOLTIP) : null)
@@ -49,9 +40,20 @@ public abstract class ValueEntry<T> extends BaseEntry {
                 .tooltip(GuiUtils.hasTranslation(ClientConstants.UNDO_TOOLTIP) ? Tooltip.create(ClientConstants.UNDO_TOOLTIP) : null)
                 .bounds(0, 0, 20, 20)
                 .build();
-
         undo.active = false;
 
+        if (field.isAnnotationPresent(RangedEntry.class)) {
+            RangedEntry range = field.getAnnotation(RangedEntry.class);
+            valueWidget = new RangedEntrySlider(getWidgetWidth(), Double.parseDouble(getFieldValue().toString()), range.minValue(), range.maxValue(), integer)
+                    .setResponder(aDouble -> undo.active = !Objects.equals(aDouble, getFieldValue()));
+        } else {
+            valueWidget = new EditBox(getFont(), getWidgetWidth(), 18, Component.empty());
+            ((EditBox) valueWidget).setResponder(s -> undo.active = !Objects.equals(s, getFieldValue()));
+            ((EditBox) valueWidget).setFilter(s -> pattern.matcher(s).matches());
+            ((EditBox) valueWidget).setValue(getFieldValue().toString());
+        }
+
+        this.children.add(valueWidget);
         this.children.add(reset);
         this.children.add(undo);
     }
@@ -66,19 +68,19 @@ public abstract class ValueEntry<T> extends BaseEntry {
         undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
         reset.setPosition(xPos + rowWidth - reset.getWidth(), yPos);
 
-        if (valueWidget != null) {
-            valueWidget.setPosition(xPos + rowWidth - getWidgetWidth(), yPos);
-            valueWidget.setWidth(getCorrectedWidgetWidth());
+        valueWidget.setPosition(xPos + rowWidth - getWidgetWidth(), yPos);
+        valueWidget.setWidth(getWidgetWidth() - (undo.getWidth() + reset.getWidth()) - 1);
 
-            valueWidget.render(guiGraphics, mouseX, mouseY, delta);
-        }
-
+        valueWidget.render(guiGraphics, mouseX, mouseY, delta);
         reset.render(guiGraphics, mouseX, mouseY, delta);
         undo.render(guiGraphics, mouseX, mouseY, delta);
 
         guiGraphics.blit(RenderType::guiTexturedOverlay, undoSprite, undo.getX() + 2, undo.getY() + 2,
                 0f, 0f, 16, 16, 16, 16);
+
     }
+
+    public abstract T getValue();
 
     @Override
     public void undoChanges() {
@@ -89,8 +91,7 @@ public abstract class ValueEntry<T> extends BaseEntry {
         if (valueWidget instanceof EditBox editBox) {
             editBox.setValue(getFieldValue().toString());
         }
-
-        changeUndoState(false);
+        this.undo.active = false;
     }
 
     @Override
@@ -114,13 +115,11 @@ public abstract class ValueEntry<T> extends BaseEntry {
     public void saveValues() {
         try {
             this.field.set(field, getValue());
-            changeUndoState(false);
+            this.undo.active = false;
         } catch (IllegalAccessException e) {
             throw new RuntimeException(String.format("Failed to save new Value for Field %s", field.getName()));
         }
     }
-
-    public abstract T getValue();
 
     protected T getFieldValue() {
         try {
@@ -128,43 +127,5 @@ public abstract class ValueEntry<T> extends BaseEntry {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(String.format("Failed to get Value for Field '%s'", field.getName()));
         }
-    }
-
-    protected int getWidgetWidth() {
-        return widgetWidth;
-    }
-
-    protected int getCorrectedWidgetWidth() {
-        return getWidgetWidth() - (undo.getWidth() + reset.getWidth()) - 1;
-    }
-
-    protected void changeUndoState(boolean state) {
-        this.undo.active = state;
-    }
-
-    protected boolean isRanged() {
-        return field.isAnnotationPresent(RangedEntry.class);
-    }
-
-    protected RangedEntrySlider createSlider(double minValue, double maxValue, boolean integer) {
-        RangedEntrySlider slider = new RangedEntrySlider(0, 0, widgetWidth, 20, Double.parseDouble(getFieldValue().toString()), minValue, maxValue, integer);
-        slider.setResponder(aDouble -> changeUndoState(!Objects.equals(aDouble, getFieldValue())));
-        this.children.add(slider);
-
-        return slider;
-    }
-
-    protected EditBox createEditBox(Pattern pattern) {
-        EditBox editBox = new EditBox(getFont(), 0, 0, widgetWidth, 18, Component.empty());
-        editBox.setValue(getFieldValue().toString());
-        editBox.setResponder(s -> changeUndoState(!Objects.equals(s, getFieldValue().toString())));
-
-        if (pattern != null) {
-            editBox.setFilter(s -> pattern.matcher(s).matches());
-        }
-
-        this.children.add(editBox);
-
-        return editBox;
     }
 }

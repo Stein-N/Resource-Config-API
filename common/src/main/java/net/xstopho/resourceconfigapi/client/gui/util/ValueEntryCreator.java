@@ -1,13 +1,13 @@
 package net.xstopho.resourceconfigapi.client.gui.util;
 
-import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ValueEntry;
+import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries.*;
 
 import java.lang.reflect.Field;
 
 public class ValueEntryCreator {
 
-    public static ValueEntry<?> create(String modId, String fileName, String translation, Field field, Object defaultValue) {
+    public static BaseEntry create(String modId, String fileName, String translation, Field field, Object defaultValue) {
         Class<?> clazz = field.getType();
 
         return switch (clazz.getSimpleName().toLowerCase()) {
