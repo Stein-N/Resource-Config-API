@@ -17,6 +17,6 @@ public class ClientPlayerUtils {
     }
 
     public static boolean isMultiplayer() {
-        return !isSingleplayer();
+        return !isSingleplayer() && Minecraft.getInstance().level != null;
     }
 }
