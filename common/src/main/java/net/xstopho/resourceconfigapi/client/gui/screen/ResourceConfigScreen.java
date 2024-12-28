@@ -134,7 +134,9 @@ public class ResourceConfigScreen extends Screen {
 
     private void saveConfigChanges(ResourceLocation location, ConfigHolder holder) {
         ModConfig config = holder.getConfig();
-        Constants.LOG.info("Saving '{}' config from mod '{}'", holder.getFileName(), config.modId);
+        if (config.configType.equals(ConfigType.SERVER)) return;
+
+        Constants.LOG.info("Saving '{}' config from mod '{}' of type '{}'", holder.getFileName(), config.modId, config.configType);
         config.writeConfig(config.toJson());
     }
 

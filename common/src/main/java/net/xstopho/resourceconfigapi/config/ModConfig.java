@@ -23,7 +23,7 @@ import java.util.Map;
 public class ModConfig {
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private final ConfigType configType;
+    public final ConfigType configType;
     private final File configFile;
     public final String modId;
 
