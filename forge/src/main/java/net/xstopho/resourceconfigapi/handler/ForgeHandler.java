@@ -13,6 +13,8 @@ import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
 
+import java.util.Map;
+
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeHandler {
 
@@ -20,13 +22,12 @@ public class ForgeHandler {
     public static void registerLoginEvents(PlayerEvent.PlayerLoggedInEvent event) {
         Constants.LOG.info("Syncing Configs with Client");
 
-        for (ModConfig config : ConfigRegistry.CONFIGS.values()) {
-            Config annotation = config.clazz.getAnnotation(Config.class);
-            ResourceLocation configLoc = ConfigRegistry.of(config.modId, annotation.type(), annotation.fileName());
+        for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
+            ResourceLocation configLoc = entry.getKey();
 
             Constants.LOG.info("Syncing Config '{}'", configLoc);
 
-            ResourceConfig.NETWORK.send(new SyncConfigPayload(configLoc.toString(), config.readConfig().toString()), PacketDistributor.PLAYER.with((ServerPlayer) event.getEntity()));
+            ResourceConfig.NETWORK.send(new SyncConfigPayload(configLoc.toString(), entry.getValue().toJson().toString()), PacketDistributor.PLAYER.with((ServerPlayer) event.getEntity()));
         }
     }
 }

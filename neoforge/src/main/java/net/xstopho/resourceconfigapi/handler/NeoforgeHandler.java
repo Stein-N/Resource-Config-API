@@ -12,6 +12,8 @@ import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
 
+import java.util.Map;
+
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class NeoforgeHandler {
 
@@ -19,13 +21,11 @@ public class NeoforgeHandler {
     public static void registerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Constants.LOG.info("Syncing Configs with Client");
 
-        for (ModConfig config : ConfigRegistry.CONFIGS.values()) {
-            Config annotation = config.clazz.getAnnotation(Config.class);
-            ResourceLocation configLoc = ConfigRegistry.of(config.modId, annotation.type(), annotation.fileName());
+        for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
+            ResourceLocation configLoc = entry.getKey();
 
             Constants.LOG.info("Syncing Config '{}'", configLoc);
-
-            PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new SyncConfigPayload(configLoc.toString(), config.readConfig().toString()));
+            PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new SyncConfigPayload(configLoc.toString(), entry.getValue().toJson().toString()));
         }
     }
 }

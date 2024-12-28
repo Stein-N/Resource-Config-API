@@ -24,7 +24,7 @@ public class ConfigRegistry {
         CONFIGS.putIfAbsent(config, new ModConfig(clazz, annotation.type(), modId));
     }
 
-    public static ResourceLocation of(String modId, ConfigType type, String fileName) {
+    private static ResourceLocation of(String modId, ConfigType type, String fileName) {
         return ResourceLocation.fromNamespaceAndPath(modId, type.name().toLowerCase() + "/" + fileName);
     }
 }
