@@ -1,4 +1,4 @@
-package net.xstopho.resourceconfigapi.client.gui.util;
+package net.xstopho.resourceconfigapi.client.util;
 
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries.*;
