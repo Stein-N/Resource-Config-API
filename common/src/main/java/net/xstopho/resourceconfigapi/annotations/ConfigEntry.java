@@ -1,7 +1,5 @@
 package net.xstopho.resourceconfigapi.annotations;
 
-import net.xstopho.resourceconfigapi.client.gui.widget.config_list.ConfigListEntry;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
