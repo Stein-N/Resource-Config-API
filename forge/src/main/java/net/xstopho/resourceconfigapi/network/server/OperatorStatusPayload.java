@@ -23,5 +23,6 @@ public record OperatorStatusPayload(boolean status) {
         context.enqueueWork(() -> {
             ClientConstants.isOperator = payload.status();
         });
+        context.setPacketHandled(true);
     }
 }

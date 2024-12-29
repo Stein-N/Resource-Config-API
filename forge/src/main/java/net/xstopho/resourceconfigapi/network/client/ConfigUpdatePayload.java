@@ -52,5 +52,6 @@ public record ConfigUpdatePayload(String file, String json) {
                 ResourceConfig.NETWORK.send(new SyncConfigPayload(configLoc.toString(), jsonObject.toString()), PacketDistributor.PLAYER.with(player));
             }
         });
+        context.setPacketHandled(true);
     }
 }

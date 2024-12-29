@@ -37,5 +37,6 @@ public record SyncConfigPayload(String file, String json) {
                 config.fromJson(jsonObject);
             }
         });
+        context.setPacketHandled(true);
     }
 }
