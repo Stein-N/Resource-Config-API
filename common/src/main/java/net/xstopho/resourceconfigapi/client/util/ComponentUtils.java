@@ -27,10 +27,6 @@ public class ComponentUtils {
         return build(String.format("%s.%s", modId, key));
     }
 
-    public static Component modTitle(String modId, String fileName, String key) {
-        return title(String.format("%s.%s.%s", modId, fileName, key));
-    }
-
     public static Component modLabel(String modId, String fileName, String key) {
         return label(String.format("%s.%s.%s", modId, fileName, key));
     }

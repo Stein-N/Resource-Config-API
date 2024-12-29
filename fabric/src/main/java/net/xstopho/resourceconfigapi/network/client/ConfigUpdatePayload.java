@@ -16,8 +16,8 @@ import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
 
 public record ConfigUpdatePayload(String file, String json) implements CustomPacketPayload {
-    public static final Type<ConfigUpdatePayload> TYPE =
-            new Type<>(Constants.of("config_update_payload"));
+
+    public static final Type<ConfigUpdatePayload> TYPE = new Type<>(Constants.of("config_update_payload"));
     public static final StreamCodec<RegistryFriendlyByteBuf, ConfigUpdatePayload> CODEC =
             StreamCodec.composite(ByteBufCodecs.STRING_UTF8, ConfigUpdatePayload::file,
                     ByteBufCodecs.STRING_UTF8, ConfigUpdatePayload::json,
