@@ -1,4 +1,3 @@
-version:4189
 ao:true
 biomeBlendRadius:2
 enableVsync:true
@@ -15,9 +14,6 @@ prioritizeChunkUpdates:0
 fullscreen:false
 gamma:0.5
 graphicsMode:1
-guiScale:4
-maxFps:120
-inactivityFpsLimit:"afk"
 mipmapLevels:4
 narrator:0
 particles:0
@@ -28,7 +24,6 @@ simulationDistance:12
 screenEffectScale:1.0
 soundDevice:""
 autoJump:false
-rotateWithMinecart:false
 operatorItemsTab:false
 autoSuggestions:true
 chatColors:true
@@ -46,12 +41,6 @@ toggleSprint:false
 darkMojangStudiosBackground:false
 hideLightningFlashes:false
 hideSplashTexts:false
-mouseSensitivity:0.3028169014084507
-damageTiltStrength:1.0
-highContrast:false
-highContrastBlockOutline:false
-narratorHotkey:true
-resourcePacks:["fabric"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
@@ -123,9 +112,6 @@ key_key.hotbar.6:key.keyboard.6
 key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
-key_key.modmenu.open_menu:key.keyboard.unknown
-soundCategory_master:0.25165562913907286
-soundCategory_music:0.20774647887323944
 soundCategory_record:1.0
 soundCategory_weather:1.0
 soundCategory_block:1.0

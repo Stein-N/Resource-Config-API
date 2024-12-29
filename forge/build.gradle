@@ -14,8 +14,9 @@ sourceSets {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
+
     testmodImplementation sourceSets.main.output
-    testmodCompileOnly project(':common').sourceSets.testmod.output
+    testmodCompileOnly project(':common').sourceSets.testmod.outpu
 }
 
 minecraft {
@@ -35,7 +36,7 @@ minecraft {
             }
         }
         server {
-            workingDirectory file('../common/runs/client')
+            workingDirectory file('../common/runs/server')
             ideaModule "${rootProject.name}.${project.name}.testmod"
             taskName "TestServer"
             args '--nogui'
@@ -56,6 +57,10 @@ sourceSets.each {
 
 compileTestmodJava {
     source(project(':common').sourceSets.testmod.allSource)
+}
+
+processTestmodResources {
+    from project(':common').sourceSets.testmod.resources
 }
 
 // Loader Specific Settings

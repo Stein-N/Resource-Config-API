@@ -3,6 +3,13 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath;
+        compileClasspath += main.compileClasspath;
+    }
+}
+
 neoForge {
     neoFormVersion = neoform_version
 
