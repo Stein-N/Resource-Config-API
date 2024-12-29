@@ -8,10 +8,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.ResourceConfig;
-import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
+import net.xstopho.resourceconfigapi.network.server.OperatorStatusPayload;
 import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
+import net.xstopho.resourceconfigapi.util.PlayerUtils;
 
 import java.util.Map;
 
@@ -20,15 +21,19 @@ public class ForgeHandler {
 
     @SubscribeEvent
     public static void registerLoginEvents(PlayerEvent.PlayerLoggedInEvent event) {
-        Constants.LOG.info("Syncing Configs with Client");
+        ServerPlayer player = (ServerPlayer) event.getEntity();
 
-        //TODO: don't sync Client configs, they are loaded on server but shouldn't be send this would screw the client configs
+        ResourceConfig.NETWORK.send(new OperatorStatusPayload(PlayerUtils.isPlayerOperator(player)), PacketDistributor.PLAYER.with(player));
+
+        Constants.LOG.info("Syncing Server Configs with Client");
         for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
-            ResourceLocation configLoc = entry.getKey();
+            ResourceLocation location = entry.getKey();
+            ModConfig config = entry.getValue();
 
-            Constants.LOG.info("Syncing Config '{}'", configLoc);
+            if (location.toString().contains("client")) continue;
+            Constants.LOG.info("Sending data for Config '{}'", location);
 
-            ResourceConfig.NETWORK.send(new SyncConfigPayload(configLoc.toString(), entry.getValue().toJson().toString()), PacketDistributor.PLAYER.with((ServerPlayer) event.getEntity()));
+            ResourceConfig.NETWORK.send(new SyncConfigPayload(location.toString(), config.toJson().toString()), PacketDistributor.PLAYER.with(player));
         }
     }
 }
