@@ -40,6 +40,7 @@ public record ConfigUpdatePayload(String file, String json) implements CustomPac
             PlayerList playerList = context.server().getPlayerList();
 
             for (ServerPlayer player : playerList.getPlayers()) {
+                if (player == context.player()) continue;
                 ServerPlayNetworking.send(player, new SyncConfigPayload(configLoc.toString(), jsonObject.toString()));
             }
         });
