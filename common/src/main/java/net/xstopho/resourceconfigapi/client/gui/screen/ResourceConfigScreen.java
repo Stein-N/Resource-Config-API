@@ -19,6 +19,7 @@ import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.widget.ConfigTab;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.client.util.ClientUtils;
+import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 
@@ -88,6 +89,8 @@ public class ResourceConfigScreen extends Screen {
         }
 
         this.repositionElements();
+
+        ComponentUtils.printMissingTranslations(modId);
     }
 
     @Override

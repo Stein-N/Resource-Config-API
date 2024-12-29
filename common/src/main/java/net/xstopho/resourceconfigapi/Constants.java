@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory;
 
 public class Constants {
 
-	//TODO: add a way to collect untranslated keys and log them when the screen gets opened
+	//TODO: - try to only send config updates when a config is really changed
+	//      - porting every Payload to forge and neoforge
 
 	public static final String MOD_ID = "resourceconfigapi";
 	public static final String MOD_NAME = "Resource Config API";
