@@ -6,8 +6,6 @@ import org.slf4j.LoggerFactory;
 
 public class Constants {
 
-	//TODO: - porting every Payload to forge and neoforge
-
 	public static final String MOD_ID = "resourceconfigapi";
 	public static final String MOD_NAME = "Resource Config API";
 	public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
