@@ -33,6 +33,7 @@ public record ConfigUpdatePayload(String file, String json) implements CustomPac
             if (ConfigRegistry.CONFIGS.containsKey(configLoc)) {
                 Constants.LOG.info("Receiving update for Config: {}", configLoc);
                 ModConfig config = ConfigRegistry.CONFIGS.get(configLoc);
+                config.writeConfig(jsonObject);
                 config.fromJson(jsonObject);
             }
 
