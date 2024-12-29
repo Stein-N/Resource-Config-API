@@ -14,11 +14,6 @@ public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
     }
 
     @Override
-    public void replaceEntries(Collection<BaseEntry> entries) {
-        super.replaceEntries(entries);
-    }
-
-    @Override
     protected void renderListSeparators(GuiGraphics guiGraphics) {}
 
     @Override

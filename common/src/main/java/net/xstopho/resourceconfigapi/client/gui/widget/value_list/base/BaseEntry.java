@@ -19,7 +19,6 @@ import java.util.List;
 public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseEntry> {
 
     public final ResourceLocation undoSprite = Constants.of("textures/gui/sprites/icon/undo.png");
-    private final int widgetWidth = 160;
 
     protected final List<AbstractWidget> children = new ArrayList<>();
     protected final Font font = GuiUtils.getFont();
@@ -56,7 +55,7 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
     }
 
     public int getWidgetWidth() {
-        return widgetWidth;
+        return 150;
     }
 
     public void saveValues() {}

@@ -66,6 +66,9 @@ public class ComponentUtils {
             Constants.LOG.info("\nYour Config/s for '{}' containing optional untranslated Keys, these can help to explain options to the user but aren't necessary.\n{}",
                     modId, buildLog(modId, OPTIONAL_TRANSLATION));
         }
+
+        NEEDED_TRANSLATION.clear();
+        OPTIONAL_TRANSLATION.clear();
     }
 
     private static String buildLog(String modId, LinkedList<Component> components) {
