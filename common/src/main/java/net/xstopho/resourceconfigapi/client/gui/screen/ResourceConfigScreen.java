@@ -61,8 +61,8 @@ public class ResourceConfigScreen extends Screen {
         TabNavigationBar.Builder builder = TabNavigationBar.builder(this.manager, this.width);
 
         if (clientTab.containsConfigs()) builder.addTabs(clientTab);
-        if (commonTab.containsConfigs() && ClientConstants.isOperator) builder.addTabs(commonTab);
-        if (serverTab.containsConfigs() && ClientConstants.isOperator && ClientUtils.isMultiplayer()) builder.addTabs(serverTab);
+        if (commonTab.containsConfigs() && ClientUtils.isOperator()) builder.addTabs(commonTab);
+        if (serverTab.containsConfigs() && ClientUtils.isOperator() && ClientUtils.isMultiplayer()) builder.addTabs(serverTab);
 
         this.navigationBar = builder.build();
 
@@ -129,11 +129,6 @@ public class ResourceConfigScreen extends Screen {
         Minecraft.getInstance().setScreen(previous);
     }
 
-    /**
-     *
-     * @param location
-     * @param config
-     */
     private void processConfigs(ResourceLocation location, ModConfig config) {
         if (location.getNamespace().equals(this.modId)) {
             this.configs.put(location, new ConfigHolder(config));
