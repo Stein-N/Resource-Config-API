@@ -68,6 +68,19 @@ public class TestConfigs {
         public static List<String> list = List.of("Hello", "World");
     }
 
+    @Config(fileName = "generator", type = ConfigType.COMMON)
+    public static class Generators {
+
+        @ConfigEntry(category = "Basic Solar Panel")
+        public static int tier = 1;
+
+        @ConfigEntry(category = "Basic Solar Panel")
+        public static int generateByDay = 50;
+
+        @ConfigEntry(category = "Basic Solar Panel")
+        public static int generateByNight = 5;
+    }
+
     @Config(fileName = "general", type = ConfigType.SERVER)
     public static class ServerConfig {
 
