@@ -5,6 +5,8 @@ import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.SimpleChannel;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.ResourceConfig;
+import net.xstopho.resourceconfigapi.network.client.ConfigUpdatePayload;
+import net.xstopho.resourceconfigapi.network.server.OperatorStatusPayload;
 import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
 
 public class ConfigNetwork {
@@ -20,6 +22,18 @@ public class ConfigNetwork {
                 .encoder(SyncConfigPayload::encode)
                 .decoder(SyncConfigPayload::decode)
                 .consumerNetworkThread(SyncConfigPayload::handle)
+                .add();
+
+        channel.messageBuilder(OperatorStatusPayload.class)
+                .encoder(OperatorStatusPayload::encode)
+                .decoder(OperatorStatusPayload::decode)
+                .consumerNetworkThread(OperatorStatusPayload::handle)
+                .add();
+
+        channel.messageBuilder(ConfigUpdatePayload.class)
+                .encoder(ConfigUpdatePayload::encode)
+                .decoder(ConfigUpdatePayload::decode)
+                .consumerNetworkThread(ConfigUpdatePayload::handle)
                 .add();
     }
 }
