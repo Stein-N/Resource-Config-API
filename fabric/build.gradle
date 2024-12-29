@@ -50,11 +50,6 @@ processTestmodResources {
     from file('../common/src/testmod/resources')
 }
 
-processTestmodResources {
-    from project(':common').sourceSets.testmod.resources
-    from file('src/generated/resources')
-}
-
 // Loader Specific Settings
 publishMods {
     file = remapJar.archiveFile
