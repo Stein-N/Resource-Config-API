@@ -22,12 +22,12 @@ public class ResourceConfig implements ModInitializer {
             Constants.LOG.info("Sync Operator status.");
             sender.sendPacket(new OperatorStatusPayload(PlayerUtils.isPlayerOperator(handler.player)));
 
-            Constants.LOG.info("Syncing Configs with Client");
+            Constants.LOG.info("Syncing Server Configs with Client");
             for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
                 ResourceLocation configLoc = entry.getKey();
 
                 if (configLoc.toString().contains("client")) continue;
-                Constants.LOG.info("Syncing Config '{}'", configLoc);
+                Constants.LOG.info("Sending data for config '{}'.", configLoc);
 
                 sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), entry.getValue().toJson().toString()));
             }
