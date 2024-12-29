@@ -1,5 +1,6 @@
 package net.xstopho.resourceconfigapi.platform;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.xstopho.resourceconfigapi.platform.services.IPlatformHelper;
 
@@ -12,6 +13,16 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public Path getConfigDir() {
         return FabricLoader.getInstance().getConfigDir();
+    }
+
+    @Override
+    public boolean isServer() {
+        return FabricLoader.getInstance().getEnvironmentType().equals(EnvType.SERVER);
+    }
+
+    @Override
+    public boolean isDevelopmentEnvironment() {
+        return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 
     @Override

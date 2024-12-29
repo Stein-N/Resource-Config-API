@@ -30,14 +30,14 @@ neoForge {
             client()
             sourceSet = sourceSets.testmod
             ideName = "NeoForge Test Client (${project.path})"
-            gameDirectory = file("../common/runs/client")
+            gameDirectory = file('../common/runs/client')
         }
         testServer {
             server()
             sourceSet = sourceSets.testmod
             programArguments.add('nogui')
             ideName = "NeoForge Test Server (${project.path})"
-            gameDirectory = file("../common/runs/server")
+            gameDirectory = file('../common/runs/server')
         }
     }
     mods {
@@ -49,9 +49,9 @@ neoForge {
 compileTestmodJava {
     source(project(':common').sourceSets.testmod.allSource)
 }
+
 processTestmodResources {
-    from project(':common').sourceSets.testmod.resources
-    from file('src/generated/resources')
+    from file('../common/src/testmod/resources')
 }
 
 publishMods {

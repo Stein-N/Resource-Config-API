@@ -1,55 +1,37 @@
 package net.xstopho.resourceconfigapi.api;
 
+import net.minecraft.resources.ResourceLocation;
+import net.xstopho.resourceconfigapi.Constants;
+import net.xstopho.resourceconfigapi.annotations.Config;
+import net.xstopho.resourceconfigapi.config.ModConfig;
 
-import net.xstopho.resourceconfigapi.builder.IResourceConfigBuilder;
-import net.xstopho.resourceconfigapi.config.ResourceModConfig;
-import net.xstopho.resourceconfigapi.platform.Services;
-
-import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ConfigRegistry {
 
-    private static final HashMap<String, ResourceModConfig> MOD_CONFIG_FILES = new LinkedHashMap<>();
+    public static final Map<ResourceLocation, ModConfig> CONFIGS = new HashMap<>();
 
-    public static ResourceModConfig register(String modId, String fileName, IResourceConfigBuilder builder, String folderName, boolean disableRangedComments) {
-        validateBuilder(builder);
-        ResourceModConfig config = new ResourceModConfig(modId, fileName, builder, Path.of(Services.getConfigPath() + "/" + folderName), disableRangedComments);
-        MOD_CONFIG_FILES.put(fileName, config);
-        return config;
-    }
-
-    public static ResourceModConfig register(String modId, IResourceConfigBuilder builder, String folderName, boolean disableRangedComments) {
-        validateBuilder(builder);
-        ResourceModConfig config = new ResourceModConfig(modId, modId, builder, Path.of(Services.getConfigPath() + "/" + folderName), disableRangedComments);
-        MOD_CONFIG_FILES.put(modId, config);
-        return config;
-    }
-
-    public static ResourceModConfig register(String modId, String fileName, IResourceConfigBuilder builder, boolean disableRangedComments) {
-        validateBuilder(builder);
-        ResourceModConfig config = new ResourceModConfig(modId, fileName, builder, Services.getConfigPath(), disableRangedComments);
-        MOD_CONFIG_FILES.put(fileName, config);
-        return config;
-    }
-
-    public static ResourceModConfig register(String modId, IResourceConfigBuilder builder, boolean disableRangedComments) {
-        validateBuilder(builder);
-        ResourceModConfig config = new ResourceModConfig(modId, modId, builder, Services.getConfigPath(), disableRangedComments);
-        MOD_CONFIG_FILES.put(modId, config);
-        return config;
-    }
-
-    public static HashMap<String, ResourceModConfig> getConfigFiles() {
-        return MOD_CONFIG_FILES;
-    }
-
-    private static void validateBuilder(IResourceConfigBuilder builder) {
-        for (ResourceModConfig configFile : MOD_CONFIG_FILES.values()) {
-            if (configFile.getBuilder().equals(builder)) {
-                throw new IllegalStateException("You try to register the same ResourceConfigBuilder twice!");
-            }
+    /**
+     * Registers the Config class for the given Mod ID. <br>
+     * If the Class doesn't have the {@link Config} annotation, the config class gets
+     * rejected but doesn't throw an Exception
+     * @param clazz Config class with {@link Config} annotation
+     * @param modId Mod id
+     */
+    public static void register(Class<?> clazz, String modId) {
+        if (!clazz.isAnnotationPresent(Config.class)) {
+            Constants.LOG.error("You try to register '{}', this class isn't flagged as a Config and was skipped!", clazz.getName());
+            return;
         }
+
+        Config annotation = clazz.getAnnotation(Config.class);
+        ResourceLocation config = of(modId, annotation.type(), annotation.fileName());
+
+        CONFIGS.putIfAbsent(config, new ModConfig(clazz, annotation.type(), modId));
+    }
+
+    private static ResourceLocation of(String modId, ConfigType type, String fileName) {
+        return ResourceLocation.fromNamespaceAndPath(modId, type.name().toLowerCase() + "/" + fileName);
     }
 }

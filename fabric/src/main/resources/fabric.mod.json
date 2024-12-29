@@ -15,7 +15,8 @@
     "environment": "*",
     "entrypoints": {
         "main": [ "net.xstopho.resourceconfigapi.ResourceConfig" ],
-        "client": [ "net.xstopho.resourceconfigapi.ResourceConfigClient" ]
+        "client": [ "net.xstopho.resourceconfigapi.ResourceConfigClient" ],
+        "modmenu": [ "net.xstopho.resourceconfigapi.ResourceModMenuCompat" ]
     },
     "depends": {
         "fabricloader": "*",

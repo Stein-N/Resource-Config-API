@@ -16,7 +16,7 @@ dependencies {
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 
     testmodImplementation sourceSets.main.output
-    testmodImplementation project(':common').sourceSets.testmod.output
+    testmodCompileOnly project(':common').sourceSets.testmod.outpu
 }
 
 minecraft {
@@ -26,7 +26,7 @@ minecraft {
 
     runs {
         client {
-            workingDirectory file("../common/runs/client")
+            workingDirectory file('../common/runs/client')
             ideaModule "${rootProject.name}.${project.name}.testmod"
             taskName "TestClient"
             mods {
@@ -36,7 +36,7 @@ minecraft {
             }
         }
         server {
-            workingDirectory file("../common/runs/client")
+            workingDirectory file('../common/runs/server')
             ideaModule "${rootProject.name}.${project.name}.testmod"
             taskName "TestServer"
             args '--nogui'
@@ -61,7 +61,6 @@ compileTestmodJava {
 
 processTestmodResources {
     from project(':common').sourceSets.testmod.resources
-    from file('src/generated/resources')
 }
 
 // Loader Specific Settings

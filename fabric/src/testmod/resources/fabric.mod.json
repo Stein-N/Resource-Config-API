@@ -5,6 +5,7 @@
     "name": "Resource Config Test Mod",
     "authors": [ "xStopho" ],
     "license": "MIT",
+    "icon": "icon.png",
     "environment": "*",
     "entrypoints": {
         "main": [ "net.xstopho.resourceconfigapi_test.ResourceConfigTest" ],

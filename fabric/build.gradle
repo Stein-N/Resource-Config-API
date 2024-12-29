@@ -3,10 +3,6 @@ plugins {
     id 'fabric-loom'
 }
 
-configurations {
-    includedLibs
-}
-
 sourceSets {
     testmod {
         runtimeClasspath += main.runtimeClasspath;
@@ -17,15 +13,14 @@ sourceSets {
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
-
+    
     testmodImplementation sourceSets.main.output
     testmodImplementation project(':common').sourceSets.testmod.output
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
 
-    implementation group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
-    includedLibs group: 'com.electronwill.night-config', name: 'toml', version: "${night_config}"
+    modImplementation "maven.modrinth:modmenu:${mod_menu}"
 }
 
 loom {
@@ -51,8 +46,8 @@ loom {
     }
 }
 
-jar {
-    from configurations.includedLibs.collect { it.isDirectory() ? it : zipTree(it) }
+processTestmodResources {
+    from file('../common/src/testmod/resources')
 }
 
 processTestmodResources {

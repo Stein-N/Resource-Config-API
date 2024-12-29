@@ -6,5 +6,9 @@ public interface IPlatformHelper {
 
     Path getConfigDir();
 
+    boolean isServer();
+
+    boolean isDevelopmentEnvironment();
+
     String getModName(String modId);
 }

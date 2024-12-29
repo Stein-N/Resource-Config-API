@@ -1,60 +1,36 @@
 package net.xstopho.resourceconfigapi;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
-import net.xstopho.resourceconfigapi.config.ResourceModConfig;
-import net.xstopho.resourceconfigapi.config.entry.ConfigEntry;
+import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.network.ConfigNetwork;
-import net.xstopho.resourceconfigapi.network.packet.SyncBooleanConfigEntryPacket;
-import net.xstopho.resourceconfigapi.network.packet.SyncDoubleConfigEntryPacket;
-import net.xstopho.resourceconfigapi.network.packet.SyncIntegerConfigEntryPacket;
-import net.xstopho.resourceconfigapi.network.packet.SyncStringConfigEntryPacket;
+import net.xstopho.resourceconfigapi.network.server.OperatorStatusPayload;
+import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
+import net.xstopho.resourceconfigapi.util.PlayerUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ResourceConfig implements ModInitializer {
-
-    public static List<String> CONFIGS = new ArrayList<>();
 
     @Override
     public void onInitialize() {
         ConfigNetwork.initServer();
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            ResourceConfigConstants.LOG.info("Syncing Config Values with Client");
+            sender.sendPacket(new OperatorStatusPayload(PlayerUtils.isPlayerOperator(handler.player)));
 
-            HashMap<String, ResourceModConfig> configs = ConfigRegistry.getConfigFiles();
+            Constants.LOG.info("Syncing Server Configs with Client");
+            for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
+                ResourceLocation location = entry.getKey();
+                ModConfig config = entry.getValue();
 
-            for (Map.Entry<String, ResourceModConfig> config : configs.entrySet()) {
-                ResourceConfigConstants.LOG.info("Syncing Values for ModConfigFile: {}", config.getKey());
-                ResourceModConfig modConfig = config.getValue();
+                if (location.toString().contains("client")) continue;
+                Constants.LOG.info("Sending data for config '{}'.", location);
 
-                for (ConfigEntry<?> entry : modConfig.getBuilder().getEntries().values()) {
-                    if (entry.syncWithServer()) {
-                        sendPacket(sender, entry, config.getKey());
-                    }
-                }
+                sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), config.toJson().toString()));
             }
         });
-    }
-
-    public void sendPacket(PacketSender sender, ConfigEntry<?> entry, String fileName) {
-        if (entry.getValue() instanceof Integer) {
-            sender.sendPacket(new SyncIntegerConfigEntryPacket(fileName, entry.getPath(), (Integer) entry.value()));
-        }
-        if (entry.getValue() instanceof Double) {
-            sender.sendPacket(new SyncDoubleConfigEntryPacket(fileName, entry.getPath(), (Double) entry.value()));
-        }
-        if (entry.getValue() instanceof String) {
-            sender.sendPacket(new SyncStringConfigEntryPacket(fileName, entry.getPath(), (String) entry.value()));
-        }
-        if (entry.getValue() instanceof Boolean) {
-            sender.sendPacket(new SyncBooleanConfigEntryPacket(fileName, entry.getPath(), (Boolean) entry.value()));
-        }
     }
 }
