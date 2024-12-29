@@ -19,17 +19,17 @@ public class ResourceConfig implements ModInitializer {
         ConfigNetwork.initServer();
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            Constants.LOG.info("Sync Operator status.");
             sender.sendPacket(new OperatorStatusPayload(PlayerUtils.isPlayerOperator(handler.player)));
 
             Constants.LOG.info("Syncing Server Configs with Client");
             for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
-                ResourceLocation configLoc = entry.getKey();
+                ResourceLocation location = entry.getKey();
+                ModConfig config = entry.getValue();
 
-                if (configLoc.toString().contains("client")) continue;
-                Constants.LOG.info("Sending data for config '{}'.", configLoc);
+                if (location.toString().contains("client")) continue;
+                Constants.LOG.info("Sending data for config '{}'.", location);
 
-                sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), entry.getValue().toJson().toString()));
+                sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), config.toJson().toString()));
             }
         });
     }

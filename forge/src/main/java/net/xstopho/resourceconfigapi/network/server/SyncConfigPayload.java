@@ -7,6 +7,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 
@@ -30,9 +31,11 @@ public record SyncConfigPayload(String file, String json) {
             JsonObject jsonObject = JsonParser.parseString(payload.json()).getAsJsonObject();
             ResourceLocation configLoc = ResourceLocation.parse(payload.file());
 
-            ModConfig modConfig = ConfigRegistry.CONFIGS.get(configLoc);
-
-            modConfig.fromJson(jsonObject);
+            Constants.LOG.info("Receiving data for config '{}'", configLoc);
+            if (ConfigRegistry.CONFIGS.containsKey(configLoc)) {
+                ModConfig config = ConfigRegistry.CONFIGS.get(configLoc);
+                config.fromJson(jsonObject);
+            }
         });
     }
 }

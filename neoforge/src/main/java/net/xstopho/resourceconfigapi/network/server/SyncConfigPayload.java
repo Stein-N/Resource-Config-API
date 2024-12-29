@@ -25,9 +25,11 @@ public record SyncConfigPayload(String file, String json) implements CustomPacke
             JsonObject jsonObject = JsonParser.parseString(payload.json()).getAsJsonObject();
             ResourceLocation configLoc = ResourceLocation.parse(payload.file());
 
-            ModConfig modConfig = ConfigRegistry.CONFIGS.get(configLoc);
-
-            modConfig.fromJson(jsonObject);
+            Constants.LOG.info("Receiving data for config '{}'", configLoc);
+            if (ConfigRegistry.CONFIGS.containsKey(configLoc)) {
+                ModConfig config = ConfigRegistry.CONFIGS.get(configLoc);
+                config.fromJson(jsonObject);
+            }
         });
     }
 
