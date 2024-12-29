@@ -32,4 +32,12 @@ public class ConfigListWidget extends ObjectSelectionList<ConfigListEntry> {
     public int getRowWidth() {
         return this.width - 4;
     }
+
+    public void setSelectedIndex(int selected) {
+        if (selected == -1) {
+            this.setSelected(null);
+        } else if (this.getItemCount() != 0) {
+            this.setSelected(this.getEntry(selected));
+        }
+    }
 }

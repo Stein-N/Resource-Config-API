@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
@@ -56,7 +55,7 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
         reset.render(guiGraphics, mouseX, mouseY, delta);
         undo.render(guiGraphics, mouseX, mouseY, delta);
 
-        guiGraphics.blit(RenderType::guiTexturedOverlay, undoSprite, undo.getX() + 2, undo.getY() + 2,
+        guiGraphics.blit(undoSprite, undo.getX() + 2, undo.getY() + 2,
                 0f, 0f, 16, 16, 16, 16);
     }
 

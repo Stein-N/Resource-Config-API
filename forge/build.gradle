@@ -35,7 +35,7 @@ minecraft {
             }
         }
         server {
-            workingDirectory file('../common/runs/client')
+            workingDirectory file('../common/runs/server')
             ideaModule "${rootProject.name}.${project.name}.testmod"
             taskName "TestServer"
             args '--nogui'
