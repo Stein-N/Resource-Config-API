@@ -85,7 +85,9 @@ public class ModConfig {
             String category = ConfigUtils.isNotEmpty(annotation.category()) ? annotation.category() : null;
 
             if (ConfigUtils.unsupportedDatatype(field)) {
-                Constants.LOG.error("Field '{}' is an unsupported Datatype and was skipped.", field.getName());
+                if (CoreServices.isDevelopmentEnvironment()) {
+                    Constants.LOG.error("Field '{}' is an unsupported Datatype and was skipped. This message will be silent outside the Dev Environment, so make sure you resolve all messages!", field.getName());
+                }
                 continue;
             }
 
@@ -139,7 +141,9 @@ public class ModConfig {
             JsonElement jsonElement = jsonObject != null ? jsonObject.get(value) : config.get(value);
 
             if (jsonElement == null) {
-                Constants.LOG.error("Failed to set Value '{}'! Seems to be a new or unsupported Value.", value);
+                if (CoreServices.isDevelopmentEnvironment()) {
+                    Constants.LOG.error("Failed to set Value '{}'! Seems to be a new or unsupported Value. This message will be silent outside the Dev Environment, so make sure you resolve all messages!", value);
+                }
                 continue;
             }
 
@@ -225,8 +229,7 @@ public class ModConfig {
                 continue;
             }
             if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
-                Constants.LOG.error("Field '{}' isn't static or is final, make sure it is only a static field!", field.getName());
-                continue;
+                throw new RuntimeException(String.format("Field '%s' isn't static or is final, make sure it is only a static field!", field.getName()));
             }
 
             ConfigEntry annotation = field.getAnnotation(ConfigEntry.class);
