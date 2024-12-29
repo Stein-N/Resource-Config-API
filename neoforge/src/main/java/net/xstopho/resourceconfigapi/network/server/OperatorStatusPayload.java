@@ -7,6 +7,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
+import net.xstopho.resourceconfigapi.client.util.ClientUtils;
 
 public record OperatorStatusPayload(boolean status) implements CustomPacketPayload {
 
@@ -16,7 +17,7 @@ public record OperatorStatusPayload(boolean status) implements CustomPacketPaylo
 
     public static void handle(OperatorStatusPayload payload, IPayloadContext context) {
         context.enqueueWork(() -> {
-            ClientConstants.isOperator = payload.status();
+            ClientUtils.setOperatorStatus(payload.status());
         });
     }
 

@@ -6,8 +6,6 @@ import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 
 public class ClientConstants {
 
-    public static boolean isOperator = true;
-
     public static final Component SAVE_AND_CLOSE = ComponentUtils.label("button.save_and_close");
     public static final Component CLOSE = ComponentUtils.label("button.close");
     public static final Component RESET = ComponentUtils.label("button.reset");

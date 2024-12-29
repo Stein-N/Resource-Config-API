@@ -9,8 +9,18 @@ import net.xstopho.resourceconfigapi.platform.CoreServices;
 
 public class ClientUtils {
 
+    private static boolean operatorStatus = true;
+
+    public static void setOperatorStatus(boolean status) {
+        operatorStatus = status;
+    }
+
+    public static boolean isOperator() {
+        return isSingleplayer() || !worldLoaded() || operatorStatus;
+    }
+
     public static void sendConfigUpdateToServer(String file, String json) {
-        if (!ClientConstants.isOperator) return;
+        if (!isOperator()) return;
         CoreServices.load(NetworkHook.class).sendConfigUpdateToServer(file, json);
     }
 
@@ -25,6 +35,10 @@ public class ClientUtils {
     }
 
     public static boolean isMultiplayer() {
-        return !isSingleplayer() && Minecraft.getInstance().level != null;
+        return !isSingleplayer() && worldLoaded();
+    }
+
+    public static boolean worldLoaded() {
+        return Minecraft.getInstance().level != null;
     }
 }
