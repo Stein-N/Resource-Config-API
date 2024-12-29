@@ -7,6 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
+import net.xstopho.resourceconfigapi.client.util.ClientUtils;
 
 public record OperatorStatusPayload(boolean status) implements CustomPacketPayload {
     public static final Type<OperatorStatusPayload> TYPE = new Type<>(Constants.of("operator_status_payload"));
@@ -15,7 +16,7 @@ public record OperatorStatusPayload(boolean status) implements CustomPacketPaylo
 
     public static void handle(OperatorStatusPayload payload, ClientPlayNetworking.Context context) {
         context.client().execute(() -> {
-            ClientConstants.isOperator = payload.status();
+            ClientUtils.setOperatorStatus(payload.status());
         });
     }
 
