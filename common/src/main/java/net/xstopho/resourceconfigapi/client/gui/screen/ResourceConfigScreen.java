@@ -142,16 +142,21 @@ public class ResourceConfigScreen extends Screen {
 
     private void saveConfigChanges(ResourceLocation location, ConfigHolder holder) {
         ModConfig config = holder.getConfig();
-        if (ClientUtils.isMultiplayer()) {
-            if (config.configType.equals(ConfigType.SERVER) && ClientConstants.isOperator) {
-                ClientUtils.sendConfigUpdateToServer(location.toString(), config.toJson().toString());
-                return;
-            }
 
-            if (config.configType.equals(ConfigType.COMMON) && ClientConstants.isOperator){
-                ClientUtils.sendConfigUpdateToServer(location.toString(), config.toJson().toString());
+        if (ClientUtils.isMultiplayer()) {
+            switch (config.configType) {
+                case CLIENT -> saveConfig(holder);
+                case COMMON, SERVER -> ClientUtils.sendConfigUpdateToServer(location.toString(), config.toJson().toString());
+            }
+        } else {
+            switch (config.configType) {
+                case COMMON, CLIENT -> saveConfig(holder);
             }
         }
+    }
+
+    private void saveConfig(ConfigHolder holder) {
+        ModConfig config = holder.getConfig();
 
         Constants.LOG.info("Saving '{}' config from mod '{}' of type '{}'", holder.getFileName(), config.modId, config.configType);
         config.writeConfig(config.toJson());
