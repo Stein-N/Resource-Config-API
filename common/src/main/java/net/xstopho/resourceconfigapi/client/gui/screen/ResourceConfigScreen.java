@@ -18,7 +18,7 @@ import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.widget.ConfigTab;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
-import net.xstopho.resourceconfigapi.client.util.ClientPlayerUtils;
+import net.xstopho.resourceconfigapi.client.util.ClientUtils;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 
@@ -61,7 +61,7 @@ public class ResourceConfigScreen extends Screen {
 
         if (clientTab.containsConfigs()) builder.addTabs(clientTab);
         if (commonTab.containsConfigs() && ClientConstants.isOperator) builder.addTabs(commonTab);
-        if (serverTab.containsConfigs() && ClientConstants.isOperator && ClientPlayerUtils.isMultiplayer()) builder.addTabs(serverTab);
+        if (serverTab.containsConfigs() && ClientConstants.isOperator && ClientUtils.isMultiplayer()) builder.addTabs(serverTab);
 
         this.navigationBar = builder.build();
 
@@ -139,10 +139,14 @@ public class ResourceConfigScreen extends Screen {
 
     private void saveConfigChanges(ResourceLocation location, ConfigHolder holder) {
         ModConfig config = holder.getConfig();
-        if (config.configType.equals(ConfigType.SERVER)) return;
+        if (config.configType.equals(ConfigType.SERVER)) {
+            ClientUtils.sendConfigUpdateToServer(location.toString(), config.toJson().toString());
+            return;
+        }
 
         Constants.LOG.info("Saving '{}' config from mod '{}' of type '{}'", holder.getFileName(), config.modId, config.configType);
         config.writeConfig(config.toJson());
+        ClientUtils.sendConfigUpdateToServer(location.toString(), config.toJson().toString());
     }
 
     private void consumeAction(Consumer<BaseEntry> consumer) {

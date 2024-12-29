@@ -22,6 +22,7 @@ public class ForgeHandler {
     public static void registerLoginEvents(PlayerEvent.PlayerLoggedInEvent event) {
         Constants.LOG.info("Syncing Configs with Client");
 
+        //TODO: don't sync Client configs, they are loaded on server but shouldn't be send this would screw the client configs
         for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
             ResourceLocation configLoc = entry.getKey();
 

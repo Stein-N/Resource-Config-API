@@ -3,8 +3,14 @@ package net.xstopho.resourceconfigapi.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ServerData;
+import net.xstopho.resourceconfigapi.network.NetworkHook;
+import net.xstopho.resourceconfigapi.platform.CoreServices;
 
-public class ClientPlayerUtils {
+public class ClientUtils {
+
+    public static void sendConfigUpdateToServer(String file, String json) {
+        CoreServices.load(NetworkHook.class).sendConfigUpdateToServer(file, json);
+    }
 
     public static boolean isSingleplayer() {
         Minecraft minecraft = Minecraft.getInstance();
