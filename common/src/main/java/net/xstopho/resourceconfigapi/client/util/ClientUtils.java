@@ -3,7 +3,6 @@ package net.xstopho.resourceconfigapi.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ServerData;
-import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.network.NetworkHook;
 import net.xstopho.resourceconfigapi.platform.CoreServices;
 
