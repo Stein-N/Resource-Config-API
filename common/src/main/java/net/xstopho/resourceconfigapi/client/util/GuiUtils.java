@@ -41,14 +41,9 @@ public class GuiUtils {
     }
 
     public static boolean hasTranslation(Component component) {
-        String key = getComponentKey(component);
+        String key = component.getString();
         String translated = ClientLanguage.getInstance().getOrDefault(key);
 
         return !translated.equals(key);
-    }
-
-    private static String getComponentKey(Component component) {
-        String fullKey = component.toString();
-        return fullKey.substring(17, fullKey.length() - 11);
     }
 }
