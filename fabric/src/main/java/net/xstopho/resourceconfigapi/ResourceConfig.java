@@ -26,7 +26,9 @@ public class ResourceConfig implements ModInitializer {
             for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
                 ResourceLocation configLoc = entry.getKey();
 
+                if (configLoc.toString().contains("client")) continue;
                 Constants.LOG.info("Syncing Config '{}'", configLoc);
+
                 sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), entry.getValue().toJson().toString()));
             }
         });
