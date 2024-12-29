@@ -15,7 +15,7 @@ public class ClientUtils {
     }
 
     public static boolean isOperator() {
-        return isSingleplayer() || operatorStatus;
+        return isSingleplayer() || !worldLoaded() || operatorStatus;
     }
 
     public static void sendConfigUpdateToServer(String file, String json) {
@@ -34,6 +34,10 @@ public class ClientUtils {
     }
 
     public static boolean isMultiplayer() {
-        return !isSingleplayer() && Minecraft.getInstance().level != null;
+        return !isSingleplayer() && worldLoaded();
+    }
+
+    public static boolean worldLoaded() {
+        return Minecraft.getInstance().level != null;
     }
 }
