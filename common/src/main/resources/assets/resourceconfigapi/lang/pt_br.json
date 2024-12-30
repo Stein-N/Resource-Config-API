@@ -7,7 +7,7 @@
   "config.button.disabled.label": "Desativado",
 
   "config.direct_impact.tooltip": "Alterar esta opção tem impacto direto no seu jogo.",
-  "config.needs_world_restart.tooltip": "O mundo deve ser reiniciado e os servidores devem ser reiniciados, caso contrário, as alterações não terão efeito.",
+  "config.needs_world_restart.tooltip": "Para Singleplayer, basta voltar ao seu mundo, mas um servidor dedicado precisa ser reiniciado, caso contrário, as alterações não terão efeito.",
   "config.needs_game_restart.tooltip": "O jogo/servidor deve ser reiniciado, caso contrário, as alterações não terão efeito.",
 
   "config.button.save_and_close.label": "Salvar e Fechar",
