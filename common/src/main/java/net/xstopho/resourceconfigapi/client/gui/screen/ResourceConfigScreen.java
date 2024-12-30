@@ -98,8 +98,7 @@ public class ResourceConfigScreen extends Screen {
         this.renderBackground(guiGraphics, mouseX, mouseY, ticks);
         super.render(guiGraphics, mouseX, mouseY, ticks);
 
-        guiGraphics.blit(RenderType::guiTextured, Screen.FOOTER_SEPARATOR, 0,
-                this.height - 35,
+        guiGraphics.blit(RenderType::guiTextured, Screen.FOOTER_SEPARATOR, 0, this.height - 35,
                 0F, 0F, this.width, 2, 32, 2);
     }
 
@@ -129,6 +128,11 @@ public class ResourceConfigScreen extends Screen {
         Minecraft.getInstance().setScreen(previous);
     }
 
+    /**
+     *
+     * @param location
+     * @param config
+     */
     private void processConfigs(ResourceLocation location, ModConfig config) {
         if (location.getNamespace().equals(this.modId)) {
             this.configs.put(location, new ConfigHolder(config));

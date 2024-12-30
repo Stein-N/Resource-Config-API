@@ -6,6 +6,10 @@
   "config.button.enabled.label": "Enabled",
   "config.button.disabled.label": "Disabled",
 
+  "config.direct_impact.tooltip": "Changing this option have direct Impact to your Gameplay.",
+  "config.needs_world_restart.tooltip": "World/Server must be reloaded, otherwise changes have no impact.",
+  "config.needs_game_restart.tooltip": "Game/Server must be restarted, otherwise changes have no impact.",
+
   "config.button.save_and_close.label": "Save and Close",
   "config.button.reset_all.label": "Reset All",
   "config.button.close.label": "Close",

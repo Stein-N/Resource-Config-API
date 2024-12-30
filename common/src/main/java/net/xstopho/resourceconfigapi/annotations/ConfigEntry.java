@@ -12,6 +12,10 @@ public @interface ConfigEntry {
      */
     String category() default "";
 
+    boolean needsGameRestart() default false;
+
+    boolean needsWorldRestart() default false;
+
     /**
      * Define a unified translation key for multiple ConfigEntries.<br>
      * This key will be used for the label and tooltip translation key.<br>

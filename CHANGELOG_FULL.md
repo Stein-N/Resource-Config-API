@@ -1,3 +1,6 @@
+#### v3.4.1
+- adding Indicator for Config Option if a world/game restart is necessary
+
 #### v3.4.0
 - complete overhaul of the config api
 - using json files instead of toml files
