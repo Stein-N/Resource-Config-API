@@ -49,12 +49,12 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,
                        int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
         GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
-                xPos, yPos + 6, mouseX, mouseY);
+                xPos + 13, yPos + 6, mouseX, mouseY);
 
         undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
         reset.setPosition(xPos + rowWidth - reset.getWidth(), yPos);
 
-        editBox.setPosition(xPos + rowWidth - getWidgetWidth(), yPos);
+        editBox.setPosition(xPos + rowWidth - getWidgetWidth(), yPos + 1);
         editBox.setWidth(getWidgetWidth() - (undo.getWidth() + reset.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, delta);
@@ -63,6 +63,8 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
 
         guiGraphics.blit(undoSprite, undo.getX() + 2, undo.getY() + 2,
                 0f, 0f, 16, 16, 16, 16);
+
+        GuiUtils.renderIcon(guiGraphics, field, xPos, yPos + 4, mouseX, mouseY);
     }
 
     public abstract T getValue();

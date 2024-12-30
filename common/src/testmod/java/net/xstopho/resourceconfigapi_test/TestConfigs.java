@@ -16,10 +16,10 @@ public class TestConfigs {
         @ConfigEntry(category = "Widget Tests")
         public static boolean testBoolean = true;
 
-        @ConfigEntry(category = "Widget Tests")
+        @ConfigEntry(category = "Widget Tests", needsGameRestart = true)
         public static byte normalByte = 100;
 
-        @ConfigEntry(category = "Widget Tests")
+        @ConfigEntry(category = "Widget Tests", needsWorldRestart = true)
         @RangedEntry(minValue = 0, maxValue = 50)
         public static byte rangedByte = 25;
 
