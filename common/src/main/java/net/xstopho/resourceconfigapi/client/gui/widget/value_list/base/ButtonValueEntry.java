@@ -44,7 +44,7 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
                        int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
 
         GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
-                xPos, yPos + 6, mouseX, mouseY);
+                xPos + 13, yPos + 6, mouseX, mouseY);
 
         undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
         reset.setPosition(xPos + rowWidth - reset.getWidth(), yPos);
@@ -58,6 +58,8 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
 
         guiGraphics.blit(RenderType::guiTextured, undoSprite, undo.getX() + 2, undo.getY() + 2,
                 0f, 0f, 16, 16, 16, 16);
+
+        GuiUtils.renderIcon(guiGraphics, field, xPos, yPos + 4, mouseX, mouseY);
     }
 
     public abstract T getValue();
