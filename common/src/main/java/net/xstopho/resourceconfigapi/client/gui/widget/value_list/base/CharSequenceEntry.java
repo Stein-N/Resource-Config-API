@@ -38,7 +38,7 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
 
         editBox = new EditBox(getFont(), getWidgetWidth(), 18, Component.empty());
         editBox.setValue(getFieldValue().toString());
-        editBox.setResponder(s -> undo.active = !Objects.equals(s, getFieldValue()));
+        editBox.setResponder(s -> undo.active = !Objects.equals(s, getFieldValue().toString()));
 
         this.children.add(editBox);
         this.children.add(reset);

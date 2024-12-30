@@ -1,5 +1,7 @@
 #### v3.1.1
+- fixing an issue where undo button was falsely active
 - adding Indicator for Config Option if a world/game restart is necessary
+- adding more translations
 
 #### v3.1.0
 - complete overhaul of the config api
