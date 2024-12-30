@@ -48,7 +48,7 @@ public abstract class NumberValueEntry<T> extends BaseEntry {
                     .setResponder(aDouble -> undo.active = !Objects.equals(aDouble, getFieldValue()));
         } else {
             valueWidget = new EditBox(getFont(), getWidgetWidth(), 18, Component.empty());
-            ((EditBox) valueWidget).setResponder(s -> undo.active = !Objects.equals(s, getFieldValue()));
+            ((EditBox) valueWidget).setResponder(s -> undo.active = !Objects.equals(s, getFieldValue().toString()));
             ((EditBox) valueWidget).setFilter(s -> pattern.matcher(s).matches());
             ((EditBox) valueWidget).setValue(getFieldValue().toString());
         }
