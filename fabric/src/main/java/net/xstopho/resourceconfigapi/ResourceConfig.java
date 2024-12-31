@@ -28,7 +28,7 @@ public class ResourceConfig implements ModInitializer {
                 ResourceLocation location = entry.getKey();
                 ModConfig config = entry.getValue();
 
-                if (location.toString().contains("client")) return;
+                if (location.toString().contains("client")) continue;
                 Constants.LOG.info("Sending data for config '{}'.", location);
 
                 sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), config.readConfig().toString()));
