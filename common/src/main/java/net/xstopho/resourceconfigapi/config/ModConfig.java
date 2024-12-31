@@ -194,6 +194,9 @@ public class ModConfig {
      * @return File converted to JsonObject
      */
     public JsonObject readConfig() {
+        if (!configFile.exists()) {
+            return toJson();
+        }
         try(FileReader reader = new FileReader(configFile)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
         } catch(IOException e) {

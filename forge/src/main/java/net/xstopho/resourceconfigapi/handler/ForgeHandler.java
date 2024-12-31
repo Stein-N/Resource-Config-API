@@ -33,7 +33,7 @@ public class ForgeHandler {
             if (location.toString().contains("client")) continue;
             Constants.LOG.info("Sending data for Config '{}'", location);
 
-            ResourceConfig.NETWORK.send(new SyncConfigPayload(location.toString(), config.readConfig().getAsString()), PacketDistributor.PLAYER.with(player));
+            ResourceConfig.NETWORK.send(new SyncConfigPayload(location.toString(), config.readConfig().toString()), PacketDistributor.PLAYER.with(player));
         }
     }
 }
