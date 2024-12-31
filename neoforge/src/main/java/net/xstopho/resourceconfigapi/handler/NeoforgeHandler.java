@@ -32,7 +32,7 @@ public class NeoforgeHandler {
             if (location.toString().contains("client")) continue;
             Constants.LOG.info("Sending data for Config '{}'", location);
 
-            PacketDistributor.sendToPlayer(player, new SyncConfigPayload(location.toString(), config.toJson().toString()));
+            PacketDistributor.sendToPlayer(player, new SyncConfigPayload(location.toString(), config.readConfig().getAsString()));
         }
     }
 }

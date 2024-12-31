@@ -29,7 +29,7 @@ public class ResourceConfig implements ModInitializer {
                 if (location.toString().contains("client")) continue;
                 Constants.LOG.info("Sending data for config '{}'.", location);
 
-                sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), config.toJson().toString()));
+                sender.sendPacket(new SyncConfigPayload(entry.getKey().toString(), config.readConfig().getAsString()));
             }
         });
     }
