@@ -4,7 +4,9 @@ import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.platform.CoreServices;
 
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ComponentUtils {
 
@@ -39,12 +41,12 @@ public class ComponentUtils {
         Component component = Component.translatable(
                 String.format("%s.%s", "config", convert(key)));
 
-        if (!GuiUtils.hasTranslation(component)) {
-            if (component.getString().contains("tooltip")) {
-                OPTIONAL_TRANSLATION.add(component);
-            } else {
-                NEEDED_TRANSLATION.add(component);
-            }
+        if (GuiUtils.hasTranslation(component)) return component;
+
+        if (component.getString().contains("tooltip")) {
+            addIfAbsent(OPTIONAL_TRANSLATION, component);
+        } else {
+            addIfAbsent(NEEDED_TRANSLATION, component);
         }
 
         return component;
@@ -54,32 +56,51 @@ public class ComponentUtils {
         return key.toLowerCase().replace(" ", "_");
     }
 
-    public static void printMissingTranslations(String modId) {
+    public static void logMissingTranslations(String modId) {
         if (!CoreServices.isDevelopmentEnvironment()) return;
 
-        if (!NEEDED_TRANSLATION.isEmpty()) {
-            Constants.LOG.info("\nYour Config/s for '{}' containing untranslated Keys, add proper translation for the user.\n{}",
-                    modId, buildLog(modId, NEEDED_TRANSLATION));
-        }
+        logMissingTranslations(modId, NEEDED_TRANSLATION, "The following keys are necessary for the User to properly edit your Configs!");
+        logMissingTranslations(modId, OPTIONAL_TRANSLATION, "The following keys are optional, they add a Tooltip to the Label, this might help to explain some Options to the User.");
+    }
 
-        if (!OPTIONAL_TRANSLATION.isEmpty()) {
-            Constants.LOG.info("\nYour Config/s for '{}' containing optional untranslated Keys, these can help to explain options to the user but aren't necessary.\n{}",
-                    modId, buildLog(modId, OPTIONAL_TRANSLATION));
+    private static void logMissingTranslations(String modId, LinkedList<Component> translations, String message) {
+        if (!translations.isEmpty()) {
+            Constants.LOG.info("\nYour Config/s for '{}' contains untranslated keys.\n{}\n\n{}", modId, message, buildLog(modId, translations));
         }
-
-        NEEDED_TRANSLATION.clear();
-        OPTIONAL_TRANSLATION.clear();
     }
 
     private static String buildLog(String modId, LinkedList<Component> components) {
+        List<Component> modComponents = collectModComponents(modId, components);
         StringBuilder builder = new StringBuilder();
 
-        for (Component comp : components) {
+        for (Iterator<Component> it = modComponents.iterator(); it.hasNext();) {
+            Component comp = it.next();
+
             if (comp.getString().contains(modId)) {
-                builder.append(comp.getString()).append("\n");
+                builder.append("\"").append(comp.getString()).append("\": \"\"");
             }
+
+            if (it.hasNext()) builder.append(",\n");
+            else builder.append("\n");
         }
 
         return builder.toString();
+    }
+
+    private static List<Component> collectModComponents(String modId, List<Component> list) {
+        List<Component> modComponents = new LinkedList<>();
+
+        for (Component comp : list) {
+            if (comp.getString().contains(modId)) {
+                modComponents.add(comp);
+            }
+        }
+
+        return modComponents;
+    }
+
+    private static void addIfAbsent(List<Component> list, Component component) {
+        if (list.contains(component)) return;
+        list.add(component);
     }
 }

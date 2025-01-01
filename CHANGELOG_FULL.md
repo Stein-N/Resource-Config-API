@@ -1,5 +1,6 @@
 #### v3.3.1
 - fixing an issue where undo button was falsely active
+- fixing logging for missing translation keys
 - adding Indicator for Config Option if a world/game restart is necessary
 - adding more translations
 
