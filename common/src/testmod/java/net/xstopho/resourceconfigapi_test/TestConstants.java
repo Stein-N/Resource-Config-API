@@ -11,10 +11,10 @@ public class TestConstants {
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
     public static void commonInit() {
-        //ConfigRegistry.register(TestConfigs.CommonConfig.class, MOD_ID);
+        ConfigRegistry.register(TestConfigs.CommonConfig.class, MOD_ID);
         ConfigRegistry.register(TestConfigs.Generators.class, MOD_ID);
-        //ConfigRegistry.register(TestConfigs.ServerConfig.class, MOD_ID);
-        //ConfigRegistry.register(TestConfigs.ClientConfig.class, MOD_ID);
+        ConfigRegistry.register(TestConfigs.ServerConfig.class, MOD_ID);
+        ConfigRegistry.register(TestConfigs.ClientConfig.class, MOD_ID);
     }
 
     public static void clientInit() {

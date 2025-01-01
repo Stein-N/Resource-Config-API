@@ -20,8 +20,8 @@ public class TestConfigs {
         public static byte normalByte = 100;
 
         @ConfigEntry(category = "Widget Tests", needsWorldRestart = true)
-        @RangedEntry(minValue = 0, maxValue = 50)
-        public static byte rangedByte = 25;
+        @RangedEntry(minValue = 1, maxValue = 3)
+        public static byte rangedByte = 1;
 
         @ConfigEntry(category = "Widget Tests")
         public static double normalDouble = 2.3;
