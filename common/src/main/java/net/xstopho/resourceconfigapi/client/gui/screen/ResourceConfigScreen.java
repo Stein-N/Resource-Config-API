@@ -89,7 +89,7 @@ public class ResourceConfigScreen extends Screen {
 
         this.repositionElements();
 
-        ComponentUtils.printMissingTranslations(modId);
+        ComponentUtils.loggMissingTranslations(modId);
     }
 
     @Override
