@@ -43,9 +43,9 @@ public class ComponentUtils {
 
         if (!GuiUtils.hasTranslation(component)) {
             if (component.getString().contains("tooltip")) {
-                OPTIONAL_TRANSLATION.add(component);
+                addIfAbsent(OPTIONAL_TRANSLATION, component);
             } else {
-                NEEDED_TRANSLATION.add(component);
+                addIfAbsent(NEEDED_TRANSLATION, component);
             }
         }
 
