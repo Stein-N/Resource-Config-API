@@ -5,6 +5,7 @@ import net.xstopho.resourceconfigapi.Constants;
 import net.xstopho.resourceconfigapi.platform.CoreServices;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class ComponentUtils {
 
@@ -41,9 +42,9 @@ public class ComponentUtils {
 
         if (!GuiUtils.hasTranslation(component)) {
             if (component.getString().contains("tooltip")) {
-                OPTIONAL_TRANSLATION.add(component);
+                addIfAbsent(OPTIONAL_TRANSLATION, component);
             } else {
-                NEEDED_TRANSLATION.add(component);
+               addIfAbsent(NEEDED_TRANSLATION, component);
             }
         }
 
@@ -81,5 +82,10 @@ public class ComponentUtils {
         }
 
         return builder.toString();
+    }
+
+    private static void addIfAbsent(List<Component> list, Component component) {
+        if (list.contains(component)) return;
+        list.add(component);
     }
 }

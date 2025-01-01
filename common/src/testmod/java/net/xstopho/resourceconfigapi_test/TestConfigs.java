@@ -71,14 +71,23 @@ public class TestConfigs {
     @Config(fileName = "generator", type = ConfigType.COMMON)
     public static class Generators {
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int tier = 1;
+        @ConfigEntry(category = "Basic Solar Panel", translation = "tier")
+        public static int basicTier = 1;
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int generateByDay = 50;
+        @ConfigEntry(category = "Basic Solar Panel", translation = "generateByDay")
+        public static int basicGenerateByDay = 50;
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int generateByNight = 5;
+        @ConfigEntry(category = "Basic Solar Panel", translation = "generateByNight")
+        public static int basicGenerateByNight = 5;
+
+        @ConfigEntry(category = "Advanced Solar Panel", translation = "tier")
+        public static int advancedTier = 1;
+
+        @ConfigEntry(category = "Advanced Solar Panel", translation = "generateByDay")
+        public static int advancedGenerateByDay = 50;
+
+        @ConfigEntry(category = "Advanced Solar Panel", translation = "generateByNight")
+        public static int advancedGenerateByNight = 5;
     }
 
     @Config(fileName = "general", type = ConfigType.SERVER)
