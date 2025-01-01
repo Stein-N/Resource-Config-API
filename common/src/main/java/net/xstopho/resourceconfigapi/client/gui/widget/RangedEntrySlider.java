@@ -31,7 +31,7 @@ public class RangedEntrySlider extends AbstractSliderButton {
             setMessage(Component.literal(String.valueOf((int) getValue())));
             return;
         }
-        setMessage(Component.literal(String.valueOf(getValue())));
+        setMessage(Component.literal(String.format("%.2f", getValue())));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class RangedEntrySlider extends AbstractSliderButton {
         if (maxValue > 1) {
             clampedValue = Math.round(clampedValue / 0.10) * 0.10;
         }
-        return this.integer ? (int) Math.round(clampedValue) : (double) Math.round(clampedValue * 100) / 100;
+        return clampedValue;
     }
 
     public void undoValue() {
