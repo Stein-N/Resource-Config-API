@@ -1,19 +1,3 @@
-#### 3.1.2
-- fixing an issue where undo button was falsely active
-- fixing logging for missing translation keys
-  - outputs the usable translation keys for your config
-
-#### v3.1.1
-- adding Indicator for Config Option if a world/game restart is necessary
-- adding more translations
-
-#### v3.1.0
-- complete overhaul of the config api
-- using json files instead of toml files
-    - this will reset all configurations you made with the old versions
-- adding Config Menu to edit the configs without the need of editing files
-    - in Singleplayer worlds you can edit Client and Common Configs
-    - in Multiplayer, Common and Server Configs are editable, but only if you are an Operator
-      when not only the Client Config is editable
-- Configs get synced when you enter a World/Server and when a Server Operator
-  edits the config it also gets synced with all clients again
+#### 3.1.3
+- fixing wrong calculation of current Slider Entries
+  - when the range wasn't f.e. 0-50 it mosty sets it to the highest values
