@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 import net.xstopho.resourceconfigapi.network.ConfigNetwork;
@@ -24,15 +25,8 @@ public class ResourceConfig implements ModInitializer {
 
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            ConfigConstants.LOG.info("Syncing Server Configs with Client");
-            for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.getConfigEntries()) {
-                ResourceLocation location = entry.getKey();
-                ModConfig config = entry.getValue();
-
-                if (location.toString().contains("client")) continue;
-                ConfigConstants.LOG.info("Sending data for config '{}'.", location);
-                ConfigNetwork.INSTANCE.sendToClient(handler.getPlayer(), new ConfigSyncPayload(location.toString(), config.toJson().toString()));
-            }
+            ServerPlayer player = handler.getPlayer();
+            ConfigConstants.syncConfigs(player);
         });
     }
 }
