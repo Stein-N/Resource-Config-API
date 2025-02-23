@@ -15,7 +15,7 @@ public class RangedEntrySlider extends AbstractSliderButton {
     private Consumer<Double> responder;
 
     public RangedEntrySlider(int width, double currentValue, double minValue, double maxValue, boolean integer) {
-        super(0, 0, width, 20, Component.empty(), currentValue / maxValue);
+        super(0, 0, width, 20, Component.empty(), (currentValue - minValue) / (maxValue - minValue));
         this.currentValue = currentValue;
         this.minValue = minValue;
         this.maxValue = maxValue;

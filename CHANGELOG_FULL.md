@@ -1,3 +1,7 @@
+#### 3.3.3
+- fixing wrong calculation of current Slider Entries
+  - when the range wasn't f.e. 0-50 it mosty sets it to the highest values
+
 #### 3.3.2
 - fixing an issue where undo button was falsely active
 - fixing logging for missing translation keys
