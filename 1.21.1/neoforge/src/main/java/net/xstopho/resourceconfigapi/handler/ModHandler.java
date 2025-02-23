@@ -4,21 +4,21 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import net.xstopho.resourceconfigapi.Constants;
-import net.xstopho.resourceconfigapi.network.client.ConfigUpdatePayload;
-import net.xstopho.resourceconfigapi.network.server.OperatorStatusPayload;
-import net.xstopho.resourceconfigapi.network.server.SyncConfigPayload;
+import net.xstopho.resourceconfigapi.ConfigConstants;
+import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
+import net.xstopho.resourceconfigapi.network.payloads.ConfigSyncPayload;
 
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ConfigConstants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModHandler {
 
     @SubscribeEvent
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar payload = event.registrar(Constants.MOD_ID);
+        PayloadRegistrar registry = event.registrar(ConfigConstants.MOD_ID);
 
-        payload.playToClient(SyncConfigPayload.TYPE, SyncConfigPayload.CODEC, SyncConfigPayload::handle);
-        payload.playToClient(OperatorStatusPayload.TYPE, OperatorStatusPayload.CODEC, OperatorStatusPayload::handle);
+        registry.playToServer(ConfigUpdatePayload.TYPE, ConfigUpdatePayload.CODEC,
+                (payload, context) -> ConfigUpdatePayload.handle(payload, context.player().getServer()));
 
-        payload.playToServer(ConfigUpdatePayload.TYPE, ConfigUpdatePayload.CODEC, ConfigUpdatePayload::handle);
+        registry.playToClient(ConfigSyncPayload.TYPE, ConfigSyncPayload.CODEC,
+                (payload, context) -> ConfigSyncPayload.handle(payload));
     }
 }

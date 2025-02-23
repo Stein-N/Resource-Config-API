@@ -7,7 +7,7 @@ import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
-import net.xstopho.resourceconfigapi.Constants;
+import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.tooltip.EntryLabelTooltipPosition;
@@ -17,9 +17,9 @@ import java.util.List;
 
 public class GuiUtils {
 
-    private static final ResourceLocation directImpact = Constants.of("textures/gui/sprites/icon/direct_impact.png");
-    private static final ResourceLocation worldRestart = Constants.of("textures/gui/sprites/icon/world_restart.png");
-    private static final ResourceLocation gameRestart = Constants.of("textures/gui/sprites/icon/game_restart.png");
+    private static final ResourceLocation directImpact = ConfigConstants.of("textures/gui/sprites/icon/direct_impact.png");
+    private static final ResourceLocation worldRestart = ConfigConstants.of("textures/gui/sprites/icon/world_restart.png");
+    private static final ResourceLocation gameRestart = ConfigConstants.of("textures/gui/sprites/icon/game_restart.png");
 
     public static Font getFont() {
         return Minecraft.getInstance().font;

@@ -16,9 +16,8 @@ public class ResourceModMenuCompat implements ModMenuApi {
     public Map<String, ConfigScreenFactory<?>> getProvidedConfigScreenFactories() {
         Map<String, ConfigScreenFactory<?>> screenFactoryMap = new HashMap<>();
 
-        for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.CONFIGS.entrySet()) {
+        for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.getConfigEntries()) {
             String modId = entry.getKey().getNamespace();
-
             screenFactoryMap.put(modId, screen -> new ResourceConfigScreen(screen, modId));
         }
 

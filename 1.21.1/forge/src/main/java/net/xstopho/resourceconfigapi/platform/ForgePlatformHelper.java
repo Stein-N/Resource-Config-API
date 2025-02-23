@@ -4,11 +4,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.xstopho.resourceconfigapi.platform.services.IPlatformHelper;
 
 import java.nio.file.Path;
 
-public class ForgePlatformHelper implements IPlatformHelper {
+public class ForgePlatformHelper implements PlatformHelper {
 
     private String modName;
 
@@ -18,12 +17,17 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
+    public Path getServerConfigDir() {
+        return Path.of("./world/serverconfig");
+    }
+
+    @Override
     public boolean isServer() {
         return FMLLoader.getDist().equals(Dist.DEDICATED_SERVER);
     }
 
     @Override
-    public boolean isDevelopmentEnvironment() {
+    public boolean isDevEnv() {
         return !FMLLoader.isProduction();
     }
 
