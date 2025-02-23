@@ -1,10 +1,10 @@
 plugins {
-    id "me.modmuss50.mod-publish-plugin"
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 publishMods {
     displayName = file.map { it.asFile.name }
-    type = STABLE
+    type = BETA
 
     var changelogFile = rootProject.file('CHANGELOG.md')
     if (changelogFile.exists()) changelog = changelogFile.text
@@ -13,16 +13,20 @@ publishMods {
     modrinth {
         accessToken = MODRINTH_API_KEY
         projectId = modrinth_id
-        minecraftVersions.add("${minecraft_version}")
+
+        minecraftVersions.add(project.minecraft_version)
     }
+
     curseforge {
         accessToken = CURSEFORGE_API_KEY
         projectId = curseforge_id
-        minecraftVersions.add("${minecraft_version}")
 
         clientRequired = true
         serverRequired = true
 
         javaVersions.add(JavaVersion.VERSION_21)
+
+
+        minecraftVersions.add(project.minecraft_version)
     }
 }

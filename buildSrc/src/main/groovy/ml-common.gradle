@@ -4,24 +4,12 @@ plugins {
 }
 
 base {
-    archivesName = "$mod_id-$project.name-$minecraft_version"
+    archivesName = "$mod_id-$project.name"
+    version = "$minecraft_version-$mod_version"
 }
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
-    withSourcesJar()
-    withJavadocJar()
-}
-
-repositories {
-    mavenCentral()
-    maven { url 'https://raw.githubusercontent.com/Stein-N/resources/main/maven' }
-    maven { url 'https://maven.parchmentmc.org/' }
-    maven { url 'https://api.modrinth.com/maven' }
-}
-
-dependencies {
-    implementation 'org.jetbrains:annotations:24.1.0'
 }
 
 tasks.named('javadoc', Javadoc) {
@@ -30,6 +18,17 @@ tasks.named('javadoc', Javadoc) {
 
 tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
+}
+
+repositories {
+    maven { url 'https://api.modrinth.com/maven' }
+}
+
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath
+        compileClasspath += main.compileClasspath
+    }
 }
 
 jar {
@@ -50,18 +49,11 @@ jar {
     }
 }
 
-sourcesJar {
-    from(rootProject.file("LICENSE")) {
-        rename { "${it}_${mod_name}" }
-    }
-}
-
 processResources {
     var expandProps = [
             // Project related Keys
             "version": version,
             "group": project.group,
-            "java_version": java_version,
 
             // Mod related Keys
             "minecraft_version": minecraft_version,
@@ -71,8 +63,6 @@ processResources {
             "mod_license": mod_license,
             "mod_credits": mod_credits,
             "mod_description": mod_description,
-
-            // General Key
             "minecraft_version_range": minecraft_version_range,
 
             // Fabric Keys
@@ -81,11 +71,11 @@ processResources {
 
             // NeoForge Keys
             "neoforge_version": neoforge_version,
-            "neoforge_version_range": neoforge_version_range,
+            "neoforge_loader_version_range": neoforge_loader_version_range,
 
             // Forge Keys
             "forge_version": forge_version,
-            "forge_version_range": forge_version_range
+            "forge_version_range": forge_version_range,
     ]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', 'META-INF/mods.toml', '*.mixins.json']) {
