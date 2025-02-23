@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 
 public interface ConfigNetwork {
-
     ConfigNetwork INSTANCE = ConfigUtils.load(ConfigNetwork.class);
 
     void sendToClient(ServerPlayer player, CustomPacketPayload payload);
