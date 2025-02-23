@@ -4,9 +4,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.SimpleChannel;
-import net.xstopho.resourceconfigapi.network.ConfigNetwork;
+import net.xstopho.resourceconfigapi.network.PayloadBuilder;
 
-@Mod(Constants.MOD_ID)
+@Mod(ConfigConstants.MOD_ID)
 public class ResourceConfig {
 
     public static SimpleChannel NETWORK;
@@ -16,6 +16,6 @@ public class ResourceConfig {
     }
 
     private void initNetwork(FMLCommonSetupEvent event) {
-        event.enqueueWork(ConfigNetwork::initPayloads);
+        event.enqueueWork(PayloadBuilder::build);
     }
 }

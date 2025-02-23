@@ -4,11 +4,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.loading.FMLPaths;
-import net.xstopho.resourceconfigapi.platform.services.IPlatformHelper;
 
 import java.nio.file.Path;
 
-public class NeoForgePlatformHelper implements IPlatformHelper {
+public class NeoForgePlatformHelper implements PlatformHelper {
 
     private String modName;
 
@@ -18,12 +17,17 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
+    public Path getServerConfigDir() {
+        return Path.of("./world/serverconfig");
+    }
+
+    @Override
     public boolean isServer() {
         return FMLLoader.getDist().equals(Dist.DEDICATED_SERVER);
     }
 
     @Override
-    public boolean isDevelopmentEnvironment() {
+    public boolean isDevEnv() {
         return !FMLLoader.isProduction();
     }
 

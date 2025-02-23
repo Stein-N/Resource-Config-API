@@ -16,12 +16,12 @@ public class TestConfigs {
         @ConfigEntry(category = "Widget Tests")
         public static boolean testBoolean = true;
 
-        @ConfigEntry(category = "Widget Tests")
+        @ConfigEntry(category = "Widget Tests", needsGameRestart = true)
         public static byte normalByte = 100;
 
-        @ConfigEntry(category = "Widget Tests")
-        @RangedEntry(minValue = 0, maxValue = 50)
-        public static byte rangedByte = 25;
+        @ConfigEntry(category = "Widget Tests", needsWorldRestart = true)
+        @RangedEntry(minValue = 1, maxValue = 3)
+        public static byte rangedByte = 1;
 
         @ConfigEntry(category = "Widget Tests")
         public static double normalDouble = 2.3;
@@ -71,14 +71,23 @@ public class TestConfigs {
     @Config(fileName = "generator", type = ConfigType.COMMON)
     public static class Generators {
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int tier = 1;
+        @ConfigEntry(category = "Basic Solar Panel", translation = "tier")
+        public static int basicTier = 1;
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int generateByDay = 50;
+        @ConfigEntry(category = "Basic Solar Panel", translation = "generateByDay")
+        public static int basicGenerateByDay = 50;
 
-        @ConfigEntry(category = "Basic Solar Panel")
-        public static int generateByNight = 5;
+        @ConfigEntry(category = "Basic Solar Panel", translation = "generateByNight")
+        public static int basicGenerateByNight = 5;
+
+        @ConfigEntry(category = "Advanced Solar Panel", translation = "tier")
+        public static int advancedTier = 1;
+
+        @ConfigEntry(category = "Advanced Solar Panel", translation = "generateByDay")
+        public static int advancedGenerateByDay = 50;
+
+        @ConfigEntry(category = "Advanced Solar Panel", translation = "generateByNight")
+        public static int advancedGenerateByNight = 5;
     }
 
     @Config(fileName = "general", type = ConfigType.SERVER)

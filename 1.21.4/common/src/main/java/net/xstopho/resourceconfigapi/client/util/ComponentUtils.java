@@ -1,8 +1,8 @@
 package net.xstopho.resourceconfigapi.client.util;
 
 import net.minecraft.network.chat.Component;
-import net.xstopho.resourceconfigapi.Constants;
-import net.xstopho.resourceconfigapi.platform.CoreServices;
+import net.xstopho.resourceconfigapi.ConfigConstants;
+import net.xstopho.resourceconfigapi.platform.PlatformHelper;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -41,12 +41,12 @@ public class ComponentUtils {
         Component component = Component.translatable(
                 String.format("%s.%s", "config", convert(key)));
 
-        if (!GuiUtils.hasTranslation(component)) {
-            if (component.getString().contains("tooltip")) {
-                addIfAbsent(OPTIONAL_TRANSLATION, component);
-            } else {
-                addIfAbsent(NEEDED_TRANSLATION, component);
-            }
+        if (GuiUtils.hasTranslation(component)) return component;
+
+        if (component.getString().contains("tooltip")) {
+            addIfAbsent(OPTIONAL_TRANSLATION, component);
+        } else {
+            addIfAbsent(NEEDED_TRANSLATION, component);
         }
 
         return component;
@@ -56,8 +56,8 @@ public class ComponentUtils {
         return key.toLowerCase().replace(" ", "_");
     }
 
-    public static void logMissingTranslations(String modId) {
-        if (!CoreServices.isDevelopmentEnvironment()) return;
+    public static void loggMissingTranslations(String modId) {
+        if (!PlatformHelper.INSTANCE.isDevEnv()) return;
 
         logMissingTranslations(modId, NEEDED_TRANSLATION, "The following keys are necessary for the User to properly edit your Configs!");
         logMissingTranslations(modId, OPTIONAL_TRANSLATION, "The following keys are optional, they add a Tooltip to the Label, this might help to explain some Options to the User.");
@@ -65,7 +65,7 @@ public class ComponentUtils {
 
     private static void logMissingTranslations(String modId, LinkedList<Component> translations, String message) {
         if (!translations.isEmpty()) {
-            Constants.LOG.info("\nYour Config/s for '{}' contains untranslated keys.\n{}\n\n{}", modId, message, buildLog(modId, translations));
+            ConfigConstants.LOG.info("\nYour Config/s for '{}' contains untranslated keys.\n{}\n\n{}", modId, message, buildLog(modId, translations));
         }
     }
 

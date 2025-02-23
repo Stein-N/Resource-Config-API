@@ -55,7 +55,7 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
         undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
         reset.setPosition(xPos + rowWidth - reset.getWidth(), yPos);
 
-        editBox.setPosition(xPos + rowWidth - getWidgetWidth(), yPos);
+        editBox.setPosition(xPos + rowWidth - getWidgetWidth(), yPos + 1);
         editBox.setWidth(getWidgetWidth() - (undo.getWidth() + reset.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, delta);

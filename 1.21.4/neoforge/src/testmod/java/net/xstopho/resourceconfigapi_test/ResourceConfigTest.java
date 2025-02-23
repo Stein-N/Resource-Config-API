@@ -7,6 +7,6 @@ import net.neoforged.fml.common.Mod;
 public class ResourceConfigTest {
 
     public ResourceConfigTest(IEventBus bus) {
-        TestConstants.commonInit();
+        TestConstants.init();
     }
 }

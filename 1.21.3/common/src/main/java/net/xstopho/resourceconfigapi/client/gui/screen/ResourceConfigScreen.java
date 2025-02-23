@@ -9,10 +9,11 @@ import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.xstopho.resourceconfigapi.Constants;
+import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
@@ -49,7 +50,7 @@ public class ResourceConfigScreen extends Screen {
 
         manager = new TabManager(this::addRenderableWidget, this::removeWidget);
 
-        ConfigRegistry.CONFIGS.forEach(this::processConfigs);
+        ConfigRegistry.getConfigs().forEach(this::processConfigs);
 
         this.commonTab = new ConfigTab(ConfigType.COMMON, this.configs);
         this.clientTab = new ConfigTab(ConfigType.CLIENT, this.configs);
@@ -90,7 +91,7 @@ public class ResourceConfigScreen extends Screen {
 
         this.repositionElements();
 
-        ComponentUtils.logMissingTranslations(modId);
+        ComponentUtils.loggMissingTranslations(modId);
     }
 
     @Override
@@ -146,6 +147,7 @@ public class ResourceConfigScreen extends Screen {
             switch (config.configType) {
                 case CLIENT -> saveConfig(holder);
                 case COMMON, SERVER -> ClientUtils.sendConfigUpdateToServer(location.toString(), config.toJson().toString());
+
             }
         } else {
             switch (config.configType) {
@@ -156,8 +158,7 @@ public class ResourceConfigScreen extends Screen {
 
     private void saveConfig(ConfigHolder holder) {
         ModConfig config = holder.getConfig();
-
-        Constants.LOG.info("Saving '{}' config from mod '{}' of type '{}'", holder.getFileName(), config.modId, config.configType);
+        ConfigConstants.LOG.info("Saving '{}' config from mod '{}' of type '{}'", holder.getFileName(), config.modId, config.configType);
         config.writeConfig(config.toJson());
     }
 

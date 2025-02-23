@@ -6,7 +6,5 @@ import net.neoforged.fml.common.Mod;
 @Mod(ConfigConstants.MOD_ID)
 public class ResourceConfig {
 
-    public ResourceConfig(IEventBus eventBus) {
-
-    }
+    public ResourceConfig(IEventBus eventBus) {}
 }

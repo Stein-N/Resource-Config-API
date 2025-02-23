@@ -79,7 +79,6 @@ public abstract class NumberValueEntry<T> extends BaseEntry {
                 0f, 0f, 16, 16, 16, 16);
 
         GuiUtils.renderIcon(guiGraphics, field, xPos, yPos + 4, mouseX, mouseY);
-
     }
 
     public abstract T getValue();

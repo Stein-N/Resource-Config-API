@@ -3,24 +3,20 @@ package net.xstopho.resourceconfigapi.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ServerData;
-import net.xstopho.resourceconfigapi.network.NetworkHook;
-import net.xstopho.resourceconfigapi.platform.CoreServices;
+import net.minecraft.client.player.LocalPlayer;
+import net.xstopho.resourceconfigapi.network.ConfigNetwork;
+import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 
 public class ClientUtils {
-
-    private static boolean operatorStatus = true;
-
-    public static void setOperatorStatus(boolean status) {
-        operatorStatus = status;
-    }
+    private static final LocalPlayer player = Minecraft.getInstance().player;
 
     public static boolean isOperator() {
-        return isSingleplayer() || !worldLoaded() || operatorStatus;
+        return isSingleplayer() || !worldLoaded() || player.hasPermissions(4);
     }
 
     public static void sendConfigUpdateToServer(String file, String json) {
         if (!isOperator()) return;
-        CoreServices.load(NetworkHook.class).sendConfigUpdateToServer(file, json);
+        ConfigNetwork.INSTANCE.sendToServer(new ConfigUpdatePayload(file, json));
     }
 
     public static boolean isSingleplayer() {

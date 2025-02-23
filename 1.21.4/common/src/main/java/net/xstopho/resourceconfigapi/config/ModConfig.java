@@ -1,12 +1,12 @@
 package net.xstopho.resourceconfigapi.config;
 
 import com.google.gson.*;
-import net.xstopho.resourceconfigapi.Constants;
+import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.annotations.RangedEntry;
 import net.xstopho.resourceconfigapi.api.ConfigType;
-import net.xstopho.resourceconfigapi.platform.CoreServices;
+import net.xstopho.resourceconfigapi.platform.PlatformHelper;
 import net.xstopho.resourceconfigapi.util.ConfigUtils;
 import org.apache.commons.io.FileUtils;
 
@@ -36,10 +36,10 @@ public class ModConfig {
         this.modId = modId;
 
         Path configPath;
-        if (CoreServices.isServer() && configType.equals(ConfigType.SERVER)) {
-            configPath = CoreServices.getServerConfigPath();
+        if (PlatformHelper.INSTANCE.isServer() && configType.equals(ConfigType.SERVER)) {
+            configPath = PlatformHelper.INSTANCE.getServerConfigDir();
         } else {
-            configPath = CoreServices.getConfigPath();
+            configPath = PlatformHelper.INSTANCE.getConfigDir();
         }
 
         this.configFile = new File(String.format("%s/%s/%s/%s.json",
@@ -57,13 +57,13 @@ public class ModConfig {
             fromJson(readConfig());
         }
 
-        if (configType.equals(ConfigType.CLIENT) && CoreServices.isServer()) {
-            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
+        if (configType.equals(ConfigType.CLIENT) && PlatformHelper.INSTANCE.isServer()) {
+            ConfigConstants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
             return;
         }
 
-        if (configType.equals(ConfigType.SERVER) && !CoreServices.isServer()) {
-            Constants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
+        if (configType.equals(ConfigType.SERVER) && !PlatformHelper.INSTANCE.isServer()) {
+            ConfigConstants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
             return;
         }
 
@@ -85,8 +85,8 @@ public class ModConfig {
             String category = ConfigUtils.isNotEmpty(annotation.category()) ? annotation.category() : null;
 
             if (ConfigUtils.unsupportedDatatype(field)) {
-                if (CoreServices.isDevelopmentEnvironment()) {
-                    Constants.LOG.error("Field '{}' is an unsupported Datatype and was skipped. This message will be silent outside the Dev Environment, so make sure you resolve all messages!", field.getName());
+                if (PlatformHelper.INSTANCE.isDevEnv()) {
+                    ConfigConstants.LOG.error("Field '{}' is an unsupported Datatype and was skipped. This message will be silent outside the Dev Environment, so make sure you resolve all messages!", field.getName());
                 }
                 continue;
             }
@@ -141,8 +141,8 @@ public class ModConfig {
             JsonElement jsonElement = jsonObject != null ? jsonObject.get(value) : config.get(value);
 
             if (jsonElement == null) {
-                if (CoreServices.isDevelopmentEnvironment()) {
-                    Constants.LOG.error("Failed to set Value '{}'! Seems to be a new or unsupported Value. This message will be silent outside the Dev Environment, so make sure you resolve all messages!", value);
+                if (PlatformHelper.INSTANCE.isDevEnv()) {
+                    ConfigConstants.LOG.error("Failed to set Value '{}'! Seems to be a new or unsupported Value. This message will be silent outside the Dev Environment, so make sure you resolve all messages!", value);
                 }
                 continue;
             }
@@ -169,18 +169,18 @@ public class ModConfig {
         try {
             obj = gson.fromJson(jsonElement, field.getType());
         } catch(JsonSyntaxException | IllegalStateException e) {
-            Constants.LOG.error("Failed to read value '{}', value is set to its default!", field.getName());
+            ConfigConstants.LOG.error("Failed to read value '{}', value is set to its default!", field.getName());
         }
 
         if (field.isAnnotationPresent(RangedEntry.class) && field.getType().isPrimitive()) {
             if (field.getType() == char.class || field.getType() == Character.class) {
-                Constants.LOG.error("Character with RangedEntry annotation found, this will be ignored");
+                ConfigConstants.LOG.error("Character with RangedEntry annotation found, this will be ignored");
             } else {
                 RangedEntry annotation = field.getAnnotation(RangedEntry.class);
                 Number number = (Number) obj;
 
                 if (number != null && outOfRange(number, annotation)) {
-                    Constants.LOG.error("Value {} is out of Range, using default Value!", field.getName());
+                    ConfigConstants.LOG.error("Value {} is out of Range, using default Value!", field.getName());
                     obj = field.get(null);
                 }
             }
@@ -193,7 +193,10 @@ public class ModConfig {
      * Tries to parse the defined ConfigFile
      * @return File converted to JsonObject
      */
-    private JsonObject readConfig() {
+    public JsonObject readConfig() {
+        if (!configFile.exists()) {
+            return toJson();
+        }
         try(FileReader reader = new FileReader(configFile)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
         } catch(IOException e) {
@@ -225,7 +228,7 @@ public class ModConfig {
 
         for (Field field : this.clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(ConfigEntry.class)) {
-                Constants.LOG.error("Field '{}' isn't annotated as a ConfigEntry is this correct?", field.getName());
+                ConfigConstants.LOG.error("Field '{}' isn't annotated as a ConfigEntry is this correct?", field.getName());
                 continue;
             }
             if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
@@ -268,6 +271,15 @@ public class ModConfig {
             return this.defaultValueMap.get(field);
         }
         throw new IllegalStateException("Can't receive default Value for field: " + field.getName());
+    }
+
+    /**
+     * Method can be used to save the config dynamically at runtime.<br>
+     * F.e. when a command changes a Config Value, this should be saved permanently.
+     */
+    public void save() {
+        JsonObject config = this.toJson();
+        this.writeConfig(config);
     }
 
     private boolean outOfRange(Number number, RangedEntry annotation) {
