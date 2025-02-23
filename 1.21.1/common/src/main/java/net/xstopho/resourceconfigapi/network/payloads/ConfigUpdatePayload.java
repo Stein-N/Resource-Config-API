@@ -32,7 +32,7 @@ public record ConfigUpdatePayload(String file, String json) implements CustomPac
                 config.save();
             }
 
-            ConfigConstants.LOG.info("Send Config changes ");
+            ConfigConstants.LOG.info("Sync config changes with Player");
             server.getPlayerList().getPlayers().forEach(player ->
                     ConfigNetwork.INSTANCE.sendToClient(player, new ConfigSyncPayload(payload.file(), payload.json())));
         });
