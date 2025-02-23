@@ -4,15 +4,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.xstopho.resourceconfigapi.api.ConfigRegistry;
-import net.xstopho.resourceconfigapi.config.ModConfig;
-import net.xstopho.resourceconfigapi.network.ConfigNetwork;
-import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 import net.xstopho.resourceconfigapi.network.payloads.ConfigSyncPayload;
-
-import java.util.Map;
+import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 
 public class ResourceConfig implements ModInitializer {
 

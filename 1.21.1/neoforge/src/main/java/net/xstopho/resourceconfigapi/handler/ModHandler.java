@@ -5,8 +5,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.xstopho.resourceconfigapi.ConfigConstants;
-import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 import net.xstopho.resourceconfigapi.network.payloads.ConfigSyncPayload;
+import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 
 @EventBusSubscriber(modid = ConfigConstants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModHandler {

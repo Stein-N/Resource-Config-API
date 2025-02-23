@@ -1,6 +1,9 @@
 package net.xstopho.resourceconfigapi.network;
 
-import net.minecraftforge.network.*;
+import net.minecraftforge.network.Channel;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.SimpleChannel;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.ResourceConfig;
 import net.xstopho.resourceconfigapi.network.payloads.ConfigSyncPayload;
