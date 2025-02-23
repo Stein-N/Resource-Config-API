@@ -76,4 +76,11 @@ processTestmodResources {
 publishMods {
     file = jar.archiveFile
     modLoaders.addAll("forge")
+
+    modrinth {
+        minecraftVersions.addAll("1.21", "1.21.1")
+    }
+    curseforge {
+        minecraftVersions.addAll("1.21", "1.21.1")
+    }
 }

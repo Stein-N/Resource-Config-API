@@ -13,8 +13,6 @@ publishMods {
     modrinth {
         accessToken = MODRINTH_API_KEY
         projectId = modrinth_id
-
-        minecraftVersions.add(project.minecraft_version)
     }
 
     curseforge {
@@ -25,8 +23,5 @@ publishMods {
         serverRequired = true
 
         javaVersions.add(JavaVersion.VERSION_21)
-
-
-        minecraftVersions.add(project.minecraft_version)
     }
 }
