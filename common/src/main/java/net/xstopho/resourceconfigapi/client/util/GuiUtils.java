@@ -58,7 +58,7 @@ public class GuiUtils {
                 int yMax = yPos + getFont().lineHeight;
                 if (hasTranslation(tooltip) && inBounds(xPos, yPos, xMax, yMax, mouseX, mouseY)) {
                     guiGraphics.renderTooltip(getFont(), splitTooltip(tooltip, 170),
-                            DefaultTooltipPositioner.INSTANCE, mouseX, mouseY);
+                            EntryLabelTooltipPosition.INSTANCE, mouseX, mouseY);
                 }
             }
         }
