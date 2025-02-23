@@ -128,11 +128,6 @@ public class ResourceConfigScreen extends Screen {
         Minecraft.getInstance().setScreen(previous);
     }
 
-    /**
-     *
-     * @param location
-     * @param config
-     */
     private void processConfigs(ResourceLocation location, ModConfig config) {
         if (location.getNamespace().equals(this.modId)) {
             this.configs.put(location, new ConfigHolder(config));
