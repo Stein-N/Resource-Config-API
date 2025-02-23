@@ -3,6 +3,7 @@ package net.xstopho.resourceconfigapi.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.network.chat.Component;
@@ -57,7 +58,7 @@ public class GuiUtils {
                 int yMax = yPos + getFont().lineHeight;
                 if (hasTranslation(tooltip) && inBounds(xPos, yPos, xMax, yMax, mouseX, mouseY)) {
                     guiGraphics.renderTooltip(getFont(), splitTooltip(tooltip, 170),
-                            EntryLabelTooltipPosition.INSTANCE, mouseX, mouseY);
+                            DefaultTooltipPositioner.INSTANCE, mouseX, mouseY);
                 }
             }
         }
