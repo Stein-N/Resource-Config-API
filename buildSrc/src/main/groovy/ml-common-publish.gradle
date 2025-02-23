@@ -15,12 +15,12 @@ publishing {
     }
 
     repositories {
-        maven { url = MAVEN_REPOSITORY_TEST }
+        maven { url = MAVEN_REPOSITORY }
     }
 
     publish.doLast {
         exec {
-            workingDir MAVEN_REPOSITORY_TEST
+            workingDir MAVEN_REPOSITORY
             commandLine 'cmd', '/c', 'git add . && git commit -m "' + "${mod_id}-${project.name} ${version}" + '" && git push'
         }
     }
