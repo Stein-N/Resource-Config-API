@@ -23,6 +23,7 @@ import java.util.Map;
 public class ModConfig {
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final boolean isServer = PlatformHelper.INSTANCE.isServer();
     public final ConfigType configType;
     private final File configFile;
     public final String modId;
@@ -53,21 +54,16 @@ public class ModConfig {
     }
 
     private void setup() {
-        if (configFile.exists()) {
-            fromJson(readConfig());
-        }
+        fromJson(readConfig());
 
-        if (configType.equals(ConfigType.CLIENT) && PlatformHelper.INSTANCE.isServer()) {
-            ConfigConstants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
-            return;
-        }
-
-        if (configType.equals(ConfigType.SERVER) && !PlatformHelper.INSTANCE.isServer()) {
-            ConfigConstants.LOG.info("Config '{}' from mod '{}' was skipped because of '{}' type.", configFile.getName(), modId, configType);
-            return;
-        }
+        if (isServer && configType.equals(ConfigType.CLIENT)) skipConfig();
+        if (!isServer && configType.equals(ConfigType.SERVER)) skipConfig();
 
         writeConfig(toJson());
+    }
+
+    private void skipConfig() {
+        ConfigConstants.LOG.info("Config '{}' from type '{}' was skipped.", configFile.getName(), configType);
     }
 
     /**
