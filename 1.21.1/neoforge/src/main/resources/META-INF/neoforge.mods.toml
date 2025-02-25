@@ -2,9 +2,6 @@ modLoader = "javafml"
 loaderVersion = "[2,)"
 license = "${mod_license}"
 
-[[accessTransformers]]
-    file="META-INF/accesstransformer.cfg"
-
 [[mods]]
     modId = "${mod_id}"
     version = "${version}"
