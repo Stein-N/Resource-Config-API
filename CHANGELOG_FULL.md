@@ -1,3 +1,6 @@
+#### 3.5.1
+- fix client crash due to wrongly set mixin file
+
 #### 3.5.0
 - adding the option for config saving at runtime
   - useful when values get edited with commands
