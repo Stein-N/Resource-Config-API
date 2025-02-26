@@ -21,7 +21,7 @@ publishing {
     publish.doLast {
         exec {
             workingDir MAVEN_REPOSITORY
-            commandLine 'cmd', '/c', 'git add . && git commit -m "' + "${mod_id}-${project.name} ${version}" + '" && git push'
+            commandLine 'cmd', '/c', 'git add . && git commit -m "' + "${mod_id}-${project.name}-${version}" + '" && git push'
         }
     }
 }
