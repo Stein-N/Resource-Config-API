@@ -1,3 +1,6 @@
+#### 3.5.2
+- fix network issue for all loader
+
 #### 3.5.1
 - fix client crash due to wrongly set mixin file
 
