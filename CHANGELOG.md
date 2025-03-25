@@ -1,2 +1,2 @@
-#### 3.5.2
-- fix network issue for all loader
+#### 3.6.0
+  - update to 1.21.5
