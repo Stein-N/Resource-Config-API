@@ -1,0 +1,82 @@
+plugins {
+    id 'ml-loader'
+    id 'net.minecraftforge.gradle'
+    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
+
+    testmodImplementation sourceSets.main.output
+    testmodCompileOnly project(':1.21.5:common').sourceSets.testmod.output
+}
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    copyIdeResources = true //Calls processResources when in dev
+    reobf = false
+
+    def directory = project.projectDir.parent.split("\\\\").last()
+
+    def at = file('../common/src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) accessTransformers = [at]
+
+    runs {
+        client {
+            workingDirectory project.file('../common/runs/client')
+            ideaModule "${rootProject.name}.${directory}.${project.name}.testmod"
+            taskName 'TestClient'
+            mods {
+                modClientRun {
+                    source sourceSets.testmod
+                }
+            }
+        }
+        server {
+            workingDirectory file('../common/runs/server')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName "TestServer"
+            args '--nogui'
+            mods {
+                modServerRun {
+                    source sourceSets.testmod
+                }
+            }
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes([
+                'FMLCorePluginContainsFMLMod': 'true'
+        ])
+    }
+}
+
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}
+
+compileTestmodJava {
+    source(project(':1.21.5:common').sourceSets.testmod.allSource)
+}
+
+processTestmodResources {
+    from project(':1.21.5:common').sourceSets.testmod.resources
+}
+
+publishMods {
+    file = jar.archiveFile
+    modLoaders.addAll("forge")
+
+    modrinth {
+        minecraftVersions.addAll("1.21.5")
+    }
+    curseforge {
+        minecraftVersions.addAll("1.21.5")
+    }
+}
