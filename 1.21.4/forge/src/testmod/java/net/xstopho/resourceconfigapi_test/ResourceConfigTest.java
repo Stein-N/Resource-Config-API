@@ -6,6 +6,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ResourceConfigTest {
 
     public ResourceConfigTest() {
-
+        TestConstants.init();
     }
 }
