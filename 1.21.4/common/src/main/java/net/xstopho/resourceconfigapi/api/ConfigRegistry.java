@@ -5,6 +5,7 @@ import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,6 +49,6 @@ public class ConfigRegistry {
     }
 
     private static ResourceLocation of(String modId, ConfigType type, String fileName) {
-        return ResourceLocation.fromNamespaceAndPath(modId, type.name().toLowerCase() + "/" + fileName);
+        return ResourceLocation.fromNamespaceAndPath(modId, type.name().toLowerCase(Locale.ENGLISH) + "/" + fileName);
     }
 }
