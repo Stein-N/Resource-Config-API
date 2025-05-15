@@ -278,8 +278,8 @@ public class ModConfig {
         this.writeConfig(config);
     }
 
-    private boolean outOfRange(Number number, RangedEntry annotation) {
-        return number.doubleValue() >= annotation.maxValue() &&
-                number.doubleValue() <= annotation.minValue();
+    private boolean outOfRange(Number number, RangedEntry anno) {
+        return number.doubleValue() > anno.maxValue() ||
+                number.doubleValue() < anno.minValue();
     }
 }

@@ -176,12 +176,11 @@ public class ModConfig {
                 Number number = (Number) obj;
 
                 if (number != null && outOfRange(number, annotation)) {
-                    ConfigConstants.LOG.error("Value {} is out of Range, using default Value!", field.getName());
+                    ConfigConstants.LOG.error("Value {} is out of range, using default Value", field.getName());
                     obj = field.get(null);
                 }
             }
         }
-
         return obj != null ? obj : field.get(null);
     }
 
@@ -278,8 +277,8 @@ public class ModConfig {
         this.writeConfig(config);
     }
 
-    private boolean outOfRange(Number number, RangedEntry annotation) {
-        return number.doubleValue() >= annotation.maxValue() &&
-                number.doubleValue() <= annotation.minValue();
+    private boolean outOfRange(Number number, RangedEntry anno) {
+        return number.doubleValue() > anno.maxValue() ||
+                number.doubleValue() < anno.minValue();
     }
 }

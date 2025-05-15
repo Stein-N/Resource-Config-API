@@ -41,7 +41,7 @@ public class TestConfigs {
         public static int normalInteger = 23;
 
         @ConfigEntry(category = "Widget Tests")
-        @RangedEntry(minValue = 0, maxValue = 50)
+        @RangedEntry(minValue = 5, maxValue = 50)
         public static int rangedInteger = 10;
 
         @ConfigEntry(category = "Widget Tests")
