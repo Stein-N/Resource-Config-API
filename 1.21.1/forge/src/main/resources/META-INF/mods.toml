@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "${forge_version_range}"
+loaderVersion = "[51, 53)"
 license = "${mod_license}"
 
 [[mods]]
@@ -13,7 +13,7 @@ license = "${mod_license}"
 [[dependencies.${mod_id}]]
     modId = "forge"
     mandatory = true
-    versionRange = "${forge_version_range}"
+    versionRange = "[51, 53)"
     ordering = "NONE"
     side = "BOTH"
 

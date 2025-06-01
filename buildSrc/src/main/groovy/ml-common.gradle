@@ -61,20 +61,7 @@ processResources {
             "mod_author": mod_author,
             "mod_id": mod_id,
             "mod_license": mod_license,
-            "mod_description": mod_description,
-            "minecraft_version_range": minecraft_version_range,
-
-            // Fabric Keys
-            "fabric_loader_version": fabric_loader_version,
-            "fabric_api_version": fabric_api_version,
-
-            // NeoForge Keys
-            "neoforge_version": neoforge_version,
-            "neoforge_loader_version_range": neoforge_loader_version_range,
-
-            // Forge Keys
-            "forge_version": forge_version,
-            "forge_version_range": forge_version_range,
+            "mod_description": mod_description
     ]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', 'META-INF/mods.toml', '*.mixins.json']) {
