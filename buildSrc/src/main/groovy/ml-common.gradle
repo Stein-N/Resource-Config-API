@@ -57,6 +57,7 @@ processResources {
 
             // Mod related Keys
             "minecraft_version": minecraft_version,
+            "minecraft_version_range": minecraft_version_range,
             "mod_name": mod_name,
             "mod_author": mod_author,
             "mod_id": mod_id,

@@ -1,3 +1,6 @@
+#### 3.6.3
+- don't rely on latest neo/forge loader version
+
 #### 3.6.2
 - fixing check for RangedEntries
 
