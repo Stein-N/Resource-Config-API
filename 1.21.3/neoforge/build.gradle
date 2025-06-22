@@ -20,7 +20,7 @@ neoForge {
         mappingsVersion = parchment_21_3
     }
 
-    runs {
+/*    runs {
         configureEach {
             systemProperty('neoforge.enableGameTestNamespaces', mod_id)
             ideName = "NeoForge Test ${it.name.capitalize()} (${project.path})"
@@ -42,7 +42,7 @@ neoForge {
     mods {
         "${mod_id}" { sourceSet sourceSets.main }
         "${mod_id}_test" { sourceSet sourceSets.testmod }
-    }
+    }*/
 
 }
 

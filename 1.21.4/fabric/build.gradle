@@ -22,7 +22,7 @@ loom {
     def aw = file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) accessWidenerPath.set(aw)
 
-    runs {
+/*    runs {
         client {
             client()
             source sourceSets.testmod
@@ -38,7 +38,7 @@ loom {
             ideConfigGenerated(true)
             runDir("runs/server")
         }
-    }
+    }*/
 }
 
 processTestmodResources {
