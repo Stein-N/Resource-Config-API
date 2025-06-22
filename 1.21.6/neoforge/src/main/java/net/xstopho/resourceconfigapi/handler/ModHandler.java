@@ -8,7 +8,7 @@ import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.network.payloads.ConfigSyncPayload;
 import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 
-@EventBusSubscriber(modid = ConfigConstants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ConfigConstants.MOD_ID)
 public class ModHandler {
 
     @SubscribeEvent

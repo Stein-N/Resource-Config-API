@@ -17,7 +17,7 @@ import net.xstopho.resourceconfigapi.config.ModConfig;
 import java.util.Map;
 import java.util.Optional;
 
-@EventBusSubscriber(modid = ConfigConstants.MOD_ID,bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ConfigConstants.MOD_ID, value = Dist.CLIENT)
 public class ModClientHandler {
 
     @SubscribeEvent
