@@ -13,7 +13,7 @@ public class ModHandler {
 
     @SubscribeEvent
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registry = event.registrar(ConfigConstants.MOD_ID);
+        PayloadRegistrar registry = event.registrar(ConfigConstants.MOD_ID).optional();
 
         registry.playToServer(ConfigUpdatePayload.TYPE, ConfigUpdatePayload.CODEC,
                 (payload, context) -> ConfigUpdatePayload.handle(payload, context.player().getServer()));

@@ -1,3 +1,6 @@
+#### 3.7.1
+- make networking stuff optional, allows to join vanilla servers
+
 #### 3.7.0
 - port to 1.21.6
 - There are known issues:
