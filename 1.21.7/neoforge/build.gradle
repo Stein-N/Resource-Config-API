@@ -6,18 +6,18 @@ plugins {
 dependencies {
     testmodImplementation sourceSets.main.output
 
-    testmodImplementation project(':1.21.6:common').sourceSets.testmod.output
+    testmodImplementation project(':1.21.7:common').sourceSets.testmod.output
 }
 
 neoForge {
-    version = neoforge_21_6
+    version = neoforge_21_7
 
     def at = file('../common/src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) accessTransformers = [at]
 
     parchment {
         minecraftVersion = "1.21.5"
-        mappingsVersion = parchment_21_6
+        mappingsVersion = parchment_21_7
     }
 
     runs {
@@ -47,7 +47,7 @@ neoForge {
 }
 
 compileTestmodJava {
-    source(project(':1.21.6:common').sourceSets.testmod.allSource)
+    source(project(':1.21.7:common').sourceSets.testmod.allSource)
 }
 
 processTestmodResources {
@@ -59,9 +59,9 @@ publishMods {
     modLoaders.addAll("neoforge")
 
     modrinth {
-        minecraftVersions.addAll("1.21.6")
+        minecraftVersions.addAll("1.21.6", "1.21.7")
     }
     curseforge {
-        minecraftVersions.addAll("1.21.6")
+        minecraftVersions.addAll("1.21.6", "1.21.7")
     }
 }
