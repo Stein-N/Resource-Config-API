@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_21_6}"
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_21_7}"
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 
     testmodImplementation sourceSets.main.output
@@ -62,11 +62,11 @@ sourceSets.each {
 }
 
 compileTestmodJava {
-    source(project(':1.21.6:common').sourceSets.testmod.allSource)
+    source(project(':1.21.7:common').sourceSets.testmod.allSource)
 }
 
 processTestmodResources {
-    from project(':1.21.6:common').sourceSets.testmod.resources
+    from project(':1.21.7:common').sourceSets.testmod.resources
 }
 
 publishMods {
@@ -74,9 +74,9 @@ publishMods {
     modLoaders.addAll("forge")
 
     modrinth {
-        minecraftVersions.addAll("1.21.6")
+        minecraftVersions.addAll("1.21.6", "1.21.7")
     }
     curseforge {
-        minecraftVersions.addAll("1.21.6")
+        minecraftVersions.addAll("1.21.6", "1.21.7")
     }
 }
