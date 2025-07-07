@@ -9,6 +9,8 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
