@@ -1,0 +1,46 @@
+plugins {
+    id 'loader'
+    id 'net.neoforged.moddev'
+}
+
+dependencies {
+    testmodImplementation sourceSets.main.output
+    testmodImplementation project(':latest:common').sourceSets.testmod.output
+}
+
+neoForge {
+    version = neoforge
+
+    def at = file('../common/src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) accessTransformers = [at]
+
+    runs {
+        configureEach {
+            systemProperty('neoforge.enableGameTestNamespaces', mod_id)
+            ideName = "NeoForge Test ${it.name.capitalize()} (${project.path})"
+        }
+
+        testClient {
+            client()
+            sourceSet = sourceSets.testmod
+            gameDirectory = project.file("../fabric/runs/client")
+        }
+    }
+    mods {
+        "${mod_id}" { sourceSet sourceSets.main }
+        "${mod_id}_test" { sourceSet sourceSets.testmod }
+    }
+}
+
+compileTestmodJava {
+    source(project(':latest:common').sourceSets.testmod.allSource)
+}
+
+processTestmodResources {
+    from file('../common/src/testmod/resources')
+}
+
+publishMods {
+    file = jar.archiveFile
+    modLoaders.addAll("neoforge")
+}
