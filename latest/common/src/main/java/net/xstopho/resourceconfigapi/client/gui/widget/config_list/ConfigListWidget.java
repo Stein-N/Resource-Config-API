@@ -37,7 +37,7 @@ public class ConfigListWidget extends ObjectSelectionList<ConfigListEntry> {
         if (selected == -1) {
             this.setSelected(null);
         } else if (this.getItemCount() != 0) {
-            this.setSelected(this.getEntry(selected));
+            this.setSelected(this.children().get(selected)); // TODO: before -> this.getEntry
         }
     }
 }

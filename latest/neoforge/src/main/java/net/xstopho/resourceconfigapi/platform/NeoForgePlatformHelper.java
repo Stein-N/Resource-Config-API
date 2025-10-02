@@ -2,6 +2,7 @@ package net.xstopho.resourceconfigapi.platform;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.loading.FMLPaths;
 
@@ -23,12 +24,12 @@ public class NeoForgePlatformHelper implements PlatformHelper {
 
     @Override
     public boolean isServer() {
-        return FMLLoader.getDist().equals(Dist.DEDICATED_SERVER);
+        return FMLEnvironment.getDist().equals(Dist.DEDICATED_SERVER);
     }
 
     @Override
     public boolean isDevEnv() {
-        return !FMLLoader.isProduction();
+        return !FMLLoader.getCurrent().isProduction();
     }
 
     @Override

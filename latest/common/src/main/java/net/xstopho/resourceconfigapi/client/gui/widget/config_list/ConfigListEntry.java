@@ -2,6 +2,7 @@ package net.xstopho.resourceconfigapi.client.gui.widget.config_list;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
@@ -25,10 +26,10 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
     }
 
     @Override
-    public boolean mouseClicked(double p_331676_, double p_330254_, int p_331536_) {
+    public boolean mouseClicked(MouseButtonEvent mouseEvent, boolean p_432750_) {
         this.valueListWidget.replaceEntries(configHolder.getEntryList());
         this.valueListWidget.setScrollAmount(0);
-        return super.mouseClicked(p_331676_, p_330254_, p_331536_);
+        return super.mouseClicked(mouseEvent, p_432750_);
     }
 
     @Override
@@ -37,8 +38,7 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,
-                                int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
+    public void renderContent(GuiGraphics guiGraphics, int yPos, int xPos, boolean hovered, float delta) {
         guiGraphics.drawString(GuiUtils.getFont(), fileName, xPos + 2, yPos + 2, -1, false);
     }
 

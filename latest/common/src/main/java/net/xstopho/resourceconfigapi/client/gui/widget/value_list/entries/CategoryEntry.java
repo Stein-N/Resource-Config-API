@@ -13,10 +13,9 @@ public class CategoryEntry extends BaseEntry {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth, int rowHeight,
-                       int mouseX, int mouseY, boolean hovered, float delta) {
+    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hovered, float delta) {
         GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
-                xPos + (rowWidth / 2) - (font.width(label.getString()) / 2),
-                yPos + 6, mouseX, mouseY);
+                this.getContentX() + (this.getContentWidth() / 2) - (font.width(label.getString()) / 2),
+                this.getContentY() + 6, mouseX, mouseY);
     }
 }

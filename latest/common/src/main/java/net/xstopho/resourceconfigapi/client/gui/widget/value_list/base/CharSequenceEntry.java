@@ -48,15 +48,11 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int rowWidth,
-                       int rowHeight, int mouseX, int mouseY, boolean hovered, float delta) {
-        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip,
-                xPos + 13, yPos + 6, mouseX, mouseY);
+    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hovered, float delta) {
+        undo.setPosition(this.getContentX() + this.getWidgetWidth() - undo.getWidth() - reset.getWidth(), this.getContentY());
+        reset.setPosition(this.getContentX() + this.getWidgetWidth(), this.getContentY());
 
-        undo.setPosition(xPos + rowWidth - undo.getWidth() - reset.getWidth(), yPos);
-        reset.setPosition(xPos + rowWidth - reset.getWidth(), yPos);
-
-        editBox.setPosition(xPos + rowWidth - getWidgetWidth(), yPos + 1);
+        editBox.setPosition(this.getContentX() + this.getContentWidth() - getWidgetWidth(), this.getContentY() + 1);
         editBox.setWidth(getWidgetWidth() - (undo.getWidth() + reset.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, delta);
@@ -66,7 +62,9 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, undoSprite, undo.getX() + 2, undo.getY() + 2,
                 0f, 0f, 16, 16, 16, 16);
 
-        GuiUtils.renderIcon(guiGraphics, field, xPos, yPos + 4, mouseX, mouseY);
+        GuiUtils.renderIcon(guiGraphics, field, this.getContentX(), this.getContentY() + 4, mouseX, mouseY);
+
+        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip, this.getContentX() + 13, this.getContentY() + 6, mouseX, mouseY);
     }
 
     public abstract T getValue();
