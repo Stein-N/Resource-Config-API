@@ -42,8 +42,10 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
 
     @Override
     public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hovered, float delta) {
+        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip, this.getContentX() + 13, this.getContentY() + 6, mouseX, mouseY);
+
         undo.setPosition(this.getContentX() + this.getContentWidth() - undo.getWidth() - reset.getWidth(), this.getContentY());
-        reset.setPosition(this.getContentX() + this.getContentWidth(), this.getContentY());
+        reset.setPosition(this.getContentX() + this.getContentWidth() - reset.getWidth(), this.getContentY());
 
         valueButton.setPosition(this.getContentX() + this.getContentWidth() - getWidgetWidth(), this.getContentY());
         valueButton.setWidth(getWidgetWidth() - (undo.getWidth() + reset.getWidth()) - 1);
@@ -56,8 +58,6 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
                 0f, 0f, 16, 16, 16, 16);
 
         GuiUtils.renderIcon(guiGraphics, field, this.getContentX(), this.getContentY() + 4, mouseX, mouseY);
-
-        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip, this.getContentX() + 13, this.getContentY() + 6, mouseX, mouseY);
     }
 
     public abstract T getValue();

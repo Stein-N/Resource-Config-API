@@ -49,8 +49,10 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
 
     @Override
     public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hovered, float delta) {
-        undo.setPosition(this.getContentX() + this.getWidgetWidth() - undo.getWidth() - reset.getWidth(), this.getContentY());
-        reset.setPosition(this.getContentX() + this.getWidgetWidth(), this.getContentY());
+        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip, this.getContentX() + 13, this.getContentY() + 6, mouseX, mouseY);
+
+        undo.setPosition(this.getContentX() + this.getContentWidth() - undo.getWidth() - reset.getWidth(), this.getContentY());
+        reset.setPosition(this.getContentX() + this.getContentWidth() - reset.getWidth(), this.getContentY());
 
         editBox.setPosition(this.getContentX() + this.getContentWidth() - getWidgetWidth(), this.getContentY() + 1);
         editBox.setWidth(getWidgetWidth() - (undo.getWidth() + reset.getWidth()) - 1);
@@ -63,8 +65,6 @@ public abstract class CharSequenceEntry<T> extends BaseEntry {
                 0f, 0f, 16, 16, 16, 16);
 
         GuiUtils.renderIcon(guiGraphics, field, this.getContentX(), this.getContentY() + 4, mouseX, mouseY);
-
-        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip, this.getContentX() + 13, this.getContentY() + 6, mouseX, mouseY);
     }
 
     public abstract T getValue();

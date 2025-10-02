@@ -38,8 +38,8 @@ public class ConfigListEntry extends ObjectSelectionList.Entry<ConfigListEntry> 
     }
 
     @Override
-    public void renderContent(GuiGraphics guiGraphics, int yPos, int xPos, boolean hovered, float delta) {
-        guiGraphics.drawString(GuiUtils.getFont(), fileName, xPos + 2, yPos + 2, -1, false);
+    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hovered, float delta) {
+        guiGraphics.drawString(GuiUtils.getFont(), fileName, this.getContentX() + 2, this.getContentY() + 2, -1, false);
     }
 
     public LinkedList<BaseEntry> getEntryList() {
