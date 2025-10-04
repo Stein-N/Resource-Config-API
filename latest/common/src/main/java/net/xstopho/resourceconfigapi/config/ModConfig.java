@@ -158,31 +158,34 @@ public class ModConfig {
      * @param jsonElement parsed Value
      * @param field field corresponding to the parsed value
      * @return parsed or default value.
-     * @throws IllegalAccessException can be thrown when something went wrong by accessing the given field
      */
-    private Object readValue(JsonElement jsonElement, Field field) throws IllegalAccessException {
-        Object obj = null;
+    @SuppressWarnings("unchecked")
+    private <T> T readValue(JsonElement jsonElement, Field field) {
+        T defaultValue = (T) defaultValueMap.get(field);
+        T parsedValue;
         try {
-            obj = gson.fromJson(jsonElement, field.getType());
-        } catch(JsonSyntaxException | IllegalStateException e) {
-            ConfigConstants.LOG.error("Failed to read value '{}', value is set to its default!", field.getName());
+            parsedValue = gson.fromJson(jsonElement, field.getGenericType());
+        } catch (JsonSyntaxException e) {
+            ConfigConstants.LOG.warn("Failed to parse Value for '{}', using default Value: {}", field.getName(), defaultValue);
+            return defaultValue;
         }
 
-        if (field.isAnnotationPresent(RangedEntry.class) && field.getType().isPrimitive()) {
-            if (field.getType() == char.class || field.getType() == Character.class) {
-                ConfigConstants.LOG.error("Character with RangedEntry annotation found, this will be ignored");
-            } else {
-                RangedEntry annotation = field.getAnnotation(RangedEntry.class);
-                Number number = (Number) obj;
+        if (parsedValue == null) return defaultValue;
 
-                if (number != null && outOfRange(number, annotation)) {
-                    ConfigConstants.LOG.error("Value {} is out of Range, using default Value!", field.getName());
-                    obj = field.get(null);
+        if (field.isAnnotationPresent(RangedEntry.class)) {
+            if (parsedValue instanceof Number number) {
+                RangedEntry range = field.getAnnotation(RangedEntry.class);
+
+                if (number.doubleValue() > range.maxValue() && number.doubleValue() < range.minValue()) {
+                    ConfigConstants.LOG.warn("Value '{}' is out of range, using default Value: {}", field.getName(), defaultValue);
+                    return defaultValue;
                 }
+            } else {
+                ConfigConstants.LOG.warn("Range for '{}' was ignored, it isn't a Numeric Value!", field.getName());
             }
         }
 
-        return obj != null ? obj : field.get(null);
+        return parsedValue;
     }
 
     /**
@@ -220,22 +223,29 @@ public class ModConfig {
      * @return HashMap containing all valid ConfigEntry Fields
      */
     private Map<Field, ConfigEntry> getConfigEntries() {
-        Map<Field, ConfigEntry> entries = new HashMap<>();
+        Map<Field, ConfigEntry> map = new HashMap<>();
 
-        for (Field field : this.clazz.getDeclaredFields()) {
+        for (Field field : clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(ConfigEntry.class)) {
-                ConfigConstants.LOG.error("Field '{}' isn't annotated as a ConfigEntry is this correct?", field.getName());
+                ConfigConstants.LOG.info("Value '{}' was skipped: ConfigEntry Annotation is missing!", field.getName());
                 continue;
             }
-            if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
-                throw new RuntimeException(String.format("Field '%s' isn't static or is final, make sure it is only a static field!", field.getName()));
+
+            if (!Modifier.isStatic(field.getModifiers())) {
+                ConfigConstants.LOG.info("Value '{}' was skipped: Value isn't static", field.getName());
+                continue;
             }
 
-            ConfigEntry annotation = field.getAnnotation(ConfigEntry.class);
-            entries.put(field, annotation);
+            if (Modifier.isFinal(field.getModifiers())) {
+                ConfigConstants.LOG.info("Value '{}' was skipped: Value is final", field.getName());
+                continue;
+            }
+
+            ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
+            map.put(field, entry);
         }
 
-        return entries;
+        return map;
     }
 
     /**
