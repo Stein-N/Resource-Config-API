@@ -1,6 +1,7 @@
 package net.xstopho.resourceconfigapi.client.gui.widget.config_list;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.ValueListWidget;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
@@ -33,11 +34,17 @@ public class ConfigListWidget extends ObjectSelectionList<ConfigListEntry> {
         return this.width - 4;
     }
 
+    @Override
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        super.renderWidget(guiGraphics, mouseX, mouseY, delta);
+        this.repositionEntries();
+    }
+
     public void setSelectedIndex(int selected) {
         if (selected == -1) {
             this.setSelected(null);
         } else if (this.getItemCount() != 0) {
-            this.setSelected(this.children().get(selected)); // TODO: before -> this.getEntry
+            this.setSelected(this.children().get(selected));
         }
     }
 }

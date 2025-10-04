@@ -2,19 +2,22 @@ package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
+import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ButtonValueEntry;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Objects;
 
 public class BooleanValueEntry extends ButtonValueEntry<Boolean> {
 
     private boolean state;
 
-    public BooleanValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
-        super(modId, fileName, translationKey, field, defaultValue);
+    public BooleanValueEntry(ResourceConfigScreen screen, String modId, String fileName, String translationKey, Field field, Object defaultValue) {
+        super(screen, modId, fileName, translationKey, field, defaultValue);
 
         this.state = this.getFieldValue();
 
@@ -53,5 +56,10 @@ public class BooleanValueEntry extends ButtonValueEntry<Boolean> {
         valueButton.setMessage(state ? ClientConstants.BOOLEAN_ENABLED : ClientConstants.BOOLEAN_DISABLED);
         changeUndoState(!Objects.equals(state, getFieldValue()));
         super.resetValues();
+    }
+
+    @Override
+    public ClientTooltipComponent getTooltip() {
+        return GuiUtils.createTooltip(this.tooltip);
     }
 }

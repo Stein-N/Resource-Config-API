@@ -3,6 +3,7 @@ package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
+import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ButtonValueEntry;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
@@ -16,8 +17,8 @@ public class EnumValueEntry<T extends Enum<T>> extends ButtonValueEntry<T> {
     private final Class<T> clazz;
     private final List<T> enumValues;
 
-    public EnumValueEntry(String modId, String fileName, String translationKey, Field field, Object defaultValue) {
-        super(modId, fileName, translationKey, field, defaultValue);
+    public EnumValueEntry(ResourceConfigScreen screen, String modId, String fileName, String translationKey, Field field, Object defaultValue) {
+        super(screen, modId, fileName, translationKey, field, defaultValue);
 
         if (field.getType().isEnum()) {
             this.clazz = (Class<T>) field.getType();

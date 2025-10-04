@@ -25,4 +25,10 @@ public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
     public int getRowWidth() {
         return this.width - 20;
     }
+
+    @Override
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        super.renderWidget(guiGraphics, mouseX, mouseY, delta);
+        this.repositionEntries();
+    }
 }

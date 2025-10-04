@@ -7,16 +7,19 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourceconfigapi.ConfigConstants;
+import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
+import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceTooltipProvider;
 import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseEntry> {
+public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseEntry> implements ResourceTooltipProvider {
 
     public final ResourceLocation undoSprite = ConfigConstants.of("textures/gui/sprites/icon/undo.png");
     private final int widgetWidth = 160;
@@ -25,6 +28,7 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
     protected final Font font = GuiUtils.getFont();
 
     protected final Component label, tooltip;
+    protected final ResourceConfigScreen screen;
 
     /**
      *
@@ -32,9 +36,10 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
      * @param key is the Category or Value name
      * @param chatFormatting is formatting for the label, tooltips cant be changed currently
      */
-    public BaseEntry(String modId, String fileName, String key, ChatFormatting chatFormatting) {
+    public BaseEntry(ResourceConfigScreen screen, String modId, String fileName, String key, ChatFormatting chatFormatting) {
         this.label = ComponentUtils.modLabel(modId, fileName, key).copy().withStyle(chatFormatting);
         this.tooltip = ComponentUtils.modTooltip(modId, fileName, key);
+        this.screen = screen;
     }
 
     @Override
@@ -63,4 +68,9 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
     public void undoChanges() {}
 
     public void resetValues() {}
+
+    @Override
+    public ClientTooltipComponent getTooltip() {
+        return GuiUtils.createTooltip(this.tooltip);
+    }
 }

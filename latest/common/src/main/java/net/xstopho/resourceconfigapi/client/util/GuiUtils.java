@@ -11,8 +11,10 @@ import net.minecraft.util.FormattedCharSequence;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
+import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.gui.tooltip.EntryLabelTooltipPosition;
 import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceConfigTextTooltip;
+import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceTooltipProvider;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -27,30 +29,29 @@ public class GuiUtils {
         return Minecraft.getInstance().font;
     }
 
-    public static void renderIcon(GuiGraphics guiGraphics, Field field, int xPos, int yPos, int mouseX, int mouseY) {
+    public static void renderIcon(ResourceConfigScreen screen, GuiGraphics guiGraphics, Field field, int xPos, int yPos, int mouseX, int mouseY) {
         ConfigEntry config = field.getAnnotation(ConfigEntry.class);
 
         if (!config.needsGameRestart() && !config.needsWorldRestart()) {
-            renderIcon(guiGraphics, directImpact, ClientConstants.DIRECT_IMPACT_TOOLTIP, xPos, yPos, mouseX, mouseY);
+            renderIcon(screen, guiGraphics, directImpact, ClientConstants.DIRECT_IMPACT_TOOLTIP, xPos, yPos, mouseX, mouseY);
         }
         if (config.needsGameRestart()) {
-            renderIcon(guiGraphics, gameRestart, ClientConstants.NEEDS_GAME_RESTART_TOOLTIP, xPos, yPos, mouseX, mouseY);
+            renderIcon(screen, guiGraphics, gameRestart, ClientConstants.NEEDS_GAME_RESTART_TOOLTIP, xPos, yPos, mouseX, mouseY);
         }
         if (config.needsWorldRestart()) {
-            renderIcon(guiGraphics, worldRestart, ClientConstants.NEEDS_WORLD_RESTART_TOOLTIP, xPos, yPos, mouseX, mouseY);
+            renderIcon(screen, guiGraphics, worldRestart, ClientConstants.NEEDS_WORLD_RESTART_TOOLTIP, xPos, yPos, mouseX, mouseY);
         }
     }
 
-    public static void renderIcon(GuiGraphics guiGraphics, ResourceLocation texture, Component tooltip, int xPos, int yPos, int mouseX, int mouseY) {
+    public static void renderIcon(ResourceConfigScreen screen, GuiGraphics guiGraphics, ResourceLocation texture, Component tooltip, int xPos, int yPos, int mouseX, int mouseY) {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture, xPos, yPos, 0, 0, 11, 11, 11, 11);
 
         if (inBounds(xPos, yPos, xPos + 11, yPos + 11, mouseX, mouseY)) {
-            guiGraphics.renderTooltip(getFont(), List.of(createTooltip(tooltip)),
-                    mouseX, mouseY, EntryLabelTooltipPosition.INSTANCE, null);
+            screen.addTooltip(createTooltip(tooltip));
         }
     }
 
-    public static void drawStringWithTooltip(GuiGraphics guiGraphics, Component title, Component tooltip, int xPos, int yPos, int mouseX, int mouseY) {
+    public static void drawStringWithTooltip(ResourceConfigScreen screen, ResourceTooltipProvider provider, GuiGraphics guiGraphics, Component title, Component tooltip, int xPos, int yPos, int mouseX, int mouseY) {
         if (title != null) {
             guiGraphics.drawString(getFont(), title, xPos, yPos, -1, false);
 
@@ -58,8 +59,7 @@ public class GuiUtils {
                 int xMax = xPos + getFont().width(title.getString());
                 int yMax = yPos + getFont().lineHeight;
                 if (hasTranslation(tooltip) && inBounds(xPos, yPos, xMax, yMax, mouseX, mouseY)) {
-                    guiGraphics.renderTooltip(getFont(), List.of(createTooltip(tooltip)),
-                            mouseX, mouseY, EntryLabelTooltipPosition.INSTANCE, null);
+                    screen.addTooltip(provider.getTooltip());
                 }
             }
         }

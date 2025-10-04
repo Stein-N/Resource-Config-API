@@ -19,9 +19,6 @@ include('stable');
 rootProject.children.each { subproject ->
     def subprojectDir = file(subproject.projectDir)
     subprojectDir.eachDir { dir ->
-        if (subproject.projectDir.getName() == "latest" && dir.getName() == "forge") {
-            return;
-        }
         if (new File(dir, 'build.gradle').exists()) {
             include "${subproject.name}:${dir.name}"
         }

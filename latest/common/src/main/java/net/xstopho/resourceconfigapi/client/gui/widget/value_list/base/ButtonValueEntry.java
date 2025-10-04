@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
+import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.lang.reflect.Field;
@@ -20,8 +21,8 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
     private final Button reset, undo;
     protected Button valueButton;
 
-    public ButtonValueEntry(String modId, String fileName, String key, Field field, Object defaultValue) {
-        super(modId, fileName, key, ChatFormatting.WHITE);
+    public ButtonValueEntry(ResourceConfigScreen screen, String modId, String fileName, String key, Field field, Object defaultValue) {
+        super(screen, modId, fileName, key, ChatFormatting.WHITE);
         this.defaultValue = defaultValue;
         this.field = field;
 
@@ -42,7 +43,7 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
 
     @Override
     public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hovered, float delta) {
-        GuiUtils.drawStringWithTooltip(guiGraphics, label, tooltip, this.getContentX() + 13, this.getContentY() + 6, mouseX, mouseY);
+        GuiUtils.drawStringWithTooltip(this.screen, this, guiGraphics, label, tooltip, this.getContentX() + 13, this.getContentY() + 6, mouseX, mouseY);
 
         undo.setPosition(this.getContentX() + this.getContentWidth() - undo.getWidth() - reset.getWidth(), this.getContentY());
         reset.setPosition(this.getContentX() + this.getContentWidth() - reset.getWidth(), this.getContentY());
@@ -57,7 +58,7 @@ public abstract class ButtonValueEntry<T> extends BaseEntry {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, undoSprite, undo.getX() + 2, undo.getY() + 2,
                 0f, 0f, 16, 16, 16, 16);
 
-        GuiUtils.renderIcon(guiGraphics, field, this.getContentX(), this.getContentY() + 4, mouseX, mouseY);
+        GuiUtils.renderIcon(this.screen, guiGraphics, field, this.getContentX(), this.getContentY() + 4, mouseX, mouseY);
     }
 
     public abstract T getValue();

@@ -2,6 +2,7 @@ package net.xstopho.resourceconfigapi.config;
 
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
+import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries.CategoryEntry;
 import net.xstopho.resourceconfigapi.client.util.ValueEntryCreator;
@@ -17,16 +18,16 @@ public class ConfigHolder {
 
     private final LinkedList<BaseEntry> entryList;
 
-    public ConfigHolder(ModConfig config) {
+    public ConfigHolder(ModConfig config, ResourceConfigScreen screen) {
         this.config = config;
 
         Config annotation = config.clazz.getAnnotation(Config.class);
         this.fileName = annotation.fileName();
 
-        this.entryList = createEntries();
+        this.entryList = createEntries(screen);
     }
 
-    private LinkedList<BaseEntry> createEntries() {
+    private LinkedList<BaseEntry> createEntries(ResourceConfigScreen screen) {
         LinkedList<BaseEntry> entries = new LinkedList<>();
         String currentCategory = "";
 
@@ -39,11 +40,11 @@ public class ConfigHolder {
                 String fieldCategory = entry.category();
                 if (notEmpty(fieldCategory) && !fieldCategory.equals(currentCategory)) {
                     currentCategory = fieldCategory;
-                    entries.add(new CategoryEntry(getModId(), fileName, currentCategory));
+                    entries.add(new CategoryEntry(screen, getModId(), fileName, currentCategory));
                 }
 
                 String translationKey = notEmpty(entry.translation()) ? entry.translation() : field.getName();
-                entries.add(ValueEntryCreator.create(getModId(), fileName, translationKey, field, config.getDefaultValue(field)));
+                entries.add(ValueEntryCreator.create(screen, getModId(), fileName, translationKey, field, config.getDefaultValue(field)));
             }
         }
 

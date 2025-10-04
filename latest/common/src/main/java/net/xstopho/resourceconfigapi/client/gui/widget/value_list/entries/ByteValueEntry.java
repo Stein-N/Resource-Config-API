@@ -1,16 +1,19 @@
 package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.gui.widget.RangedEntrySlider;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.NumberValueEntry;
+import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
 public class ByteValueEntry extends NumberValueEntry<Byte> {
 
-    public ByteValueEntry(String modId, String fileName, String key, Field field, Object defaultValue) {
-        super(modId, fileName, key, field, defaultValue, true,
+    public ByteValueEntry(ResourceConfigScreen screen, String modId, String fileName, String key, Field field, Object defaultValue) {
+        super(screen, modId, fileName, key, field, defaultValue, true,
                 Pattern.compile("^(?:12[0-7]|1[01][0-9]|[1-9]?[0-9])?$"));
     }
 

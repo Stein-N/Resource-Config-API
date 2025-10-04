@@ -61,7 +61,7 @@ public class TestConfigs {
         @ConfigEntry(category = "Widget Tests")
         public static String string = "Hello World";
 
-        @ConfigEntry(category = "Widget Tests")
+        @ConfigEntry(category = "Widget Tests", needsWorldRestart = true)
         public static ConfigType configType = ConfigType.COMMON;
 
         @ConfigEntry(category = "Widget Tests")

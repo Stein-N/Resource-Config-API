@@ -9,6 +9,8 @@ import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
@@ -18,14 +20,19 @@ import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
+import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceConfigTextTooltip;
+import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceTooltipProvider;
 import net.xstopho.resourceconfigapi.client.gui.widget.ConfigTab;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.client.util.ClientUtils;
 import net.xstopho.resourceconfigapi.client.util.ComponentUtils;
+import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 import net.xstopho.resourceconfigapi.config.ConfigHolder;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -39,6 +46,7 @@ public class ResourceConfigScreen extends Screen {
     private TabNavigationBar navigationBar;
 
     private final Map<ResourceLocation, ConfigHolder> configs = new HashMap<>();
+    private final List<ClientTooltipComponent> tooltips = new ArrayList<>();
 
     private final ConfigTab commonTab, clientTab, serverTab;
 
@@ -101,6 +109,10 @@ public class ResourceConfigScreen extends Screen {
 
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, Screen.FOOTER_SEPARATOR, 0, this.height - 35,
                 0F, 0F, this.width, 2, 32, 2);
+
+        this.tooltips.forEach(tooltip -> guiGraphics.renderTooltip(GuiUtils.getFont(),
+                List.of(tooltip), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null));
+        this.tooltips.clear();
     }
 
     @Override
@@ -131,7 +143,7 @@ public class ResourceConfigScreen extends Screen {
 
     private void processConfigs(ResourceLocation location, ModConfig config) {
         if (location.getNamespace().equals(this.modId)) {
-            this.configs.put(location, new ConfigHolder(config));
+            this.configs.put(location, new ConfigHolder(config, this));
         }
     }
 
@@ -162,4 +174,9 @@ public class ResourceConfigScreen extends Screen {
             entry.getValue().getEntryList().forEach(consumer);
         }
     }
+
+    public void addTooltip(ClientTooltipComponent tooltipProvider) {
+        this.tooltips.add(tooltipProvider);
+    }
+
 }
