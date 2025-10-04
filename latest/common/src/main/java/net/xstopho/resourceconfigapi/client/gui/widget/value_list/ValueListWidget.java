@@ -3,6 +3,7 @@ package net.xstopho.resourceconfigapi.client.gui.widget.value_list;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
+import net.xstopho.resourceconfigapi.client.gui.widget.ResourceWidgetUpdater;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 
 import java.util.Collection;
@@ -29,6 +30,6 @@ public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         super.renderWidget(guiGraphics, mouseX, mouseY, delta);
-        this.repositionEntries();
+        ((ResourceWidgetUpdater) this).resourceconfigapi$updateWidgets();
     }
 }

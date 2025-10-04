@@ -19,6 +19,7 @@
         "client": [ "net.xstopho.resourceconfigapi.ResourceConfigClient" ],
         "modmenu": [ "net.xstopho.resourceconfigapi.ResourceModMenuCompat" ]
     },
+    "mixins": [ "${mod_id}.mixins.json" ],
     "depends": {
         "fabricloader": ">=${fabric_loader}",
         "minecraft": "${minecraft_version}",

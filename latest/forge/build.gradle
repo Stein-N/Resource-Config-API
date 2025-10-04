@@ -12,18 +12,21 @@ dependencies {
     testmodCompileOnly project(':latest:common').sourceSets.testmod.output
 }
 
+mixin {
+    config("${mod_id}.mixins.json")
+}
+
 jar {
     manifest {
         attributes([
-                'FMLCorePluginContainsFMLMod': 'true'
+                'FMLCorePluginContainsFMLMod': 'true',
+                'MixinConfigs': "${mod_id}.mixins.json"
         ])
     }
 }
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
-    reobf = false
-    copyIdeResources = true //Calls processResources when in dev
 
     def directory = project.projectDir.parent.split("\\\\").last()
 
@@ -44,6 +47,7 @@ minecraft {
         }
     }
 }
+
 
 compileTestmodJava {
     source(project(':latest:common').sourceSets.testmod.allSource)
