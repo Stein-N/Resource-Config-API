@@ -28,7 +28,7 @@ public class PayloadBuilder {
                .encoder((payload, byteBuf) -> ConfigUpdatePayload.CODEC.encode(byteBuf, payload))
                .decoder(ConfigUpdatePayload.CODEC::decode)
                .consumerNetworkThread((payload, context) -> {
-                   context.enqueueWork(() -> ConfigUpdatePayload.handle(payload, context.getSender().getServer()));
+                   context.enqueueWork(() -> ConfigUpdatePayload.handle(payload, context.getSender().level().getServer()));
                }).add();
     }
 }
