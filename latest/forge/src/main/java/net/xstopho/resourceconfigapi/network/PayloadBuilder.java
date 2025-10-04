@@ -7,6 +7,7 @@ import net.minecraftforge.network.SimpleChannel;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.ResourceConfig;
 import net.xstopho.resourceconfigapi.network.payloads.ConfigSyncPayload;
+import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 
 public class PayloadBuilder {
     public static void build() {
@@ -21,6 +22,13 @@ public class PayloadBuilder {
                .decoder(ConfigSyncPayload.CODEC::decode)
                .consumerNetworkThread((payload, context) -> {
                    context.enqueueWork(() -> ConfigSyncPayload.handle(payload));
+               }).add();
+
+        channel.messageBuilder(ConfigUpdatePayload.class, 1, NetworkDirection.PLAY_TO_SERVER)
+               .encoder((payload, byteBuf) -> ConfigUpdatePayload.CODEC.encode(byteBuf, payload))
+               .decoder(ConfigUpdatePayload.CODEC::decode)
+               .consumerNetworkThread((payload, context) -> {
+                   context.enqueueWork(() -> ConfigUpdatePayload.handle(payload, context.getSender().getServer()));
                }).add();
     }
 }
