@@ -1,6 +1,6 @@
 package net.xstopho.resourceconfigapi.handler;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -9,8 +9,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
@@ -24,7 +22,7 @@ public class ModClientHandler {
 
     @SubscribeEvent
     public static void registerModConfigScreens(FMLClientSetupEvent event) {
-        for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.getConfigEntries()) {
+        for (Map.Entry<Identifier, ModConfig> entry : ConfigRegistry.getConfigEntries()) {
             Optional<? extends ModContainer> container = ModList.get().getModContainerById(entry.getKey().getNamespace());
 
             container.ifPresent(modContainer -> {

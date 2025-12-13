@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.server.permissions.PermissionSet;
 import net.xstopho.resourceconfigapi.network.ConfigNetwork;
 import net.xstopho.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 
@@ -11,7 +12,7 @@ public class ClientUtils {
     private static final LocalPlayer player = Minecraft.getInstance().player;
 
     public static boolean isOperator() {
-        return isSingleplayer() || !worldLoaded() || (player != null && player.hasPermissions(4));
+        return isSingleplayer() || !worldLoaded() || (player != null && player.permissions() == PermissionSet.ALL_PERMISSIONS);
     }
 
     public static void sendConfigUpdateToServer(String file, String json) {

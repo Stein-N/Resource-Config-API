@@ -1,6 +1,6 @@
 package net.xstopho.resourceconfigapi.handler;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
@@ -21,7 +21,7 @@ public class ModClientHandler {
 
     @SubscribeEvent
     public static void registerModConfigScreens(FMLClientSetupEvent event) {
-        for (Map.Entry<ResourceLocation, ModConfig> entry : ConfigRegistry.getConfigEntries()) {
+        for (Map.Entry<Identifier, ModConfig> entry : ConfigRegistry.getConfigEntries()) {
             Optional<? extends ModContainer> container = ModList.get().getModContainerById(entry.getKey().getNamespace());
 
             container.ifPresent(modContainer -> {

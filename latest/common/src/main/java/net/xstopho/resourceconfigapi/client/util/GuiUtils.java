@@ -6,13 +6,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.annotations.ConfigEntry;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
 import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
-import net.xstopho.resourceconfigapi.client.gui.tooltip.EntryLabelTooltipPosition;
 import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceConfigTextTooltip;
 import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceTooltipProvider;
 
@@ -21,9 +20,9 @@ import java.util.List;
 
 public class GuiUtils {
 
-    private static final ResourceLocation directImpact = ConfigConstants.of("textures/gui/sprites/icon/direct_impact.png");
-    private static final ResourceLocation worldRestart = ConfigConstants.of("textures/gui/sprites/icon/world_restart.png");
-    private static final ResourceLocation gameRestart = ConfigConstants.of("textures/gui/sprites/icon/game_restart.png");
+    private static final Identifier directImpact = ConfigConstants.of("textures/gui/sprites/icon/direct_impact.png");
+    private static final Identifier worldRestart = ConfigConstants.of("textures/gui/sprites/icon/world_restart.png");
+    private static final Identifier gameRestart = ConfigConstants.of("textures/gui/sprites/icon/game_restart.png");
 
     public static Font getFont() {
         return Minecraft.getInstance().font;
@@ -43,7 +42,7 @@ public class GuiUtils {
         }
     }
 
-    public static void renderIcon(ResourceConfigScreen screen, GuiGraphics guiGraphics, ResourceLocation texture, Component tooltip, int xPos, int yPos, int mouseX, int mouseY) {
+    public static void renderIcon(ResourceConfigScreen screen, GuiGraphics guiGraphics, Identifier texture, Component tooltip, int xPos, int yPos, int mouseX, int mouseY) {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture, xPos, yPos, 0, 0, 11, 11, 11, 11);
 
         if (inBounds(xPos, yPos, xPos + 11, yPos + 11, mouseX, mouseY)) {

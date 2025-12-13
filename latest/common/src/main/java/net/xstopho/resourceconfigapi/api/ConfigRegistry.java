@@ -1,6 +1,6 @@
 package net.xstopho.resourceconfigapi.api;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.xstopho.resourceconfigapi.annotations.Config;
 import net.xstopho.resourceconfigapi.config.ModConfig;
 
@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class ConfigRegistry {
 
-    private static final Map<ResourceLocation, ModConfig> CONFIGS = new HashMap<>();
+    private static final Map<Identifier, ModConfig> CONFIGS = new HashMap<>();
 
     /**
      * Registers the Config class for the given Mod ID. <br>
@@ -27,28 +27,28 @@ public class ConfigRegistry {
         }
 
         Config annotation = clazz.getAnnotation(Config.class);
-        ResourceLocation config = of(modId, annotation.type(), annotation.fileName());
+        Identifier config = of(modId, annotation.type(), annotation.fileName());
 
         return CONFIGS.putIfAbsent(config, new ModConfig(clazz, annotation.type(), modId));
     }
 
-    public static ModConfig getConfig(ResourceLocation configLocation) {
+    public static ModConfig getConfig(Identifier configLocation) {
         return CONFIGS.get(configLocation);
     }
 
-    public static boolean contains(ResourceLocation configLocation) {
+    public static boolean contains(Identifier configLocation) {
         return CONFIGS.containsKey(configLocation);
     }
 
-    public static Map<ResourceLocation, ModConfig> getConfigs() {
+    public static Map<Identifier, ModConfig> getConfigs() {
         return CONFIGS;
     }
 
-    public static Set<Map.Entry<ResourceLocation, ModConfig>> getConfigEntries() {
+    public static Set<Map.Entry<Identifier, ModConfig>> getConfigEntries() {
         return getConfigs().entrySet();
     }
 
-    private static ResourceLocation of(String modId, ConfigType type, String fileName) {
-        return ResourceLocation.fromNamespaceAndPath(modId, type.name().toLowerCase(Locale.ENGLISH) + "/" + fileName);
+    private static Identifier of(String modId, ConfigType type, String fileName) {
+        return Identifier.fromNamespaceAndPath(modId, type.name().toLowerCase(Locale.ENGLISH) + "/" + fileName);
     }
 }

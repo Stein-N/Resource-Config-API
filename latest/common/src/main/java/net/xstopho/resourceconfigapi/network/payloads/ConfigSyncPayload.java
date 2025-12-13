@@ -6,7 +6,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.config.ModConfig;
@@ -19,7 +19,7 @@ public record ConfigSyncPayload(String file, String json) implements CustomPacke
 
     public static void handle(ConfigSyncPayload payload) {
         JsonObject jsonObject = JsonParser.parseString(payload.json()).getAsJsonObject();
-        ResourceLocation configLocation = ResourceLocation.parse(payload.file());
+        Identifier configLocation = Identifier.parse(payload.file());
 
         ConfigConstants.LOG.info("Receiving Config: {}", configLocation);
         if (ConfigRegistry.contains(configLocation)) {

@@ -13,15 +13,12 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.api.ConfigRegistry;
 import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.client.ClientConstants;
-import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceConfigTextTooltip;
-import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceTooltipProvider;
 import net.xstopho.resourceconfigapi.client.gui.widget.ConfigTab;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 import net.xstopho.resourceconfigapi.client.util.ClientUtils;
@@ -45,7 +42,7 @@ public class ResourceConfigScreen extends Screen {
     private final TabManager manager;
     private TabNavigationBar navigationBar;
 
-    private final Map<ResourceLocation, ConfigHolder> configs = new HashMap<>();
+    private final Map<Identifier, ConfigHolder> configs = new HashMap<>();
     private final List<ClientTooltipComponent> tooltips = new ArrayList<>();
 
     private final ConfigTab commonTab, clientTab, serverTab;
@@ -141,13 +138,13 @@ public class ResourceConfigScreen extends Screen {
         Minecraft.getInstance().setScreen(previous);
     }
 
-    private void processConfigs(ResourceLocation location, ModConfig config) {
+    private void processConfigs(Identifier location, ModConfig config) {
         if (location.getNamespace().equals(this.modId)) {
             this.configs.put(location, new ConfigHolder(config, this));
         }
     }
 
-    private void saveConfigChanges(ResourceLocation location, ConfigHolder holder) {
+    private void saveConfigChanges(Identifier location, ConfigHolder holder) {
         ModConfig config = holder.getConfig();
 
         if (ClientUtils.isMultiplayer()) {
@@ -170,7 +167,7 @@ public class ResourceConfigScreen extends Screen {
     }
 
     private void consumeAction(Consumer<BaseEntry> consumer) {
-        for (Map.Entry<ResourceLocation, ConfigHolder> entry : this.configs.entrySet()) {
+        for (Map.Entry<Identifier, ConfigHolder> entry : this.configs.entrySet()) {
             entry.getValue().getEntryList().forEach(consumer);
         }
     }

@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.gui.tooltip.ResourceTooltipProvider;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseEntry> implements ResourceTooltipProvider {
 
-    public final ResourceLocation undoSprite = ConfigConstants.of("textures/gui/sprites/icon/undo.png");
+    public final Identifier undoSprite = ConfigConstants.of("textures/gui/sprites/icon/undo.png");
     private final int widgetWidth = 160;
 
     protected final List<AbstractWidget> children = new ArrayList<>();

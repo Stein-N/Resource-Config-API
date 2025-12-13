@@ -9,7 +9,6 @@ import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.ButtonVal
 import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Objects;
 
 public class BooleanValueEntry extends ButtonValueEntry<Boolean> {

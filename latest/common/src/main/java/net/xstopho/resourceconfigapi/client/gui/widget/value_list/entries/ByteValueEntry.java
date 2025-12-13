@@ -1,11 +1,9 @@
 package net.xstopho.resourceconfigapi.client.gui.widget.value_list.entries;
 
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.xstopho.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
 import net.xstopho.resourceconfigapi.client.gui.widget.RangedEntrySlider;
 import net.xstopho.resourceconfigapi.client.gui.widget.value_list.base.NumberValueEntry;
-import net.xstopho.resourceconfigapi.client.util.GuiUtils;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;

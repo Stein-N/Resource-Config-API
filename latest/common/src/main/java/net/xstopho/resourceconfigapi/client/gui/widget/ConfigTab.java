@@ -4,7 +4,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.tabs.Tab;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.xstopho.resourceconfigapi.api.ConfigType;
 import net.xstopho.resourceconfigapi.client.gui.widget.config_list.ConfigListEntry;
 import net.xstopho.resourceconfigapi.client.gui.widget.config_list.ConfigListWidget;
@@ -24,7 +24,7 @@ public class ConfigTab implements Tab {
     private final ValueListWidget valueListWidget;
     private final ConfigType type;
 
-    public ConfigTab(ConfigType type, Map<ResourceLocation, ConfigHolder> configs) {
+    public ConfigTab(ConfigType type, Map<Identifier, ConfigHolder> configs) {
         this.type = type;
         configs.forEach(this::processConfigs);
 
@@ -40,7 +40,7 @@ public class ConfigTab implements Tab {
         }
     }
 
-    private void processConfigs(ResourceLocation location, ConfigHolder configHolder) {
+    private void processConfigs(Identifier location, ConfigHolder configHolder) {
         String configType = location.getPath().split("/")[0];
 
         if (configType.equalsIgnoreCase(this.type.name())) {
