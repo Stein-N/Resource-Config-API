@@ -1,6 +1,7 @@
 package net.xstopho.resourceconfigapi.client.gui.widget;
 
 import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -15,7 +16,7 @@ public class RangedEntrySlider extends AbstractSliderButton {
     private Consumer<Double> responder;
 
     public RangedEntrySlider(int width, double currentValue, double minValue, double maxValue, boolean integer) {
-        super(0, 0, width, 20, Component.empty(), (currentValue - minValue) / (maxValue - minValue));
+        super(0, 0, width, 20, CommonComponents.EMPTY, (currentValue - minValue) / (maxValue - minValue));
         this.currentValue = currentValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -29,9 +30,9 @@ public class RangedEntrySlider extends AbstractSliderButton {
     protected void updateMessage() {
         if (integer) {
             setMessage(Component.literal(String.valueOf((int) getValue())));
-            return;
+        } else {
+            setMessage(Component.literal(String.format("%.2f", getValue())));
         }
-        setMessage(Component.literal(String.format("%.2f", getValue())));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class RangedEntrySlider extends AbstractSliderButton {
     }
 
     public double getValue() {
-        double clampedValue = Mth.clampedLerp(this.minValue, this.maxValue, this.value);
+        double clampedValue = Mth.clampedLerp(this.value, this.minValue, this.maxValue);
         if (maxValue > 1) {
             clampedValue = Math.round(clampedValue / 0.10) * 0.10;
         }
@@ -59,9 +60,7 @@ public class RangedEntrySlider extends AbstractSliderButton {
         updateMessage();
     }
 
-    public void setValue(double doubleValue) {
-        this.value = doubleValue / maxValue;
-        updateMessage();
-        applyValue();
+    public void setValueWrapper(double value) {
+        this.setValue(value);
     }
 }

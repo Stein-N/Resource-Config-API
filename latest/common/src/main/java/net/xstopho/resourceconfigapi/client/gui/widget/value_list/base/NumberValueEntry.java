@@ -96,7 +96,7 @@ public abstract class NumberValueEntry<T> extends BaseEntry {
     @Override
     public void resetValues() {
         if (valueWidget instanceof RangedEntrySlider slider) {
-            slider.setValue(Double.parseDouble(defaultValue.toString()));
+            slider.setValueWrapper(Double.parseDouble(defaultValue.toString()));
         }
 
         if (valueWidget instanceof EditBox editBox) {
