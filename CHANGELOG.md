@@ -1,2 +1,2 @@
-#### 3.9.1
-- fix broken slider
+#### 3.9.2
+- fix forge 

@@ -27,6 +27,7 @@ jar {
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
+    reobf = false
 
     def directory = project.projectDir.parent.split("\\\\").last()
 
