@@ -1,2 +1,2 @@
-#### 4.0.1
-  - fix supported versions
+#### 4.0.2
+  - finally fixed supported versions, sry it's late
