@@ -1,2 +1,4 @@
-#### 3.9.2
-- fix forge 
+#### 4.0.0
+  - Port to 26.1.2
+  - remove forge for now
+  - remove config screens

@@ -23,12 +23,12 @@ public class NeoForgePlatformHelper implements PlatformHelper {
 
     @Override
     public boolean isServer() {
-        return FMLLoader.getDist().equals(Dist.DEDICATED_SERVER);
+        return FMLLoader.getCurrent().getDist().equals(Dist.DEDICATED_SERVER);
     }
 
     @Override
     public boolean isDevEnv() {
-        return !FMLLoader.isProduction();
+        return !FMLLoader.getCurrent().isProduction();
     }
 
     @Override

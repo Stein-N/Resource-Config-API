@@ -12,8 +12,12 @@ public class ResourceConfig implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        PayloadTypeRegistry.playS2C().register(ConfigSyncPayload.TYPE, ConfigSyncPayload.CODEC);
-        PayloadTypeRegistry.playC2S().register(ConfigUpdatePayload.TYPE, ConfigUpdatePayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(ConfigSyncPayload.TYPE, ConfigSyncPayload.CODEC);
+        PayloadTypeRegistry.clientboundConfiguration().register(ConfigSyncPayload.TYPE, ConfigSyncPayload.CODEC);
+
+        PayloadTypeRegistry.serverboundPlay().register(ConfigUpdatePayload.TYPE, ConfigUpdatePayload.CODEC);
+        PayloadTypeRegistry.serverboundConfiguration().register(ConfigUpdatePayload.TYPE, ConfigUpdatePayload.CODEC);
+
         ServerPlayNetworking.registerGlobalReceiver(ConfigUpdatePayload.TYPE,
                 (payload, context) -> ConfigUpdatePayload.handle(payload, context.server()));
 

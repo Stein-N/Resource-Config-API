@@ -6,7 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.xstopho.resourceconfigapi.ConfigConstants;
 
-@EventBusSubscriber(modid = ConfigConstants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = ConfigConstants.MOD_ID)
 public class NeoforgeHandler {
 
     @SubscribeEvent

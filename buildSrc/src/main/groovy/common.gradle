@@ -70,12 +70,11 @@ processResources {
             // Loader Keys
             "fabric_api": fabric_api,
             "fabric_loader": fabric_loader,
-            "forge": forge,
             "neoforge": neoforge
 
     ]
 
-    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', 'META-INF/mods.toml', '*.mixins.json']) {
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
         expand expandProps
     }
     inputs.properties(expandProps)

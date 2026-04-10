@@ -18,14 +18,24 @@ publishing {
         }
 
         repositories {
-            maven { url = mavenRepo }
+            maven { url = mavenRepo + "/maven" }
         }
 
-        publish.doLast {
-            exec {
-                workingDir mavenRepo
-                commandLine 'cmd', '/c', 'git add . && git commit -m "' + "${mod_id}-${project.name} ${version}" + '" && git push'
+        def gitPushTask = tasks.register("gitPush") {
+            group = 'publishing'
+            description = 'Commits and pushes to the maven repository.'
+
+            doLast {
+                def execOps = project.services.get(ExecOperations)
+                execOps.exec {
+                    workingDir mavenRepo
+                    commandLine 'cmd', '/c', 'git add . && git commit -m "' + "${mod_id}-${project.name} ${version}" + '" && git push'
+                }
             }
+        }
+
+        tasks.named('publish').configure {
+            finalizedBy(gitPushTask)
         }
     } else {
         println("Maven Repository isn't defined!")
