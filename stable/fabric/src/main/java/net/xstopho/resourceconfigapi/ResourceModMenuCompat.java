@@ -2,9 +2,6 @@ package net.xstopho.resourceconfigapi;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import net.minecraft.resources.Identifier;
-import net.xstopho.resourceconfigapi.api.ConfigRegistry;
-import net.xstopho.resourceconfigapi.config.ModConfig;
 
 import java.util.HashMap;
 import java.util.Map;
