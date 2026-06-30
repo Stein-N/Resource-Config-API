@@ -1,0 +1,18 @@
+{
+    "schemaVersion": 1,
+    "id": "resourceconfigapi_test",
+    "version": "1.0-TEST",
+    "name": "Resource Config Test Mod",
+    "authors": [ "xStopho" ],
+    "license": "MIT",
+    "icon": "icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+          "net.morthen.resourceconfigapi_test.ResourceConfigTest"
+        ],
+        "client": [
+          "net.morthen.resourceconfigapi_test.ResourceConfigTestClient"
+        ]
+    }
+}

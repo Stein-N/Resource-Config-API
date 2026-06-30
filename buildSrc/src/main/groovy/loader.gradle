@@ -4,21 +4,24 @@ plugins {
     id 'java-library'
 }
 
-def directory = project.projectDir.parent.split("\\\\").last()
-
 dependencies {
-    compileOnly(project(":${directory}:common"))
+    compileOnly(project(':common'))
 }
 
 tasks.named('compileJava', JavaCompile) {
-    source(project(":${directory}:common").sourceSets.main.allSource)
+    source(project(':common').sourceSets.main.allSource)
 }
 
 tasks.named('javadoc', Javadoc) {
-    source(project(":${directory}:common").sourceSets.main.allJava)
+    source(project(":common").sourceSets.main.allJava)
+}
+
+tasks.named('sourcesJar', Jar) {
+    from project(':common').sourceSets.main.resources
+    from file('src/generated')
 }
 
 processResources {
-    from project(":${directory}:common").sourceSets.main.resources
-    from file('../common/src/generated')
+    from project(":common").sourceSets.main.resources
+    from file("src/generated")
 }

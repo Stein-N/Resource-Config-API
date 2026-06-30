@@ -10,12 +10,30 @@ base {
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    withSourcesJar()
+    withJavadocJar()
 }
 
+idea.module {
+    downloadJavadoc = true
+    downloadSources = true
+}
+
+// Remove if testmod isn't needed
+sourceSets {
+    testmod {
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.main.compileClasspath
+    }
+}
 
 repositories {
     mavenCentral()
-    maven {url = "https://maven.terraformersmc.com/" }
+    mavenLocal()
+
+    maven { url 'https://raw.githubusercontent.com/Stein-N/resources/main/maven' }
+    maven { url "https://repo.spongepowered.org/maven" }
+    maven { url "https://maven.terraformersmc.com/" }
 }
 
 tasks.named('javadoc', Javadoc) {
@@ -24,13 +42,6 @@ tasks.named('javadoc', Javadoc) {
 
 tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
-}
-
-sourceSets {
-    testmod {
-        runtimeClasspath += sourceSets.main.runtimeClasspath
-        compileClasspath += sourceSets.main.compileClasspath
-    }
 }
 
 jar {
@@ -51,7 +62,13 @@ jar {
     }
 }
 
-processResources {
+sourcesJar {
+    from(rootProject.file('LICENSE')) {
+        rename { "${it}_${mod_name}" }
+    }
+}
+
+tasks.withType(ProcessResources).configureEach {
     var expandProps = [
             // Project related Keys
             "version": version,
@@ -65,16 +82,15 @@ processResources {
             "mod_id": mod_id,
             "mod_license": mod_license,
             "mod_description": mod_description,
-            "mod_credits": mod_credits,
 
             // Loader Keys
             "fabric_api": fabric_api,
             "fabric_loader": fabric_loader,
-            "neoforge": neoforge
-
+            "neoforge": neoforge,
+            "forge": forge
     ]
 
-    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', 'META-INF/mods.toml', '*.mixins.json']) {
         expand expandProps
     }
     inputs.properties(expandProps)

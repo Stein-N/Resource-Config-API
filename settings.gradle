@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        mavenCentral()
         gradlePluginPortal()
         maven { url 'https://maven.fabricmc.net/' }
         maven { url 'https://maven.minecraftforge.net/' }
@@ -9,18 +10,12 @@ pluginManagement {
 }
 
 plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
 rootProject.name = 'Resource-Config-API'
-//include('latest');
-include('stable');
 
-rootProject.children.each { subproject ->
-    def subprojectDir = file(subproject.projectDir)
-    subprojectDir.eachDir { dir ->
-        if (new File(dir, 'build.gradle').exists()) {
-            include "${subproject.name}:${dir.name}"
-        }
-    }
-}
+include('common')
+include('fabric')
+include('forge')
+include('neoforge')
