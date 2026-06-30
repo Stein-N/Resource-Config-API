@@ -1,13 +1,13 @@
 package net.morthen.resourceconfigapi.handler;
 
+import net.morthen.resourceconfigapi.ConfigConstants;
+import net.morthen.resourceconfigapi.network.payloads.ConfigSyncPayload;
+import net.morthen.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import net.morthen.resourceconfigapi.ConfigConstants;
-import net.morthen.resourceconfigapi.network.payloads.ConfigSyncPayload;
-import net.morthen.resourceconfigapi.network.payloads.ConfigUpdatePayload;
 
 @EventBusSubscriber(modid = ConfigConstants.MOD_ID)
 public class ModHandler {
