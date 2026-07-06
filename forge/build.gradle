@@ -30,7 +30,6 @@ minecraft {
     runs {
         configureEach {
             workingDir.convention layout.projectDirectory.dir("../common/runs/${it.name.toLowerCase()}")
-            args "--mixin.config=${mod_id}.mixins.json"
         }
 
         register('client') {
@@ -50,13 +49,6 @@ compileTestJava {
 
 processTestResources {
     from project(':common').sourceSets.testmod.resources
-}
-
-tasks.named('jar', Jar) {
-    manifest {
-        // Add our config to the manifest of our jar to have Mixin detect us at runtime.
-        attributes['MixinConfigs'] = "${mod_id}.mixins.json"
-    }
 }
 
 sourceSets.each {

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class ConfigTab implements Tab {
+public class ConfigTab  implements Tab {
 
     private final List<ConfigHolder> configHolderList = new ArrayList<>();
     private final ConfigListWidget configListWidget;
@@ -66,9 +66,14 @@ public class ConfigTab implements Tab {
     }
 
     @Override
-    public void doLayout(ScreenRectangle screenRectangle) {
-        this.configListWidget.setRectangle(100, screenRectangle.height() - 13, 5 , 30);
-        this.valueListWidget.setRectangle(screenRectangle.width() - configListWidget.getWidth() - 15, screenRectangle.height() - 11, 125 , 29);
+    public void doLayout(ScreenRectangle rec) {
+        var clw = this.configListWidget;
+        clw.setRectangle(100, rec.height() - 13, 5, 30);
+        clw.updateSizeAndPosition(clw.getWidth(), clw.getHeight(), clw.getX(), clw.getY());
+
+        var vlw = this.valueListWidget;
+        vlw.setRectangle((rec.width() - clw.getRight()) - 15, rec.height() - 13, clw.getRight() + 10, 30);
+        vlw.updateSizeAndPosition(vlw.getWidth(), vlw.getHeight(), vlw.getX(), vlw.getY());
     }
 
     public boolean containsConfigs() {

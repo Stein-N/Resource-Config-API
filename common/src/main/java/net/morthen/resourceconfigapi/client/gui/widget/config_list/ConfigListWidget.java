@@ -3,7 +3,6 @@ package net.morthen.resourceconfigapi.client.gui.widget.config_list;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ObjectSelectionList;
-import net.morthen.resourceconfigapi.client.gui.widget.ResourceWidgetUpdater;
 import net.morthen.resourceconfigapi.client.gui.widget.value_list.ValueListWidget;
 import net.morthen.resourceconfigapi.config.ConfigHolder;
 
@@ -38,7 +37,6 @@ public class ConfigListWidget extends ObjectSelectionList<ConfigListEntry> {
     @Override
     public void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractWidgetRenderState(graphics, mouseX, mouseY, a);
-        ((ResourceWidgetUpdater) this).resourceconfigapi$updateWidgets();
     }
 
     public void setSelectedIndex(int selected) {
