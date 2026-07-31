@@ -3,6 +3,7 @@ package net.morthen.resourceconfigapi.client.gui.screen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.tabs.MenuTabBar;
 import net.minecraft.client.gui.components.tabs.TabManager;
 import net.minecraft.client.gui.components.tabs.TabNavigationBar;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
@@ -65,7 +66,7 @@ public class ResourceConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        TabNavigationBar.Builder builder = TabNavigationBar.builder(this.manager, this.width);
+        MenuTabBar.Builder builder = MenuTabBar.builder(this.manager, this.width);
 
         if (clientTab.containsConfigs()) builder.addTabs(clientTab);
         if (commonTab.containsConfigs() && ClientUtils.isOperator()) builder.addTabs(commonTab);
@@ -115,7 +116,7 @@ public class ResourceConfigScreen extends Screen {
     @Override
     public boolean keyPressed(KeyEvent keyEvent) {
         if (keyEvent.key() == 256 && this.shouldCloseOnEsc()) {
-            Minecraft.getInstance().setScreen(previous);
+            Minecraft.getInstance().gui.setScreen(previous);
             return true;
         }
         return super.keyPressed(keyEvent);
@@ -124,8 +125,7 @@ public class ResourceConfigScreen extends Screen {
     @Override
     protected void repositionElements() {
         if (this.navigationBar != null && !this.navigationBar.children().isEmpty()) {
-            this.navigationBar.updateWidth(this.width);
-            this.navigationBar.arrangeElements();
+            this.navigationBar.arrangeElements(this.width);
             int i = this.navigationBar.getRectangle().bottom();
             ScreenRectangle screenRectangle = new ScreenRectangle(0, i, this.width, this.height - (i * 2) - 10);
             this.manager.setTabArea(screenRectangle);
@@ -135,7 +135,7 @@ public class ResourceConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        Minecraft.getInstance().setScreen(previous);
+        Minecraft.getInstance().gui.setScreen(previous);
     }
 
     private void processConfigs(Identifier location, ModConfig config) {

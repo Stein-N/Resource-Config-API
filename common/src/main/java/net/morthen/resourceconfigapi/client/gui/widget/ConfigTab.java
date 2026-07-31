@@ -2,6 +2,8 @@ package net.morthen.resourceconfigapi.client.gui.widget;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.tabs.Tab;
+import net.minecraft.client.gui.layouts.FrameLayout;
+import net.minecraft.client.gui.layouts.Layout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -22,6 +24,7 @@ public class ConfigTab  implements Tab {
     private final List<ConfigHolder> configHolderList = new ArrayList<>();
     private final ConfigListWidget configListWidget;
     private final ValueListWidget valueListWidget;
+    private final FrameLayout layout;
     private final ConfigType type;
 
     public ConfigTab(ConfigType type, Map<Identifier, ConfigHolder> configs) {
@@ -38,6 +41,10 @@ public class ConfigTab  implements Tab {
         if (entry != null && entry.getEntryList() != null) {
             this.valueListWidget.replaceEntries(entry.getEntryList());
         }
+
+        this.layout = new FrameLayout();
+        this.layout.addChild(this.configListWidget);
+        this.layout.addChild(this.valueListWidget);
     }
 
     private void processConfigs(Identifier location, ConfigHolder configHolder) {
@@ -78,5 +85,10 @@ public class ConfigTab  implements Tab {
 
     public boolean containsConfigs() {
         return !configHolderList.isEmpty();
+    }
+
+    @Override
+    public Layout getLayout() {
+        return this.layout;
     }
 }
