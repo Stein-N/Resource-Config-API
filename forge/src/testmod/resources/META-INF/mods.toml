@@ -1,6 +1,7 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "[4,)" #mandatory
+loaderVersion = "[0,)" #mandatory
 license = "${mod_license}"
+issueTrackerURL = "${issues_url}"
 
 [[mods]]
     modId = "${mod_id}_testmod"
@@ -10,9 +11,9 @@ license = "${mod_license}"
     authors = "${mod_author}"
     description = '''${mod_description}'''
 
-[[dependencies.${mod_id}]]
+[[dependencies.${mod_id}_testmod]]
     modId = "${mod_id}"
-    type="required"
+    mandatory = true
     versionRange = "[${version},)"
     ordering = "BEFORE"
     side = "BOTH"
