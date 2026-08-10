@@ -14,7 +14,9 @@
   "icon": "${mod_id}.png",
   "environment": "*",
   "entrypoints": {
-    "main": [ "net.morthen.resourceconfigapi.ResourceConfig" ]
+    "main": [ "net.morthen.resourceconfigapi.ResourceConfig" ],
+    "client": [ "net.morthen.resourceconfigapi.ResourceConfigClient" ],
+    "modmenu": [ "net.morthen.resourceconfigapi.ResourceModMenuCompat" ]
   },
   "mixins": [
     "${mod_id}.mixins.json"
@@ -24,5 +26,10 @@
     "fabric-api": ">=${fabric_api}",
     "minecraft": "${minecraft_version}",
     "java": ">=${java_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": ["library"]
+    }
   }
 }

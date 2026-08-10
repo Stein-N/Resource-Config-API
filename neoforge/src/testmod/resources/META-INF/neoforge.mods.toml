@@ -6,7 +6,6 @@ license = "${mod_license}"
     modId = "${mod_id}_testmod"
     version = "${version}"
     displayName = "${mod_name} - Test Mod"
-    logoFile="${mod_id}.png"
     authors = "${mod_author}"
     description = '''${mod_description}'''
 
