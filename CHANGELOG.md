@@ -1,2 +1,2 @@
-#### 4.0.2
-  - finally fixed supported versions, sry it's late
+#### 4.1.1
+  - port to 26.2
