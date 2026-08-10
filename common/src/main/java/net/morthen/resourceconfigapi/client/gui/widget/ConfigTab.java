@@ -2,6 +2,8 @@ package net.morthen.resourceconfigapi.client.gui.widget;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.tabs.Tab;
+import net.minecraft.client.gui.layouts.FrameLayout;
+import net.minecraft.client.gui.layouts.Layout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -17,11 +19,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class ConfigTab implements Tab {
+public class ConfigTab  implements Tab {
 
     private final List<ConfigHolder> configHolderList = new ArrayList<>();
     private final ConfigListWidget configListWidget;
     private final ValueListWidget valueListWidget;
+    private final FrameLayout layout;
     private final ConfigType type;
 
     public ConfigTab(ConfigType type, Map<Identifier, ConfigHolder> configs) {
@@ -38,6 +41,10 @@ public class ConfigTab implements Tab {
         if (entry != null && entry.getEntryList() != null) {
             this.valueListWidget.replaceEntries(entry.getEntryList());
         }
+
+        this.layout = new FrameLayout();
+        this.layout.addChild(this.configListWidget);
+        this.layout.addChild(this.valueListWidget);
     }
 
     private void processConfigs(Identifier location, ConfigHolder configHolder) {
@@ -66,12 +73,22 @@ public class ConfigTab implements Tab {
     }
 
     @Override
-    public void doLayout(ScreenRectangle screenRectangle) {
-        this.configListWidget.setRectangle(100, screenRectangle.height() - 13, 5 , 30);
-        this.valueListWidget.setRectangle(screenRectangle.width() - configListWidget.getWidth() - 15, screenRectangle.height() - 11, 125 , 29);
+    public void doLayout(ScreenRectangle rec) {
+        var clw = this.configListWidget;
+        clw.setRectangle(100, rec.height() - 13, 5, 30);
+        clw.updateSizeAndPosition(clw.getWidth(), clw.getHeight(), clw.getX(), clw.getY());
+
+        var vlw = this.valueListWidget;
+        vlw.setRectangle((rec.width() - clw.getRight()) - 15, rec.height() - 13, clw.getRight() + 10, 30);
+        vlw.updateSizeAndPosition(vlw.getWidth(), vlw.getHeight(), vlw.getX(), vlw.getY());
     }
 
     public boolean containsConfigs() {
         return !configHolderList.isEmpty();
+    }
+
+    @Override
+    public Layout getLayout() {
+        return this.layout;
     }
 }

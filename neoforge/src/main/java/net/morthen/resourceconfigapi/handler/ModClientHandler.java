@@ -1,6 +1,10 @@
 package net.morthen.resourceconfigapi.handler;
 
 import net.minecraft.resources.Identifier;
+import net.morthen.resourceconfigapi.ConfigConstants;
+import net.morthen.resourceconfigapi.api.ConfigRegistry;
+import net.morthen.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
+import net.morthen.resourceconfigapi.config.ModConfig;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -9,10 +13,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.morthen.resourceconfigapi.ConfigConstants;
-import net.morthen.resourceconfigapi.api.ConfigRegistry;
-import net.morthen.resourceconfigapi.client.gui.screen.ResourceConfigScreen;
-import net.morthen.resourceconfigapi.config.ModConfig;
 
 import java.util.Map;
 import java.util.Optional;

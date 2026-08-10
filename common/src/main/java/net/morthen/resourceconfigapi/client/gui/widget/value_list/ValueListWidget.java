@@ -3,7 +3,6 @@ package net.morthen.resourceconfigapi.client.gui.widget.value_list;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
-import net.morthen.resourceconfigapi.client.gui.widget.ResourceWidgetUpdater;
 import net.morthen.resourceconfigapi.client.gui.widget.value_list.base.BaseEntry;
 
 import java.util.Collection;
@@ -20,9 +19,6 @@ public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
     }
 
     @Override
-    protected void extractListSeparators(GuiGraphicsExtractor graphics) {}
-
-    @Override
     public int getRowWidth() {
         return this.width - 20;
     }
@@ -30,6 +26,5 @@ public class ValueListWidget extends ContainerObjectSelectionList<BaseEntry> {
     @Override
     public void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float delta) {
         super.extractWidgetRenderState(guiGraphics, mouseX, mouseY, delta);
-        ((ResourceWidgetUpdater) this).resourceconfigapi$updateWidgets();
     }
 }
